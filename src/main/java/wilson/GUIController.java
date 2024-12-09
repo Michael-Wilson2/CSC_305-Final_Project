@@ -14,30 +14,77 @@ public class GUIController implements MouseListener, MouseMotionListener, Compon
 
   @Override
   public void mouseClicked(MouseEvent e) {
-    Box element = Repository.getInstance().getElementAtLocation(e.getX(), e.getY());
+    int x = e.getX();
+    int y = e.getY();
     if (e.getButton() == MouseEvent.BUTTON1) {
-      if (element == null) {
-        String name = "Box";
-        Box box = new Box(
-            e.getX() - (Box.DEFAULT_SIZE / 2),
-            e.getY() - (Box.DEFAULT_SIZE / 2),
-            Box.DEFAULT_SIZE,
-            Box.DEFAULT_SIZE,
-            String.format("%s%02d", name, Repository.getInstance().size())
-        );
-
-        Repository.getInstance().add(box);
-      } else {
-        String newName = JOptionPane.showInputDialog(Repository.getInstance().getFrame(),
-                "New Name",
-                "Rename",
-                JOptionPane.PLAIN_MESSAGE);
-        Repository.getInstance().setBoxName(element, newName);
-      }
+      handleLeftMouseClick(x, y);
     } else if (e.getButton() == MouseEvent.BUTTON3) {
-      PopupDecoratorList popup = new PopupDecoratorList(element, e.getX(), e.getY());
-      popup.show(Repository.getInstance().getFrame(), e.getX(), e.getY());
+      handleRightMouseClick(x, y);
     }
+  }
+
+  private void handleRightMouseClick(int x, int y) {
+    Box box = Repository.getInstance().getElementAtLocation(x, y);
+    if (box != null) {
+      BoxDecorator boxDecorator = box.getDecoratorAtLocation(x, y);
+      if (boxDecorator == null) { // TODO: This ignores if clicking a decorator, but really, it should ignore if the new decorator will overlap
+        PopupDecoratorList popup = new PopupDecoratorList(box, x, y);
+        popup.show(Repository.getInstance().getFrame(), x, y);
+      }
+    }
+  }
+
+  private void handleLeftMouseClick(int x, int y) {
+    if (Repository.getInstance().getIsConnectingDecorator()) {
+      handleLeftClickWhileConnectingDecorator(x, y);
+      return;
+    }
+
+    Box box = Repository.getInstance().getElementAtLocation(x, y);
+    if (box == null) { // Clicked empty space
+      handleLeftClickInEmptySpace(x, y);
+    } else { // Clicked non-empty space
+      BoxDecorator boxDecorator = box.getDecoratorAtLocation(x, y);
+      if (boxDecorator != null) {
+        handleLeftClickOnBoxDecorator(boxDecorator);
+      } else {
+        handleLeftClickOnBox(box);
+      }
+    }
+  }
+
+  private void handleLeftClickWhileConnectingDecorator(int x, int y) {
+    Box box = Repository.getInstance().getElementAtLocation(x, y);
+    if (box != null) {
+      BoxDecorator boxDecorator = box.getDecoratorAtLocation(x, y);
+      if (boxDecorator != null) {
+        boxDecorator.addConnection(Repository.getInstance().getConnectingDecorator());
+        Repository.getInstance().repaint();
+
+        Repository.getInstance().setConnectingDecorator(null);
+        Repository.getInstance().setIsConnectingDecorator(false);
+      }
+    }
+  }
+
+  private void handleLeftClickInEmptySpace(int x, int y) {
+    int offset = Box.DEFAULT_SIZE / 2;
+    String name = String.format("%s%02d", "Box", Repository.getInstance().size());
+    Box box = new Box(x - offset, y - offset, Box.DEFAULT_SIZE, Box.DEFAULT_SIZE, name);
+    Repository.getInstance().add(box);
+  }
+
+  private void handleLeftClickOnBox(Box box) {
+    JFrame frame = Repository.getInstance().getFrame();
+    String newName = JOptionPane.showInputDialog(frame, "New Name", "Rename", JOptionPane.PLAIN_MESSAGE);
+    if (newName != null) {
+      Repository.getInstance().setBoxName(box, newName);
+    }
+  }
+
+  private void handleLeftClickOnBoxDecorator(BoxDecorator boxDecorator) {
+    Repository.getInstance().setConnectingDecorator(boxDecorator);
+    Repository.getInstance().setIsConnectingDecorator(true);
   }
 
   @Override

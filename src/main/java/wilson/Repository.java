@@ -12,12 +12,17 @@ public class Repository extends PropertyChangeSupport {
   private List<Box> elements;
   private Box selectedElement;
   private JFrame frame;
+  private boolean isConnectingDecorator;
+  private BoxDecorator connectingDecorator;
 
   private Repository() {
     super(new Object());
 
     this.elements = new ArrayList<>();
     this.selectedElement = null;
+    this.frame = null;
+    this.isConnectingDecorator = false;
+    this.connectingDecorator = null;
   }
 
   public void add(Box element) {
@@ -66,7 +71,7 @@ public class Repository extends PropertyChangeSupport {
     this.frame = frame;
   }
 
-  public Component getFrame() {
+  public JFrame getFrame() {
     return this.frame;
   }
 
@@ -87,5 +92,21 @@ public class Repository extends PropertyChangeSupport {
   public void addDecoratorToBox(Box box, BoxDecorator boxDecorator) {
     box.addDecorator(boxDecorator);
     repaint();
+  }
+
+  public boolean getIsConnectingDecorator() {
+    return isConnectingDecorator;
+  }
+
+  public void setIsConnectingDecorator(boolean isConnectingDecorator) {
+    this.isConnectingDecorator = isConnectingDecorator;
+  }
+
+  public BoxDecorator getConnectingDecorator() {
+    return connectingDecorator;
+  }
+
+  public void setConnectingDecorator(BoxDecorator connectingDecorator) {
+    this.connectingDecorator = connectingDecorator;
   }
 }

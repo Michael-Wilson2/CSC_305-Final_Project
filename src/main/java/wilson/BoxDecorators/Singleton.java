@@ -1,6 +1,7 @@
 package wilson.BoxDecorators;
 import wilson.Box;
 import wilson.BoxDecorator;
+import wilson.Emojis;
 
 import java.awt.*;
 
@@ -12,7 +13,6 @@ public class Singleton extends BoxDecorator {
   @Override
   public void draw(Graphics g) {
     super.draw(g);
-
-
+    g.drawString(Emojis.CROWN_EMOJI, getRelativeX(), getRelativeY());
   }
 }

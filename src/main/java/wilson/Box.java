@@ -33,6 +33,20 @@ public class Box extends DiagramElement {
     drawDecorators(g);
   }
 
+  @Override
+  public boolean occupies(int x, int y) {
+    return this.bounds.contains(x, y) || getDecoratorAtLocation(x, y) != null;
+  }
+
+  public BoxDecorator getDecoratorAtLocation(int x, int y) {
+    for (BoxDecorator decorator : decorators) {
+      if (decorator.occupies(x, y)) {
+        return decorator;
+      }
+    }
+    return null;
+  }
+
   private void drawDecorators(Graphics g) {
     for (BoxDecorator decorator : decorators) {
       decorator.draw(g);
