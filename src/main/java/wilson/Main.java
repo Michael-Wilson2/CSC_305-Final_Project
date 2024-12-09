@@ -6,16 +6,16 @@ import java.awt.*;
 public class Main extends JFrame {
   public Main() {
     PanelDiagram diagramPanel = new PanelDiagram();
-
     GUIController controller = new GUIController();
     diagramPanel.addMouseListener(controller);
     diagramPanel.addMouseMotionListener(controller);
-
     Repository.getInstance().addPropertyChangeListener(diagramPanel);
-
     setLayout(new GridLayout(1, 1));
-
     add(diagramPanel);
+
+    MenuBar menuBar = new MenuBar();
+    setJMenuBar(menuBar);
+
     Repository.getInstance().setFrame(this);
     repaint();
   }

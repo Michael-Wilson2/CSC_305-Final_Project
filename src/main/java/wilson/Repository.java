@@ -14,6 +14,7 @@ public class Repository extends PropertyChangeSupport {
   private JFrame frame;
   private boolean isConnectingDecorator;
   private BoxDecorator connectingDecorator;
+  private Box connectionBox;
 
   private Repository() {
     super(new Object());
@@ -23,6 +24,7 @@ public class Repository extends PropertyChangeSupport {
     this.frame = null;
     this.isConnectingDecorator = false;
     this.connectingDecorator = null;
+    this.connectionBox = null;
   }
 
   public void add(Box element) {
@@ -108,5 +110,13 @@ public class Repository extends PropertyChangeSupport {
 
   public void setConnectingDecorator(BoxDecorator connectingDecorator) {
     this.connectingDecorator = connectingDecorator;
+  }
+
+  public Box getConnectingBox() {
+    return connectionBox;
+  }
+
+  public void setConnectingBox(Box connectingBox) {
+    this.connectionBox = connectingBox;
   }
 }

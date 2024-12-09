@@ -6,11 +6,9 @@ import java.util.ArrayList;
 public abstract class DiagramElement {
   protected boolean isSelected;
   protected Rectangle bounds;
-  protected ArrayList<DiagramElement> connections;
 
   public DiagramElement(int x, int y, int w, int h) {
     this.bounds = new Rectangle(x, y, w, h);
-    this.connections = new ArrayList<>();
   }
 
   public abstract void draw(Graphics g);
@@ -29,7 +27,5 @@ public abstract class DiagramElement {
     this.bounds.setLocation(x - bounds.width / 2, y - bounds.height / 2);
   }
 
-  public void addConnection(DiagramElement connection) {
-    connections.add(connection);
-  }
+  public abstract void addConnection(DiagramElement connection);
 }

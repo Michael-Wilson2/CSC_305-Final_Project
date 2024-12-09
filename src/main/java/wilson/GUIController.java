@@ -3,6 +3,7 @@ package wilson;
 import javax.swing.*;
 import java.awt.event.*;
 
+// TODO: Use strategy pattern here
 public class GUIController implements MouseListener, MouseMotionListener, ComponentListener {
   int xOffset;
   int yOffset;
@@ -35,9 +36,11 @@ public class GUIController implements MouseListener, MouseMotionListener, Compon
   }
 
   private void handleLeftMouseClick(int x, int y) {
-    if (Repository.getInstance().getIsConnectingDecorator()) {
+    if (Repository.getInstance().getConnectingDecorator() != null) {
       handleLeftClickWhileConnectingDecorator(x, y);
       return;
+    } else if (Repository.getInstance().getConnectingBox() != null) {
+      handleLeftClickWhileConnectingBox(x, y);
     }
 
     Box box = Repository.getInstance().getElementAtLocation(x, y);
@@ -53,11 +56,24 @@ public class GUIController implements MouseListener, MouseMotionListener, Compon
     }
   }
 
+  private void handleLeftClickWhileConnectingBox(int x, int y) {
+    Box box = Repository.getInstance().getElementAtLocation(x, y);
+    if (box != null) {
+      // TODO: If clicked box == connection box, cancel the connection
+      box.addConnection(Repository.getInstance().getConnectingBox());
+      Repository.getInstance().repaint();
+
+      Repository.getInstance().setConnectingDecorator(null);
+      Repository.getInstance().setIsConnectingDecorator(false);
+    }
+  }
+
   private void handleLeftClickWhileConnectingDecorator(int x, int y) {
     Box box = Repository.getInstance().getElementAtLocation(x, y);
     if (box != null) {
       BoxDecorator boxDecorator = box.getDecoratorAtLocation(x, y);
       if (boxDecorator != null) {
+        // TODO: If clicked box decoratro == connection box decorator, cancel the connection
         boxDecorator.addConnection(Repository.getInstance().getConnectingDecorator());
         Repository.getInstance().repaint();
 

@@ -7,11 +7,14 @@ public class Box extends DiagramElement {
   public static final int DEFAULT_SIZE = 100;
 
   private String name;
-  private ArrayList<BoxDecorator> decorators = new ArrayList<>();
+  private ArrayList<BoxDecorator> decorators;
+  private ArrayList<Box> connections;
 
   public Box(int x, int y, int w, int h, String name) {
     super(x, y, w, h);
     this.name = name;
+    this.decorators = new ArrayList<>();
+    this.connections = new ArrayList<>();
   }
 
   public String getName() {
@@ -36,6 +39,15 @@ public class Box extends DiagramElement {
   @Override
   public boolean occupies(int x, int y) {
     return this.bounds.contains(x, y) || getDecoratorAtLocation(x, y) != null;
+  }
+
+  @Override
+  public void addConnection(DiagramElement connection) {
+    if (!(connection instanceof Box)) {
+      System.out.println("Unexpected pls fix"); // TODO: make this a logger or exception
+      return;
+    }
+    connections.add((Box) connection);
   }
 
   public BoxDecorator getDecoratorAtLocation(int x, int y) {
