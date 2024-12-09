@@ -1,5 +1,6 @@
 package wilson;
 
+import javax.swing.*;
 import java.awt.event.*;
 
 public class GUIController implements MouseListener, MouseMotionListener, ComponentListener {
@@ -14,9 +15,8 @@ public class GUIController implements MouseListener, MouseMotionListener, Compon
   @Override
   public void mouseClicked(MouseEvent e) {
     if (e.getButton() == MouseEvent.BUTTON1) {
-      // left click -- either add a new Box or rename an existing one
-      if (!Repository.getInstance().isOccupied(e.getX(), e.getY())) {
-        // if clicked in an empty space, add a new Box
+      Box element = Repository.getInstance().getElementAtLocation(e.getX(), e.getY());
+      if (element == null) {
         String name = "Box";
         Box box = new Box(
             e.getX() - (Box.DEFAULT_SIZE / 2),
@@ -27,10 +27,12 @@ public class GUIController implements MouseListener, MouseMotionListener, Compon
         );
 
         Repository.getInstance().add(box);
-      }
-
-      else {
-        // clicked on an existing box, so rename it
+      } else {
+        String newName = JOptionPane.showInputDialog(Repository.getInstance().getFrame(),
+                "New Name",
+                "Rename",
+                JOptionPane.PLAIN_MESSAGE);
+        Repository.getInstance().setBoxName(element, newName);
       }
     }
 
@@ -46,7 +48,10 @@ public class GUIController implements MouseListener, MouseMotionListener, Compon
 
   @Override
   public void mouseDragged(MouseEvent e) {
-
+    Box box = Repository.getInstance().getElementAtLocation(e.getX(), e.getY());
+    if (box != null) {
+      Repository.getInstance().setBoxPosition(box, e.getX(), e.getY());
+    }
   }
 
   @Override

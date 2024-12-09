@@ -27,4 +27,8 @@ public abstract class DiagramElement {
   public boolean isSelected() {
     return this.isSelected;
   }
+
+  public void setPosition(int x, int y) {
+    this.bounds.setLocation(x - bounds.width / 2, y - bounds.height / 2);
+  }
 }

@@ -15,8 +15,8 @@ public class PanelDiagram extends JPanel implements PropertyChangeListener {
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
 
-    List<DiagramElement> elements = Repository.getInstance().getElements();
-    for (DiagramElement element : elements) {
+    List<Box> elements = Repository.getInstance().getElements();
+    for (Box element : elements) {
       element.draw(g);
     }
   }

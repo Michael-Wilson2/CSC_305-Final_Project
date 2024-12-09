@@ -12,6 +12,14 @@ public class Box extends DiagramElement {
     this.name = name;
   }
 
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
   @Override
   public void draw(Graphics g) {
     g.setColor(Color.BLACK);

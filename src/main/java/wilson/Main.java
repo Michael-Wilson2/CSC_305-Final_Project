@@ -16,6 +16,7 @@ public class Main extends JFrame {
     setLayout(new GridLayout(1, 1));
 
     add(diagramPanel);
+    Repository.getInstance().setFrame(this);
     repaint();
   }
 
