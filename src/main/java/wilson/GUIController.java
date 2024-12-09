@@ -14,8 +14,8 @@ public class GUIController implements MouseListener, MouseMotionListener, Compon
 
   @Override
   public void mouseClicked(MouseEvent e) {
+    Box element = Repository.getInstance().getElementAtLocation(e.getX(), e.getY());
     if (e.getButton() == MouseEvent.BUTTON1) {
-      Box element = Repository.getInstance().getElementAtLocation(e.getX(), e.getY());
       if (element == null) {
         String name = "Box";
         Box box = new Box(
@@ -34,10 +34,9 @@ public class GUIController implements MouseListener, MouseMotionListener, Compon
                 JOptionPane.PLAIN_MESSAGE);
         Repository.getInstance().setBoxName(element, newName);
       }
-    }
-
-    else if (e.getButton() == MouseEvent.BUTTON3) {
-      // right click -- display popup menu
+    } else if (e.getButton() == MouseEvent.BUTTON3) {
+      PopupDecoratorList popup = new PopupDecoratorList(element, e.getX(), e.getY());
+      popup.show(Repository.getInstance().getFrame(), e.getX(), e.getY());
     }
   }
 

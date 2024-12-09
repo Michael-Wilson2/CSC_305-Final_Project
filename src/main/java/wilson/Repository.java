@@ -83,4 +83,9 @@ public class Repository extends PropertyChangeSupport {
     box.setPosition(x, y);
     repaint();
   }
+
+  public void addDecoratorToBox(Box box, BoxDecorator boxDecorator) {
+    box.addDecorator(boxDecorator);
+    repaint();
+  }
 }
