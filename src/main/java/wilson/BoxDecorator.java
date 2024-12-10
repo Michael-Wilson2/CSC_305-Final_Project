@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 
-public class BoxDecorator extends DiagramElement {
+public abstract class BoxDecorator extends DiagramElement {
   public static int DEFAULT_DECORATOR_RADIUS = 50;
 
   protected DiagramElement next;
@@ -30,12 +30,17 @@ public class BoxDecorator extends DiagramElement {
 
   @Override
   public void draw(Graphics g) {
+    g.setColor(new Color(0xf0be5f));
+    g.fillOval(getRelativeX(), getRelativeY(), bounds.width, bounds.height);
+  }
+
+  public void drawConnections(Graphics g) {
     g.setColor(Color.BLACK);
     for (BoxDecorator boxDecorator : connections) {
-      g.drawLine(getRelativeX(), getRelativeY(), boxDecorator.getRelativeX(), boxDecorator.getRelativeY());
+      int offset = DEFAULT_DECORATOR_RADIUS / 2;
+      g.drawLine(getRelativeX() + offset, getRelativeY() + offset,
+              boxDecorator.getRelativeX() + offset, boxDecorator.getRelativeY() + offset);
     }
-    g.setColor(Color.YELLOW);
-    g.fillOval(getRelativeX(), getRelativeY(), bounds.width, bounds.height);
   }
 
   @Override
@@ -59,6 +64,13 @@ public class BoxDecorator extends DiagramElement {
 
   public int getRelativeY() {
     return box.bounds.y - yOffset;
+  }
+
+  public void drawEmoji(String emoji, Graphics g) {
+    g.setFont(new Font("Arial", Font.PLAIN, 20));
+    int offsetX = (DEFAULT_DECORATOR_RADIUS / 2) - 10;
+    int offsetY = (DEFAULT_DECORATOR_RADIUS / 2) + 8;
+    g.drawString(emoji, getRelativeX() + offsetX, getRelativeY() + offsetY);
   }
 
   public void add(DiagramElement element) {

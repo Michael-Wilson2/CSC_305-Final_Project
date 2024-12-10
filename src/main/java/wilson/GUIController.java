@@ -29,7 +29,8 @@ public class GUIController implements MouseListener, MouseMotionListener, Compon
     if (box != null) {
       BoxDecorator boxDecorator = box.getDecoratorAtLocation(x, y);
       if (boxDecorator == null) { // TODO: This ignores if clicking a decorator, but really, it should ignore if the new decorator will overlap
-        PopupDecoratorList popup = new PopupDecoratorList(box, x, y);
+        int offset = BoxDecorator.DEFAULT_DECORATOR_RADIUS / 2;
+        PopupDecoratorList popup = new PopupDecoratorList(box, x - offset, y - offset);
         popup.show(Repository.getInstance().getFrame(), x, y);
       }
     }

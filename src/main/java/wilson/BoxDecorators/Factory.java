@@ -13,6 +13,6 @@ public class Factory extends BoxDecorator {
   @Override
   public void draw(Graphics g) {
     super.draw(g);
-    g.drawString(Emojis.FACTORY_EMOJI, getRelativeX(), getRelativeY());
+    drawEmoji(Emojis.FACTORY_EMOJI, g);
   }
 }

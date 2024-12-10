@@ -13,6 +13,6 @@ public class Decoratable extends BoxDecorator {
   @Override
   public void draw(Graphics g) {
     super.draw(g);
-    g.drawString(Emojis.SPARKLE_EMOJI, getRelativeX(), getRelativeY());
+    drawEmoji(Emojis.SPARKLE_EMOJI, g);
   }
 }

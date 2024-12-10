@@ -13,6 +13,6 @@ public class Observer extends BoxDecorator {
   @Override
   public void draw(Graphics g) {
     super.draw(g);
-    g.drawString(Emojis.EYES_EMOJI, getRelativeX(), getRelativeY());
+    drawEmoji(Emojis.EYES_EMOJI, g);
   }
 }

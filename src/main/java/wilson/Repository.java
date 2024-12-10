@@ -53,7 +53,7 @@ public class Repository extends PropertyChangeSupport {
     return instance;
   }
 
-  public List<Box> getElements() {
+  public List<Box> getBoxes() {
     return this.elements;
   }
 

@@ -27,7 +27,17 @@ public class Box extends DiagramElement {
 
   @Override
   public void draw(Graphics g) {
-    // Draw connections
+    g.setColor(new Color(0x53585e));
+    // Draw box
+    g.fillRect(bounds.x, bounds.y, bounds.width, bounds.height);
+
+    // Draw name
+    g.setColor(Color.WHITE);
+    g.setFont(new Font("Arial", Font.PLAIN, 12));
+    g.drawString(this.name, bounds.x + 10, (int) bounds.getCenterY());
+  }
+
+  public void drawConnections(Graphics g) {
     g.setColor(Color.BLACK);
     for (BoxConnection boxConnection : this.connections) {
       Box box = boxConnection.getTo();
@@ -36,15 +46,6 @@ public class Box extends DiagramElement {
               (int) box.bounds.getCenterX(),
               (int) box.bounds.getCenterY());
     }
-
-    // Draw box
-    g.fillRect(bounds.x, bounds.y, bounds.width, bounds.height);
-
-    // Draw name
-    g.setColor(Color.WHITE);
-    g.drawString(this.name, bounds.x, (int) bounds.getCenterY());
-
-    drawDecorators(g);
   }
 
   @Override
@@ -71,7 +72,13 @@ public class Box extends DiagramElement {
     return null;
   }
 
-  private void drawDecorators(Graphics g) {
+  public void drawDecoratorConnections(Graphics g) {
+    for (BoxDecorator decorator : decorators) {
+      decorator.drawConnections(g);
+    }
+  }
+
+  public void drawDecorators(Graphics g) {
     for (BoxDecorator decorator : decorators) {
       decorator.draw(g);
     }

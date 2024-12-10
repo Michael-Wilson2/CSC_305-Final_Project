@@ -13,6 +13,6 @@ public class Strategy extends BoxDecorator {
   @Override
   public void draw(Graphics g) {
     super.draw(g);
-    g.drawString(Emojis.BRAIN_EMOJI, getRelativeX(), getRelativeY());
+    drawEmoji(Emojis.BRAIN_EMOJI, g);
   }
 }

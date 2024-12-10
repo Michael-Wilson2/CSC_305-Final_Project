@@ -13,6 +13,6 @@ public class Singleton extends BoxDecorator {
   @Override
   public void draw(Graphics g) {
     super.draw(g);
-    g.drawString(Emojis.CROWN_EMOJI, getRelativeX(), getRelativeY());
+    drawEmoji(Emojis.CROWN_EMOJI, g);
   }
 }

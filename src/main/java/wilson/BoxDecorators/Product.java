@@ -13,6 +13,6 @@ public class Product extends BoxDecorator {
   @Override
   public void draw(Graphics g) {
     super.draw(g);
-    g.drawString(Emojis.BOX_EMOJI, getRelativeX(), getRelativeY());
+    drawEmoji(Emojis.BOX_EMOJI, g);
   }
 }

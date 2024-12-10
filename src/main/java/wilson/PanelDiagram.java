@@ -8,16 +8,25 @@ import java.util.List;
 
 public class PanelDiagram extends JPanel implements PropertyChangeListener {
   public PanelDiagram() {
-    setBackground(new Color(230, 230, 230));
+    setBackground(new Color(0xc6dace));
   }
 
   @Override
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
 
-    List<Box> elements = Repository.getInstance().getElements();
-    for (Box element : elements) {
-      element.draw(g);
+    List<Box> boxes = Repository.getInstance().getBoxes();
+    for (Box box : boxes) {
+      box.drawConnections(g);
+    }
+    for (Box box : boxes) {
+      box.draw(g);
+    }
+    for (Box box : boxes) {
+      box.drawDecoratorConnections(g);
+    }
+    for (Box box : boxes) {
+      box.drawDecorators(g);
     }
   }
 

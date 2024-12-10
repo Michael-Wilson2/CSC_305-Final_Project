@@ -13,6 +13,6 @@ public class ChainNode extends BoxDecorator {
   @Override
   public void draw(Graphics g) {
     super.draw(g);
-    g.drawString(Emojis.CHAIN_EMOJI, getRelativeX(), getRelativeY());
+    drawEmoji(Emojis.CHAIN_EMOJI, g);
   }
 }
