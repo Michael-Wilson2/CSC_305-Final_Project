@@ -8,7 +8,7 @@ public class Box extends DiagramElement {
 
   private String name;
   private ArrayList<BoxDecorator> decorators;
-  private ArrayList<Box> connections;
+  private ArrayList<BoxConnection> connections;
 
   public Box(int x, int y, int w, int h, String name) {
     super(x, y, w, h);
@@ -27,9 +27,20 @@ public class Box extends DiagramElement {
 
   @Override
   public void draw(Graphics g) {
+    // Draw connections
     g.setColor(Color.BLACK);
+    for (BoxConnection boxConnection : this.connections) {
+      Box box = boxConnection.getTo();
+      g.drawLine((int) bounds.getCenterX(),
+              (int) bounds.getCenterY(),
+              (int) box.bounds.getCenterX(),
+              (int) box.bounds.getCenterY());
+    }
+
+    // Draw box
     g.fillRect(bounds.x, bounds.y, bounds.width, bounds.height);
 
+    // Draw name
     g.setColor(Color.WHITE);
     g.drawString(this.name, bounds.x, (int) bounds.getCenterY());
 
@@ -47,7 +58,8 @@ public class Box extends DiagramElement {
       System.out.println("Unexpected pls fix"); // TODO: make this a logger or exception
       return;
     }
-    connections.add((Box) connection);
+    BoxConnection boxConnection = new BoxConnection(this, (Box) connection, Repository.getInstance().getConnector());
+    connections.add(boxConnection);
   }
 
   public BoxDecorator getDecoratorAtLocation(int x, int y) {

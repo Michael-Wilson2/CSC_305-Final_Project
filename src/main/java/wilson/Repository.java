@@ -1,7 +1,6 @@
 package wilson;
 
 import javax.swing.*;
-import java.awt.*;
 import java.beans.PropertyChangeSupport;
 import java.util.List;
 import java.util.ArrayList;
@@ -15,6 +14,7 @@ public class Repository extends PropertyChangeSupport {
   private boolean isConnectingDecorator;
   private BoxDecorator connectingDecorator;
   private Box connectionBox;
+  private String itemName;
 
   private Repository() {
     super(new Object());
@@ -118,5 +118,13 @@ public class Repository extends PropertyChangeSupport {
 
   public void setConnectingBox(Box connectingBox) {
     this.connectionBox = connectingBox;
+  }
+
+  public void setConnector(String itemName) {
+    this.itemName = itemName;
+  }
+
+  public String getConnector() {
+    return itemName;
   }
 }

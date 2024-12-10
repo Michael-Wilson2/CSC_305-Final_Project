@@ -41,6 +41,10 @@ public class GUIController implements MouseListener, MouseMotionListener, Compon
       return;
     } else if (Repository.getInstance().getConnectingBox() != null) {
       handleLeftClickWhileConnectingBox(x, y);
+      return;
+    } else if (Repository.getInstance().getConnector() != null) {
+      handleLeftClickAfterConnectorSet(x, y);
+      return;
     }
 
     Box box = Repository.getInstance().getElementAtLocation(x, y);
@@ -56,6 +60,13 @@ public class GUIController implements MouseListener, MouseMotionListener, Compon
     }
   }
 
+  private void handleLeftClickAfterConnectorSet(int x, int y) {
+    Box box = Repository.getInstance().getElementAtLocation(x, y);
+    if (box != null) {
+      Repository.getInstance().setConnectingBox(box);
+    }
+  }
+
   private void handleLeftClickWhileConnectingBox(int x, int y) {
     Box box = Repository.getInstance().getElementAtLocation(x, y);
     if (box != null) {
@@ -63,8 +74,8 @@ public class GUIController implements MouseListener, MouseMotionListener, Compon
       box.addConnection(Repository.getInstance().getConnectingBox());
       Repository.getInstance().repaint();
 
-      Repository.getInstance().setConnectingDecorator(null);
-      Repository.getInstance().setIsConnectingDecorator(false);
+      Repository.getInstance().setConnectingBox(null);
+      Repository.getInstance().setConnector(null);
     }
   }
 

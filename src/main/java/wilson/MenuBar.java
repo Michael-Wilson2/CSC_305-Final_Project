@@ -18,24 +18,28 @@ public class MenuBar extends JMenuBar {
           new JMenuItem("Realization")
   };
 
-  public static JMenu file = new JMenu("File");
-  public static JMenu boxConnector = new JMenu("Box Connector");
-  public static JMenu tools = new JMenu("Tools");
-  public static JMenu help = new JMenu("Help");
+  public static JMenu FILE = new JMenu("File");
+  public static JMenu BOX_CONNECTOR = new JMenu("Box Connector");
+  public static JMenu TOOLS = new JMenu("Tools");
+  public static JMenu HELP = new JMenu("Help");
 
-  public static JMenu[] jMenus = { file, boxConnector, tools, help };
+  public static JMenu[] jMenus = { FILE, BOX_CONNECTOR, TOOLS, HELP };
 
   public MenuBar() {
+    MenuBarController menuBarController = new MenuBarController();
+
     for (JMenuItem item : FILE_MENU_ITEMS) {
-      file.add(item);
+      FILE.add(item);
+      item.addActionListener(menuBarController);
     }
     for (JMenuItem item : BOX_CONNECTOR_MENU_ITEMS) {
-      boxConnector.add(item);
+      BOX_CONNECTOR.add(item);
+      item.addActionListener(menuBarController);
     }
-    tools.add(new JMenuItem("Run"));
-    help.add(new JMenuItem("About"));
-
-    MenuBarController menuBarController = new MenuBarController();
+    TOOLS.add(new JMenuItem("Run"));
+    TOOLS.addActionListener(menuBarController);
+    HELP.add(new JMenuItem("About"));
+    HELP.addActionListener(menuBarController);
 
     for (JMenu menu : jMenus) {
       menu.addActionListener(menuBarController);
