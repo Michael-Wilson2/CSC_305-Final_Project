@@ -36,10 +36,12 @@ public class MenuBar extends JMenuBar {
       BOX_CONNECTOR.add(item);
       item.addActionListener(menuBarController);
     }
-    TOOLS.add(new JMenuItem("Run"));
-    TOOLS.addActionListener(menuBarController);
-    HELP.add(new JMenuItem("About"));
-    HELP.addActionListener(menuBarController);
+    JMenuItem run = new JMenuItem("Run");
+    JMenuItem about = new JMenuItem("About");
+    TOOLS.add(run);
+    HELP.add(about);
+    run.addActionListener(menuBarController);
+    about.addActionListener(menuBarController);
 
     for (JMenu menu : jMenus) {
       menu.addActionListener(menuBarController);

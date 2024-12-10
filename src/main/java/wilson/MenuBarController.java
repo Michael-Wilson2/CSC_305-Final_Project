@@ -1,5 +1,6 @@
 package wilson;
 
+import wilson.MenuBarStrategy.AboutStrategy;
 import wilson.MenuBarStrategy.BoxConnectorStrategy;
 import wilson.MenuBarStrategy.MenuBarStrategy;
 
@@ -19,8 +20,9 @@ public class MenuBarController implements ActionListener {
       case "Realization":
         menuBarStrategy = new BoxConnectorStrategy();
         break;
+      case "About":
+        menuBarStrategy = new AboutStrategy();
     }
-
 
     if (menuBarStrategy != null) {
       menuBarStrategy.doTheThing(e.getActionCommand());
