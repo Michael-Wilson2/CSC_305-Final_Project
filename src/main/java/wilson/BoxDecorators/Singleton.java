@@ -1,6 +1,7 @@
 package wilson.BoxDecorators;
 import wilson.Box;
 import wilson.BoxDecorator;
+import wilson.DiagramElement;
 import wilson.Emojis;
 
 import java.awt.*;
@@ -14,5 +15,10 @@ public class Singleton extends BoxDecorator {
   public void draw(Graphics g) {
     super.draw(g);
     drawEmoji(Emojis.CROWN_EMOJI, g);
+  }
+
+  @Override
+  public void addConnection(DiagramElement connection) {
+    // TODO: Log this is impossible
   }
 }

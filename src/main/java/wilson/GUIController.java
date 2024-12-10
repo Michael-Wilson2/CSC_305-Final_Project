@@ -1,6 +1,7 @@
 package wilson;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 
 // TODO: Use strategy pattern here
@@ -65,6 +66,7 @@ public class GUIController implements MouseListener, MouseMotionListener, Compon
     Box box = Repository.getInstance().getElementAtLocation(x, y);
     if (box != null) {
       Repository.getInstance().setConnectingBox(box);
+      Repository.getInstance().setLineStart(new Point((int) box.getBounds().getCenterX(), (int) box.getBounds().getCenterY()));
     }
   }
 
@@ -77,6 +79,7 @@ public class GUIController implements MouseListener, MouseMotionListener, Compon
 
       Repository.getInstance().setConnectingBox(null);
       Repository.getInstance().setConnector(null);
+      Repository.getInstance().setLineStart(null);
     }
   }
 
@@ -91,6 +94,7 @@ public class GUIController implements MouseListener, MouseMotionListener, Compon
 
         Repository.getInstance().setConnectingDecorator(null);
         Repository.getInstance().setIsConnectingDecorator(false);
+        Repository.getInstance().setLineStart(null);
       }
     }
   }
@@ -113,29 +117,39 @@ public class GUIController implements MouseListener, MouseMotionListener, Compon
   private void handleLeftClickOnBoxDecorator(BoxDecorator boxDecorator) {
     Repository.getInstance().setConnectingDecorator(boxDecorator);
     Repository.getInstance().setIsConnectingDecorator(true);
+    Repository.getInstance().setLineStart(new Point(boxDecorator.getCenter().x, boxDecorator.getCenter().y));
   }
 
   @Override
   public void mousePressed(MouseEvent e) {
-
+    Box box = Repository.getInstance().getElementAtLocation(e.getX(), e.getY());
+    Repository.getInstance().setSelectedBox(box);
   }
 
   @Override
   public void mouseDragged(MouseEvent e) {
-    Box box = Repository.getInstance().getElementAtLocation(e.getX(), e.getY());
-    if (box != null) {
-      Repository.getInstance().setBoxPosition(box, e.getX(), e.getY());
+    Box selectedBox = Repository.getInstance().getSelectedBox();
+    if (selectedBox != null) {
+      Repository.getInstance().setBoxPosition(selectedBox, e.getX(), e.getY());
     }
   }
 
   @Override
   public void mouseReleased(MouseEvent e) {
-
+    Repository.getInstance().setSelectedBox(null);
   }
 
   @Override
   public void componentResized(ComponentEvent e) {
 
+  }
+
+  @Override
+  public void mouseMoved(MouseEvent e) {
+    Repository.getInstance().setPointer(e.getX(), e.getY());
+    if (Repository.getInstance().getLineStart() != null) {
+      Repository.getInstance().repaint();
+    }
   }
 
   // unused methods below -----------------------------------------------------
@@ -145,9 +159,6 @@ public class GUIController implements MouseListener, MouseMotionListener, Compon
 
   @Override
   public void mouseExited(MouseEvent e) {}
-
-  @Override
-  public void mouseMoved(MouseEvent e) {}
 
   @Override
   public void componentMoved(ComponentEvent e) {}

@@ -7,25 +7,17 @@ import java.util.ArrayList;
 public abstract class BoxDecorator extends DiagramElement {
   public static int DEFAULT_DECORATOR_RADIUS = 50;
 
-  protected DiagramElement next;
   private Box box;
   private int xOffset;
   private int yOffset;
-  private ArrayList<BoxDecorator> connections;
+  protected ArrayList<BoxDecorator> connections;
 
   public BoxDecorator(int x, int y, Box box) {
     super(x, y, DEFAULT_DECORATOR_RADIUS, DEFAULT_DECORATOR_RADIUS);
-
     this.box = box;
-
     this.xOffset = box.bounds.x - x;
     this.yOffset = box.bounds.y - y;
-    this.connections = new ArrayList<BoxDecorator>();
-  }
-
-  public BoxDecorator(int x, int y, int w, int h, DiagramElement next) {
-    super(x, y, w, h);
-    this.next = next;
+    this.connections = new ArrayList<>();
   }
 
   @Override
@@ -37,9 +29,7 @@ public abstract class BoxDecorator extends DiagramElement {
   public void drawConnections(Graphics g) {
     g.setColor(Color.BLACK);
     for (BoxDecorator boxDecorator : connections) {
-      int offset = DEFAULT_DECORATOR_RADIUS / 2;
-      g.drawLine(getRelativeX() + offset, getRelativeY() + offset,
-              boxDecorator.getRelativeX() + offset, boxDecorator.getRelativeY() + offset);
+      g.drawLine(getCenter().x, getCenter().y, boxDecorator.getCenter().x, boxDecorator.getCenter().y);
     }
   }
 
@@ -49,14 +39,7 @@ public abstract class BoxDecorator extends DiagramElement {
     return ellipse.contains(x, y);
   }
 
-  @Override
-  public void addConnection(DiagramElement connection) {
-    if (!(connection instanceof BoxDecorator)) {
-      System.out.println("Unexpected pls fix"); // TODO: make this a logger or exception
-      return;
-    }
-    connections.add((BoxDecorator) connection);
-  }
+  public abstract void addConnection(DiagramElement connection);
 
   public int getRelativeX() {
     return box.bounds.x - xOffset;
@@ -68,16 +51,13 @@ public abstract class BoxDecorator extends DiagramElement {
 
   public void drawEmoji(String emoji, Graphics g) {
     g.setFont(new Font("Arial", Font.PLAIN, 20));
-    int offsetX = (DEFAULT_DECORATOR_RADIUS / 2) - 10;
-    int offsetY = (DEFAULT_DECORATOR_RADIUS / 2) + 8;
-    g.drawString(emoji, getRelativeX() + offsetX, getRelativeY() + offsetY);
+    int offsetX = -10;
+    int offsetY = 8;
+    g.drawString(emoji, getCenter().x + offsetX, getCenter().y + offsetY);
   }
 
-  public void add(DiagramElement element) {
-    this.next = element;
-  }
-
-  public DiagramElement getNext() {
-    return this.next;
+  public Point getCenter() {
+    int offset = DEFAULT_DECORATOR_RADIUS / 2;
+    return new Point(getRelativeX() + offset, getRelativeY() + offset);
   }
 }

@@ -1,6 +1,7 @@
 package wilson;
 
 import javax.swing.*;
+import java.awt.*;
 import java.beans.PropertyChangeSupport;
 import java.util.List;
 import java.util.ArrayList;
@@ -15,6 +16,9 @@ public class Repository extends PropertyChangeSupport {
   private BoxDecorator connectingDecorator;
   private Box connectionBox;
   private String itemName;
+  private Box selectedBox;
+  private Point lineStart;
+  private Point pointer;
 
   private Repository() {
     super(new Object());
@@ -25,6 +29,8 @@ public class Repository extends PropertyChangeSupport {
     this.isConnectingDecorator = false;
     this.connectingDecorator = null;
     this.connectionBox = null;
+    this.selectedBox = null;
+    this.pointer = null;
   }
 
   public void add(Box element) {
@@ -126,5 +132,29 @@ public class Repository extends PropertyChangeSupport {
 
   public String getConnector() {
     return itemName;
+  }
+
+  public Box getSelectedBox() {
+    return selectedBox;
+  }
+
+  public void setSelectedBox(Box selectedBox) {
+    this.selectedBox = selectedBox;
+  }
+
+  public Point getLineStart() {
+    return lineStart;
+  }
+
+  public void setLineStart(Point lineStart) {
+    this.lineStart = lineStart;
+  }
+
+  public Point getPointer() {
+    return pointer;
+  }
+
+  public void setPointer(int x, int y) {
+    this.pointer = new Point(x, y);
   }
 }

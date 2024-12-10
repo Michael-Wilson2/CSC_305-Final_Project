@@ -28,6 +28,13 @@ public class PanelDiagram extends JPanel implements PropertyChangeListener {
     for (Box box : boxes) {
       box.drawDecorators(g);
     }
+
+    Point lineStart = Repository.getInstance().getLineStart();
+    if (lineStart != null) {
+      Point pointer = Repository.getInstance().getPointer();
+      g.setColor(Color.BLACK);
+      g.drawLine(lineStart.x, lineStart.y, pointer.x, pointer.y);
+    }
   }
 
   @Override

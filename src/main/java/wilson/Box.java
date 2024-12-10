@@ -84,8 +84,13 @@ public class Box extends DiagramElement {
     }
   }
 
-  public void addDecorator(BoxDecorator decorator) {
-    decorators.add(decorator);
+  public void addDecorator(BoxDecorator toAdd) {
+    for (BoxDecorator decorator : decorators) {
+      if (decorator.getClass().equals(toAdd.getClass())) {
+        return;
+      }
+    }
+    decorators.add(toAdd);
   }
 
   @Override
@@ -93,5 +98,9 @@ public class Box extends DiagramElement {
     return String.format(
         "%s centered on (%d, %d)", name, (int) bounds.getCenterX(), (int) bounds.getCenterY()
     );
+  }
+
+  public Rectangle getBounds() {
+    return this.bounds;
   }
 }
