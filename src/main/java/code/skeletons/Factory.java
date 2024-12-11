@@ -1,9 +1,7 @@
 package code.skeletons;
 
-// Additions to code:
-// make it an interface
-// add method: Product create()
-
-public interface Factory {
-  Product create();
+public class Factory {
+  public Product create(){
+    return new Product();
+  }
 }

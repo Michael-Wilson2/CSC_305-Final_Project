@@ -1,6 +1,6 @@
 package code;
 
-import wilson.*;
+import diagram.*;
 
 public class CodeCreator {
   // need to write code for each box in the diagram
@@ -10,6 +10,9 @@ public class CodeCreator {
    * implements ...
    * extends ___
    * {
+   *
+   * // variables
+   * int var1;
    *
    * // constructor
    * <public / private> <box name>() {
@@ -21,9 +24,10 @@ public class CodeCreator {
    */
 
   public String createCode(DiagramElement element) {
-//    ClassDescription description = getClassDescription(element);
+    ClassDescription description = getClassDescription((Box) element); // use before refactoring decorator
 
-    ClassDescription description = element.updateDescription(new ClassDescription());
+    // TODO: should just be able to return this line instead using decorator pattern
+//    ClassDescription description = element.updateDescription(new ClassDescription());
 
     StringBuilder codeBuilder = new StringBuilder(); // TODO: can chain methods?
     codeBuilder.append(String.format("** imports **%n"));
@@ -31,6 +35,9 @@ public class CodeCreator {
 
     codeBuilder.append(String.format("** header **%n"));
     addHeader(codeBuilder, description);
+
+    codeBuilder.append(String.format("** variables **%n"));
+    addVariables(codeBuilder, description);
 
     codeBuilder.append(String.format("** constructor **%n"));
     addConstructor(codeBuilder, description);
@@ -46,7 +53,7 @@ public class CodeCreator {
   public StringBuilder addImports(StringBuilder codeBuilder, ClassDescription description) {
     if (!description.getImports().isEmpty()) {
       for (int i = 0; i < description.getImports().size(); i ++) {
-        codeBuilder.append(String.format("import %s%n", description.getImports().get(i)));
+        codeBuilder.append(String.format("import %s;%n", description.getImports().get(i)));
       }
     }
 
@@ -54,7 +61,7 @@ public class CodeCreator {
   }
 
   public StringBuilder addHeader(StringBuilder codeBuilder, ClassDescription description) {
-        codeBuilder.append(String.format(
+    codeBuilder.append(String.format(
         "public %s %s%n", description.getType(), description.getName()
     ));
 
@@ -70,7 +77,7 @@ public class CodeCreator {
       }
     }
 
-    if (!description.getExtension().isEmpty()) {
+    if (!(description.getExtension() == null)) {
       codeBuilder.append(String.format("extends %s%n", description.getExtension()));
     }
 
@@ -79,15 +86,24 @@ public class CodeCreator {
     return codeBuilder;
   }
 
+  public StringBuilder addVariables(StringBuilder codeBuilder, ClassDescription description) {
+    for (int i = 0; i < description.getVariables().size(); i++) {
+      codeBuilder.append(String.format("%s%n", description.getVariables().get(i)));
+    }
+
+    return codeBuilder;
+  }
+
   public StringBuilder addConstructor(StringBuilder codeBuilder, ClassDescription description) {
     if (description.getType().equals(ClassDescription.CLASS)) {
-      // TODO: make private constructor for Singleton
       codeBuilder.append(String.format(
-          "%s %s() {%n" +
-          "%n" +
-          "}",
+          "%s %s() {%n",
           description.getConstructorAccess(), description.getName()
       ));
+
+      codeBuilder.append(description.getConstructorBody()); // for observable, must do super(new Object())
+
+      codeBuilder.append("}%n");
     }
 
     return codeBuilder;
@@ -102,21 +118,17 @@ public class CodeCreator {
     return codeBuilder;
   }
 
-//  public ClassDescription getClassDescription(DiagramElement firstElement) {
-//    // TODO: using decorator pattern, should just be able to return this line instead
-////    firstElement.updateDescription(description);
-//
-//    ClassDescription description = new ClassDescription();
-//
-//    DiagramElement currentElement = firstElement;
-//    while (currentElement instanceof BoxDecorator decorator) {
-//      decorator.updateDescription(description);
-//      currentElement = decorator.getNext();
-//    }
-//
-//    // should have the Box now
-//    currentElement.updateDescription(description); // get class name
-//
-//    return description;
-//  }
+  public ClassDescription getClassDescription(Box box) {
+    // TODO: remove this entire method
+    // should just be able to do this instead if using JGS decorator pattern
+//    firstElement.updateDescription(description);
+
+    ClassDescription description = new ClassDescription();
+
+    for (int i = 0; i < box.getDecorators().size(); i++) {
+      box.getDecorators().get(i).updateDescription(description);
+    }
+
+    return description;
+  }
 }

@@ -1,4 +1,4 @@
-package wilson;
+package diagram;
 
 public class Emojis {
   public static String EYES_EMOJI = "\uD83D\uDC40";

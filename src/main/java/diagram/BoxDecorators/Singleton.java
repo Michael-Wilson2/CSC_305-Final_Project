@@ -1,9 +1,9 @@
-package wilson.BoxDecorators;
+package diagram.BoxDecorators;
 import code.ClassDescription;
-import wilson.Box;
-import wilson.BoxDecorator;
-import wilson.DiagramElement;
-import wilson.Emojis;
+import diagram.Box;
+import diagram.BoxDecorator;
+import diagram.DiagramElement;
+import diagram.Emojis;
 
 import java.awt.*;
 

@@ -1,9 +1,9 @@
-package wilson.BoxDecorators;
+package diagram.BoxDecorators;
 import code.ClassDescription;
-import wilson.Box;
-import wilson.BoxDecorator;
-import wilson.DiagramElement;
-import wilson.Emojis;
+import diagram.Box;
+import diagram.BoxDecorator;
+import diagram.DiagramElement;
+import diagram.Emojis;
 
 import java.awt.*;
 
@@ -25,9 +25,9 @@ public class Decoration extends BoxDecorator {
     ));
 
     description.addMethod(String.format(
-        "public void add(Decoratable decoratable) {%n" +
+        "public void add(%s decoratable) {%n" +
         "  next = decoratable;%n" +
-        "}"
+        "}", "<Decoratable>"
     ));
 
     description.addMethod(String.format(

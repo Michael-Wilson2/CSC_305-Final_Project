@@ -1,4 +1,4 @@
-package wilson;
+package diagram;
 
 import javax.swing.*;
 import java.awt.*;
@@ -88,7 +88,7 @@ public class GUIController implements MouseListener, MouseMotionListener, Compon
     if (box != null) {
       BoxDecorator boxDecorator = box.getDecoratorAtLocation(x, y);
       if (boxDecorator != null) {
-        // TODO: If clicked box decoratro == connection box decorator, cancel the connection
+        // TODO: If clicked box decorator == connection box decorator, cancel the connection
         boxDecorator.addConnection(Repository.getInstance().getConnectingDecorator());
         Repository.getInstance().repaint();
 

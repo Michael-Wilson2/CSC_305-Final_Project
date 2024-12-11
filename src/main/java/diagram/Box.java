@@ -1,4 +1,4 @@
-package wilson;
+package diagram;
 
 import code.ClassDescription;
 
@@ -103,6 +103,10 @@ public class Box extends DiagramElement {
       }
     }
     decorators.add(toAdd);
+  }
+
+  public ArrayList<BoxDecorator> getDecorators() {
+    return decorators;
   }
 
   @Override

@@ -1,8 +1,8 @@
-package wilson;
+package diagram;
 
-import wilson.MenuBarStrategy.AboutStrategy;
-import wilson.MenuBarStrategy.BoxConnectorStrategy;
-import wilson.MenuBarStrategy.MenuBarStrategy;
+import diagram.MenuBarStrategy.AboutStrategy;
+import diagram.MenuBarStrategy.BoxConnectorStrategy;
+import diagram.MenuBarStrategy.MenuBarStrategy;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

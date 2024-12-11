@@ -3,7 +3,8 @@ package code;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO: make FactoryDescription and/or ______Description child classes?
+// TODO: make FactoryDescription, DecorationDescription, StrategyDescription
+//  child classes to create/extend the right thing?
 
 public class ClassDescription {
   public static final String PUBLIC = "public";
@@ -24,6 +25,7 @@ public class ClassDescription {
   private List<String> variables = new ArrayList<>();
 
   private String constructorAccess = PUBLIC;
+  private String constructorBody = "";
 
   private List<String> methods = new ArrayList<>();
   // ---------------------------------------------------------------
@@ -85,8 +87,16 @@ public class ClassDescription {
     return constructorAccess;
   }
 
-  public void addMethod(String methodName) {
-    methods.add(methodName);
+  public void setConstructorBody(String code) {
+    this.constructorBody = code;
+  }
+
+  public String getConstructorBody() {
+    return this.constructorBody;
+  }
+
+  public void addMethod(String methodDefinition) {
+    methods.add(methodDefinition);
   }
 
   public List<String> getMethods() {

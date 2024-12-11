@@ -1,4 +1,4 @@
-package wilson;
+package diagram;
 
 import code.ClassDescription;
 

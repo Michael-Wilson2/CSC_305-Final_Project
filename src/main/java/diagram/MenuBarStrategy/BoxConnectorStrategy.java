@@ -1,6 +1,6 @@
-package wilson.MenuBarStrategy;
+package diagram.MenuBarStrategy;
 
-import wilson.Repository;
+import diagram.Repository;
 
 public class BoxConnectorStrategy implements MenuBarStrategy {
   @Override

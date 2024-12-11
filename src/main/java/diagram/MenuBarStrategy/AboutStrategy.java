@@ -1,6 +1,6 @@
-package wilson.MenuBarStrategy;
+package diagram.MenuBarStrategy;
 
-import wilson.Repository;
+import diagram.Repository;
 
 import javax.swing.*;
 

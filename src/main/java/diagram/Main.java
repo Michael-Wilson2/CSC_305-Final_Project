@@ -1,4 +1,4 @@
-package wilson;
+package diagram;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -6,30 +6,20 @@ import java.awt.*;
 
 public class Main extends JFrame {
   public Main() {
-    // Diagram
+    // Diagram panel
     PanelDiagram diagramPanel = new PanelDiagram();
     GUIController controller = new GUIController();
     diagramPanel.addMouseListener(controller);
     diagramPanel.addMouseMotionListener(controller);
     Repository.getInstance().addPropertyChangeListener(diagramPanel);
 
-    // File tree
-    DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode("src");
-    JTree fileTree = new JTree(rootNode);
-    JScrollPane scrollPane = new JScrollPane(fileTree);
-
-    // Text pane
-    JTextPane textPane = new JTextPane();
-
-    // File tree + text pane
-    JPanel panelContainer = new JPanel(new GridLayout(1, 2));
-    panelContainer.add(scrollPane);
-    panelContainer.add(textPane);
+    // Code panel
+    PanelCode codePanel = new PanelCode();
 
     // Tabbed pane
     JTabbedPane tabbedPane = new JTabbedPane();
     tabbedPane.addTab("Draw Area", diagramPanel);
-    tabbedPane.addTab("Code", panelContainer);
+    tabbedPane.addTab("Code", codePanel);
 
     add(tabbedPane);
 

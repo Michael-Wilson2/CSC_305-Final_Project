@@ -1,4 +1,4 @@
-package wilson;
+package diagram;
 
 public class BoxConnection {
   private final Box from;

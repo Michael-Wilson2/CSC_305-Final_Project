@@ -1,6 +1,6 @@
-package wilson;
+package diagram;
 
-import wilson.BoxDecorators.*;
+import diagram.BoxDecorators.*;
 
 import javax.swing.*;
 

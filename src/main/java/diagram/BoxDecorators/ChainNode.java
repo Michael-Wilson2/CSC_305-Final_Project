@@ -1,6 +1,6 @@
-package wilson.BoxDecorators;
+package diagram.BoxDecorators;
 import code.ClassDescription;
-import wilson.*;
+import diagram.*;
 
 import java.awt.*;
 
