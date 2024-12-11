@@ -1,7 +1,6 @@
 package code;
 
-import wilson.*;
-import wilson.DiagramElements.*;
+import diagram.DiagramElements.*;
 
 import java.util.Scanner;
 

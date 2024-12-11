@@ -1,8 +1,7 @@
 package code;
 
-import wilson.DiagramElements.Box;
-import wilson.DiagramElements.DiagramElement;
-import wilson.Repository;
+import diagram.DiagramElements.Box;
+import diagram.Repository;
 
 import javax.swing.*;
 import java.awt.*;

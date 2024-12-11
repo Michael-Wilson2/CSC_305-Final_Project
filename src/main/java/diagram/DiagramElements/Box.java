@@ -1,8 +1,8 @@
-package wilson.DiagramElements;
+package diagram.DiagramElements;
 
 import code.ClassDescription;
 import code.ClassDescriptionFactory;
-import wilson.Repository;
+import diagram.Repository;
 
 import java.awt.*;
 import java.util.ArrayList;

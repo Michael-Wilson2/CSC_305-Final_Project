@@ -1,8 +1,8 @@
-package wilson;
+package diagram;
 
-import wilson.DiagramElements.Box;
-import wilson.DiagramElements.BoxDecorator;
-import wilson.DiagramElements.DiagramElement;
+import diagram.DiagramElements.Box;
+import diagram.DiagramElements.BoxDecorator;
+import diagram.DiagramElements.DiagramElement;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +17,7 @@ public class Repository extends PropertyChangeSupport {
   private JFrame frame;
   private boolean isConnectingDecorator;
   private BoxDecorator connectingDecorator;
-  private wilson.DiagramElements.Box connectionBox;
+  private diagram.DiagramElements.Box connectionBox;
   private String itemName;
   private Point lineStart;
   private Point pointer;
@@ -43,7 +43,7 @@ public class Repository extends PropertyChangeSupport {
     repaint();
   }
 
-  public void remove(wilson.DiagramElements.Box element) {
+  public void remove(diagram.DiagramElements.Box element) {
     this.elements.remove(element);
     repaint();
   }
@@ -123,12 +123,12 @@ public class Repository extends PropertyChangeSupport {
     firePropertyChange("repaint", null, 1);
   }
 
-  public void setBoxName(wilson.DiagramElements.Box box, String newName) {
+  public void setBoxName(diagram.DiagramElements.Box box, String newName) {
     box.setName(newName);
     repaint();
   }
 
-  public void setBoxPosition(wilson.DiagramElements.Box box, int x, int y) {
+  public void setBoxPosition(diagram.DiagramElements.Box box, int x, int y) {
     box.setPosition(x, y);
     repaint();
   }
@@ -156,11 +156,11 @@ public class Repository extends PropertyChangeSupport {
     this.connectingDecorator = connectingDecorator;
   }
 
-  public wilson.DiagramElements.Box getConnectingBox() {
+  public diagram.DiagramElements.Box getConnectingBox() {
     return connectionBox;
   }
 
-  public void setConnectingBox(wilson.DiagramElements.Box connectingBox) {
+  public void setConnectingBox(diagram.DiagramElements.Box connectingBox) {
     this.connectionBox = connectingBox;
   }
 

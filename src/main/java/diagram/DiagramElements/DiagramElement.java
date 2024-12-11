@@ -1,4 +1,4 @@
-package wilson.DiagramElements;
+package diagram.DiagramElements;
 
 import code.ClassDescription;
 import java.awt.*;

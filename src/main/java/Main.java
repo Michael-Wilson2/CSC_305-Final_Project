@@ -1,10 +1,10 @@
-package wilson;
-
 import code.PanelCode;
+import diagram.GUIController;
+import diagram.MenuBar;
+import diagram.PanelDiagram;
+import diagram.Repository;
 
 import javax.swing.*;
-import javax.swing.tree.DefaultMutableTreeNode;
-import java.awt.*;
 
 public class Main extends JFrame {
   public Main() {

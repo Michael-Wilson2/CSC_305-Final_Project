@@ -1,27 +1,32 @@
-package wilson.DiagramElements;
+package diagram.DiagramElements;
 import code.ClassDescription;
-import code.CodeCreator;
-import wilson.Emojis;
+import diagram.Emojis;
 
 import java.awt.*;
 
-public class Factory extends BoxDecorator {
-  public Factory(int w, int h) {
+public class Observer extends BoxDecorator {
+  public Observer(int w, int h) {
     super(w, h);
   }
 
   @Override
   public void draw(Graphics g) {
     super.draw(g);
-    drawEmoji(Emojis.FACTORY_EMOJI, g);
+    drawEmoji(Emojis.EYES_EMOJI, g);
   }
 
   @Override
   public ClassDescription updateDescription(ClassDescription description) {
+    description.addImport("java.beans.PropertyChangeEvent");
+    description.addImport("java.beans.PropertyChangeListener");
+
+    description.addImplementation("PropertyChangeListener");
+
     description.addMethod(String.format(
-        "public %s create(){%n" +
-            CodeCreator.TAB + "return new %s();%n" +
-            "}", "<Product>", "<Product>" // TODO: use name of product class
+        "@Override%n" +
+            "public void propertyChange(PropertyChangeEvent evt) {%n" +
+            "%n" +
+            "}"
     ));
 
     if (diagramElement != null) {
@@ -34,7 +39,7 @@ public class Factory extends BoxDecorator {
   @Override
   public void addConnection(DiagramElement connection) {
     BoxDecorator decoratorConnection = (BoxDecorator) connection;
-    if (decoratorConnection instanceof Product) {
+    if (decoratorConnection instanceof Observable) {
       connections.add(decoratorConnection);
     }
   }

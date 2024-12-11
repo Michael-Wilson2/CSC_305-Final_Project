@@ -1,7 +1,6 @@
-package wilson;
+package diagram;
 
-import wilson.DiagramElements.Box;
-import wilson.DiagramElements.DiagramElement;
+import diagram.DiagramElements.DiagramElement;
 
 import javax.swing.*;
 import java.awt.*;

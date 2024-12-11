@@ -1,27 +1,26 @@
-package wilson.DiagramElements;
+package diagram.DiagramElements;
 import code.ClassDescription;
-import wilson.Emojis;
+import diagram.*;
 
 import java.awt.*;
 
-public class Decoratable extends BoxDecorator {
-  public Decoratable(int w, int h) {
+public class ChainNode extends BoxDecorator {
+  public ChainNode(int w, int h) {
     super(w, h);
   }
 
   @Override
   public void draw(Graphics g) {
     super.draw(g);
-    drawEmoji(Emojis.SPARKLE_EMOJI, g);
+    drawEmoji(Emojis.CHAIN_EMOJI, g);
   }
 
   @Override
   public ClassDescription updateDescription(ClassDescription description) {
     description.addMethod(String.format(
-        "@Override%n" +
-        "public void operation() {%n" +
-        "%n" +
-        "}"
+        "public void handleRequest() {%n" +
+            "%n" +
+            "};"
     ));
 
     if (diagramElement != null) {
@@ -33,9 +32,6 @@ public class Decoratable extends BoxDecorator {
 
   @Override
   public void addConnection(DiagramElement connection) {
-    BoxDecorator decoratorConnection = (BoxDecorator) connection;
-    if (decoratorConnection instanceof Decoration) {
-      connections.add(decoratorConnection);
-    }
+    // TODO: Log this is impossible
   }
 }

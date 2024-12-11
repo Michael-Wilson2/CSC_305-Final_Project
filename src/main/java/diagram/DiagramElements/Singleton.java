@@ -1,7 +1,7 @@
-package wilson.DiagramElements;
+package diagram.DiagramElements;
 import code.ClassDescription;
 import code.CodeCreator;
-import wilson.Emojis;
+import diagram.Emojis;
 
 import java.awt.*;
 

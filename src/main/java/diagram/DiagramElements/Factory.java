@@ -1,25 +1,28 @@
-package wilson.DiagramElements;
+package diagram.DiagramElements;
 import code.ClassDescription;
-import code.ClassDescriptionFactory;
-import wilson.Emojis;
+import code.CodeCreator;
+import diagram.Emojis;
 
 import java.awt.*;
 
-public class Product extends BoxDecorator {
-  public Product(int w, int h) {
+public class Factory extends BoxDecorator {
+  public Factory(int w, int h) {
     super(w, h);
   }
 
   @Override
   public void draw(Graphics g) {
     super.draw(g);
-    drawEmoji(Emojis.BOX_EMOJI, g);
+    drawEmoji(Emojis.FACTORY_EMOJI, g);
   }
 
   @Override
   public ClassDescription updateDescription(ClassDescription description) {
-    ClassDescriptionFactory factoryDescription = new ClassDescriptionFactory(description);
-//    factoryDescription.setProductName(); // don't have it yet... do in Box implementation of updateDescription
+    description.addMethod(String.format(
+        "public %s create(){%n" +
+            CodeCreator.TAB + "return new %s();%n" +
+            "}", "<Product>", "<Product>" // TODO: use name of product class
+    ));
 
     if (diagramElement != null) {
       return diagramElement.updateDescription(description);
@@ -31,7 +34,7 @@ public class Product extends BoxDecorator {
   @Override
   public void addConnection(DiagramElement connection) {
     BoxDecorator decoratorConnection = (BoxDecorator) connection;
-    if (decoratorConnection instanceof Factory) {
+    if (decoratorConnection instanceof Product) {
       connections.add(decoratorConnection);
     }
   }

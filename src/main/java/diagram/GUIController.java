@@ -1,8 +1,8 @@
-package wilson;
+package diagram;
 
-import wilson.DiagramElements.Box;
-import wilson.DiagramElements.BoxDecorator;
-import wilson.DiagramElements.DiagramElement;
+import diagram.DiagramElements.Box;
+import diagram.DiagramElements.BoxDecorator;
+import diagram.DiagramElements.DiagramElement;
 
 import javax.swing.*;
 import java.awt.*;
@@ -100,13 +100,13 @@ public class GUIController implements MouseListener, MouseMotionListener, Compon
   }
 
   private void handleLeftClickInEmptySpace(int x, int y) {
-    int offset = wilson.DiagramElements.Box.DEFAULT_SIZE / 2;
+    int offset = diagram.DiagramElements.Box.DEFAULT_SIZE / 2;
     String name = String.format("%s%02d", "Box", Repository.getInstance().size());
-    wilson.DiagramElements.Box box = new wilson.DiagramElements.Box(x - offset, y - offset, wilson.DiagramElements.Box.DEFAULT_SIZE, wilson.DiagramElements.Box.DEFAULT_SIZE, name);
+    diagram.DiagramElements.Box box = new diagram.DiagramElements.Box(x - offset, y - offset, diagram.DiagramElements.Box.DEFAULT_SIZE, diagram.DiagramElements.Box.DEFAULT_SIZE, name);
     Repository.getInstance().add(box);
   }
 
-  private void handleLeftClickOnBox(wilson.DiagramElements.Box box) {
+  private void handleLeftClickOnBox(diagram.DiagramElements.Box box) {
     JFrame frame = Repository.getInstance().getFrame();
     String newName = JOptionPane.showInputDialog(frame, "New Name", "Rename", JOptionPane.PLAIN_MESSAGE);
     if (newName != null) {
