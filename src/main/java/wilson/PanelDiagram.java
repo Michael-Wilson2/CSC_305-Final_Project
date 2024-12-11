@@ -1,5 +1,7 @@
 package wilson;
 
+import wilson.DiagramElements.Box;
+
 import javax.swing.*;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
@@ -15,14 +17,14 @@ public class PanelDiagram extends JPanel implements PropertyChangeListener {
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
 
-    List<Box> boxes = Repository.getInstance().getBoxes();
-    for (Box box : boxes) {
+    List<wilson.DiagramElements.Box> boxes = Repository.getInstance().getBoxes();
+    for (wilson.DiagramElements.Box box : boxes) {
       box.drawConnections(g);
     }
-    for (Box box : boxes) {
+    for (wilson.DiagramElements.Box box : boxes) {
       box.draw(g);
     }
-    for (Box box : boxes) {
+    for (wilson.DiagramElements.Box box : boxes) {
       box.drawDecoratorConnections(g);
     }
     for (Box box : boxes) {

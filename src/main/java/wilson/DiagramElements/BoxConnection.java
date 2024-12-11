@@ -1,4 +1,4 @@
-package wilson;
+package wilson.DiagramElements;
 
 public class BoxConnection {
   private final Box from;

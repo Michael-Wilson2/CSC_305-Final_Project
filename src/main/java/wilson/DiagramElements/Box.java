@@ -1,4 +1,6 @@
-package wilson;
+package wilson.DiagramElements;
+
+import wilson.Repository;
 
 import java.awt.*;
 import java.util.ArrayList;

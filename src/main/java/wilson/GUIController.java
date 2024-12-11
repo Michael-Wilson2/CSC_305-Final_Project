@@ -1,5 +1,8 @@
 package wilson;
 
+import wilson.DiagramElements.Box;
+import wilson.DiagramElements.BoxDecorator;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -26,7 +29,7 @@ public class GUIController implements MouseListener, MouseMotionListener, Compon
   }
 
   private void handleRightMouseClick(int x, int y) {
-    Box box = Repository.getInstance().getElementAtLocation(x, y);
+    wilson.DiagramElements.Box box = Repository.getInstance().getElementAtLocation(x, y);
     if (box != null) {
       BoxDecorator boxDecorator = box.getDecoratorAtLocation(x, y);
       if (boxDecorator == null) { // TODO: This ignores if clicking a decorator, but really, it should ignore if the new decorator will overlap
@@ -49,7 +52,7 @@ public class GUIController implements MouseListener, MouseMotionListener, Compon
       return;
     }
 
-    Box box = Repository.getInstance().getElementAtLocation(x, y);
+    wilson.DiagramElements.Box box = Repository.getInstance().getElementAtLocation(x, y);
     if (box == null) { // Clicked empty space
       handleLeftClickInEmptySpace(x, y);
     } else { // Clicked non-empty space
@@ -63,7 +66,7 @@ public class GUIController implements MouseListener, MouseMotionListener, Compon
   }
 
   private void handleLeftClickAfterConnectorSet(int x, int y) {
-    Box box = Repository.getInstance().getElementAtLocation(x, y);
+    wilson.DiagramElements.Box box = Repository.getInstance().getElementAtLocation(x, y);
     if (box != null) {
       Repository.getInstance().setConnectingBox(box);
       Repository.getInstance().setLineStart(new Point((int) box.getBounds().getCenterX(), (int) box.getBounds().getCenterY()));
@@ -71,7 +74,7 @@ public class GUIController implements MouseListener, MouseMotionListener, Compon
   }
 
   private void handleLeftClickWhileConnectingBox(int x, int y) {
-    Box box = Repository.getInstance().getElementAtLocation(x, y);
+    wilson.DiagramElements.Box box = Repository.getInstance().getElementAtLocation(x, y);
     if (box != null) {
       // TODO: If clicked box == connection box, cancel the connection
       box.addConnection(Repository.getInstance().getConnectingBox());
@@ -84,7 +87,7 @@ public class GUIController implements MouseListener, MouseMotionListener, Compon
   }
 
   private void handleLeftClickWhileConnectingDecorator(int x, int y) {
-    Box box = Repository.getInstance().getElementAtLocation(x, y);
+    wilson.DiagramElements.Box box = Repository.getInstance().getElementAtLocation(x, y);
     if (box != null) {
       BoxDecorator boxDecorator = box.getDecoratorAtLocation(x, y);
       if (boxDecorator != null) {
@@ -100,13 +103,13 @@ public class GUIController implements MouseListener, MouseMotionListener, Compon
   }
 
   private void handleLeftClickInEmptySpace(int x, int y) {
-    int offset = Box.DEFAULT_SIZE / 2;
+    int offset = wilson.DiagramElements.Box.DEFAULT_SIZE / 2;
     String name = String.format("%s%02d", "Box", Repository.getInstance().size());
-    Box box = new Box(x - offset, y - offset, Box.DEFAULT_SIZE, Box.DEFAULT_SIZE, name);
+    wilson.DiagramElements.Box box = new wilson.DiagramElements.Box(x - offset, y - offset, wilson.DiagramElements.Box.DEFAULT_SIZE, wilson.DiagramElements.Box.DEFAULT_SIZE, name);
     Repository.getInstance().add(box);
   }
 
-  private void handleLeftClickOnBox(Box box) {
+  private void handleLeftClickOnBox(wilson.DiagramElements.Box box) {
     JFrame frame = Repository.getInstance().getFrame();
     String newName = JOptionPane.showInputDialog(frame, "New Name", "Rename", JOptionPane.PLAIN_MESSAGE);
     if (newName != null) {
@@ -122,7 +125,7 @@ public class GUIController implements MouseListener, MouseMotionListener, Compon
 
   @Override
   public void mousePressed(MouseEvent e) {
-    Box box = Repository.getInstance().getElementAtLocation(e.getX(), e.getY());
+    wilson.DiagramElements.Box box = Repository.getInstance().getElementAtLocation(e.getX(), e.getY());
     Repository.getInstance().setSelectedBox(box);
   }
 

@@ -1,12 +1,13 @@
 package wilson;
 
-import wilson.BoxDecorators.*;
+import wilson.DiagramElements.*;
+import wilson.DiagramElements.Box;
 
 import javax.swing.*;
 
 public class PopupDecoratorList extends JPopupMenu {
 
-  public PopupDecoratorList(Box box, int x, int y) {
+  public PopupDecoratorList(wilson.DiagramElements.Box box, int x, int y) {
     String[] menuItems = {"Observer", "Observable", "Singleton", "Decoration", "Decoratable",
             "Chain Member", "Strategy", "Factory", "Product"};
     Class<?>[] classes = {Observer.class, Observable.class, Singleton.class, Decoration.class, Decoratable.class,

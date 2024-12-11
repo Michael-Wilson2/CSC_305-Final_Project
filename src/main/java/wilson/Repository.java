@@ -1,5 +1,9 @@
 package wilson;
 
+import wilson.DiagramElements.Box;
+import wilson.DiagramElements.BoxDecorator;
+import wilson.DiagramElements.DiagramElement;
+
 import javax.swing.*;
 import java.awt.*;
 import java.beans.PropertyChangeSupport;
@@ -9,14 +13,14 @@ import java.util.ArrayList;
 public class Repository extends PropertyChangeSupport {
   private static Repository instance;
 
-  private List<Box> elements;
-  private Box selectedElement;
+  private List<wilson.DiagramElements.Box> elements;
+  private wilson.DiagramElements.Box selectedElement;
   private JFrame frame;
   private boolean isConnectingDecorator;
   private BoxDecorator connectingDecorator;
-  private Box connectionBox;
+  private wilson.DiagramElements.Box connectionBox;
   private String itemName;
-  private Box selectedBox;
+  private wilson.DiagramElements.Box selectedBox;
   private Point lineStart;
   private Point pointer;
 
@@ -33,18 +37,18 @@ public class Repository extends PropertyChangeSupport {
     this.pointer = null;
   }
 
-  public void add(Box element) {
+  public void add(wilson.DiagramElements.Box element) {
     this.elements.add(element);
     repaint();
   }
 
-  public void remove(Box element) {
+  public void remove(wilson.DiagramElements.Box element) {
     this.elements.remove(element);
     repaint();
   }
 
-  public Box getElementAtLocation(int x, int y) {
-    for (Box element : this.elements) {
+  public wilson.DiagramElements.Box getElementAtLocation(int x, int y) {
+    for (wilson.DiagramElements.Box element : this.elements) {
       if (element.occupies(x, y)) {
         return element;
       }
@@ -59,7 +63,7 @@ public class Repository extends PropertyChangeSupport {
     return instance;
   }
 
-  public List<Box> getBoxes() {
+  public List<wilson.DiagramElements.Box> getBoxes() {
     return this.elements;
   }
 
@@ -71,7 +75,7 @@ public class Repository extends PropertyChangeSupport {
     return this.selectedElement;
   }
 
-  public void setSelectedElement(Box element) {
+  public void setSelectedElement(wilson.DiagramElements.Box element) {
     this.selectedElement = element;
   }
 
@@ -87,17 +91,17 @@ public class Repository extends PropertyChangeSupport {
     firePropertyChange("repaint", null, 1);
   }
 
-  public void setBoxName(Box box, String newName) {
+  public void setBoxName(wilson.DiagramElements.Box box, String newName) {
     box.setName(newName);
     repaint();
   }
 
-  public void setBoxPosition(Box box, int x, int y) {
+  public void setBoxPosition(wilson.DiagramElements.Box box, int x, int y) {
     box.setPosition(x, y);
     repaint();
   }
 
-  public void addDecoratorToBox(Box box, BoxDecorator boxDecorator) {
+  public void addDecoratorToBox(wilson.DiagramElements.Box box, BoxDecorator boxDecorator) {
     box.addDecorator(boxDecorator);
     repaint();
   }
@@ -118,11 +122,11 @@ public class Repository extends PropertyChangeSupport {
     this.connectingDecorator = connectingDecorator;
   }
 
-  public Box getConnectingBox() {
+  public wilson.DiagramElements.Box getConnectingBox() {
     return connectionBox;
   }
 
-  public void setConnectingBox(Box connectingBox) {
+  public void setConnectingBox(wilson.DiagramElements.Box connectingBox) {
     this.connectionBox = connectingBox;
   }
 
@@ -134,7 +138,7 @@ public class Repository extends PropertyChangeSupport {
     return itemName;
   }
 
-  public Box getSelectedBox() {
+  public wilson.DiagramElements.Box getSelectedBox() {
     return selectedBox;
   }
 

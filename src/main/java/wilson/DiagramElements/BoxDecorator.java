@@ -1,4 +1,4 @@
-package wilson;
+package wilson.DiagramElements;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
