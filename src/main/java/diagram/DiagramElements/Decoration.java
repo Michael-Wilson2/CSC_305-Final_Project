@@ -24,15 +24,15 @@ public class Decoration extends BoxDecorator {
 
     description.addMethod(String.format(
         "public void add(%s next) {%n" +
-            CodeCreator.TAB + "this.next = next;%n" +
-            "}", "<Component>"
+        CodeCreator.TAB + "this.next = next;%n" +
+        "}", "<Component>"
     ));
 
     description.addMethod(String.format(
         "@Override%n" +
-            "public void operation() {%n" +
-            "%n" +
-            "}"
+        "public void operation() {%n" +
+        "%n" +
+        "}"
     ));
 
     if (diagramElement != null) {

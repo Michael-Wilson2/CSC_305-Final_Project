@@ -23,6 +23,8 @@ public abstract class BoxDecorator extends DiagramElement {
 
   @Override
   public void draw(Graphics g) {
+    // TODO: should call super.draw(g) to draw other decorators, then get rid of drawConnections()
+
     if (diagramElement != null) {
       diagramElement.draw(g);
     }
@@ -33,6 +35,8 @@ public abstract class BoxDecorator extends DiagramElement {
   }
 
   public void drawConnections(Graphics g) {
+    // TODO: remove this method; see draw()
+
     g.setColor(Color.BLACK);
     for (BoxDecorator boxDecorator : connections) {
       g.drawLine((int) bounds.getCenterX(), (int) bounds.getCenterY(),
@@ -57,10 +61,14 @@ public abstract class BoxDecorator extends DiagramElement {
 
   @Override
   public ClassDescription updateDescription(ClassDescription description) {
-    return this.diagramElement.updateDescription(description); // should traverse linked list
+    return this.diagramElement.updateDescription(description); // should traverse linked list w/ decorator pattern
   }
 
   public abstract void addConnection(DiagramElement connection);
+
+  public ArrayList<BoxDecorator> getConnecctions() {
+    return connections;
+  }
 
   public int getRelativeX() {
 //    return box.bounds.x - xOffset;
@@ -73,7 +81,7 @@ public abstract class BoxDecorator extends DiagramElement {
   }
 
   public void drawEmoji(String emoji, Graphics g) {
-    g.setFont(new Font("Arial", Font.PLAIN, 20));
+    g.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 20));
     int offsetX = -10;
     int offsetY = 8;
     g.drawString(emoji, (int) bounds.getCenterX() + offsetX, (int) bounds.getCenterY() + offsetY);

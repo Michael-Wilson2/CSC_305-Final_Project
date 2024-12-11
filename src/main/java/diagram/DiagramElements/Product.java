@@ -1,6 +1,5 @@
 package diagram.DiagramElements;
 import code.ClassDescription;
-import code.ClassDescriptionFactory;
 import diagram.Emojis;
 
 import java.awt.*;
@@ -18,8 +17,7 @@ public class Product extends BoxDecorator {
 
   @Override
   public ClassDescription updateDescription(ClassDescription description) {
-    ClassDescriptionFactory factoryDescription = new ClassDescriptionFactory(description);
-//    factoryDescription.setProductName(); // don't have it yet... do in Box implementation of updateDescription
+    // no changes/additions
 
     if (diagramElement != null) {
       return diagramElement.updateDescription(description);
@@ -33,6 +31,7 @@ public class Product extends BoxDecorator {
     BoxDecorator decoratorConnection = (BoxDecorator) connection;
     if (decoratorConnection instanceof Factory) {
       connections.add(decoratorConnection);
+      decoratorConnection.addConnection(this);
     }
   }
 }

@@ -1,7 +1,6 @@
 package diagram.DiagramElements;
 
 import code.ClassDescription;
-import code.ClassDescriptionFactory;
 import diagram.Repository;
 
 import java.awt.*;
@@ -70,10 +69,6 @@ public class Box extends DiagramElement {
     if (description.getType() == null) {
       description.setType(ClassDescription.CLASS);
     }
-
-    if (description instanceof ClassDescriptionFactory) {
-      ((ClassDescriptionFactory) description).setProductName(name);
-    } // also do for decorations and their decoratables
 
     return description;
   }

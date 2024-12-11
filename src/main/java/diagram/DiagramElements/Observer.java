@@ -24,9 +24,9 @@ public class Observer extends BoxDecorator {
 
     description.addMethod(String.format(
         "@Override%n" +
-            "public void propertyChange(PropertyChangeEvent evt) {%n" +
-            "%n" +
-            "}"
+        "public void propertyChange(PropertyChangeEvent evt) {%n" +
+        "%n" +
+        "}"
     ));
 
     if (diagramElement != null) {

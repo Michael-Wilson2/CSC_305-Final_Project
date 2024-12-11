@@ -24,11 +24,11 @@ public class Singleton extends BoxDecorator {
 
     description.addMethod(String.format(
         "public static %s getInstance() {%n" +
-            CodeCreator.TAB + "if (instance == null) {%n" +
-            CodeCreator.TAB + CodeCreator.TAB + "instance = new %s();%n" +
-            CodeCreator.TAB + "}%n" +
-            CodeCreator.TAB + "return instance;%n" +
-            "}", CodeCreator.BOX_NAME_PLACEHOLDER, CodeCreator.BOX_NAME_PLACEHOLDER
+        CodeCreator.TAB + "if (instance == null) {%n" +
+        CodeCreator.TAB + CodeCreator.TAB + "instance = new %s();%n" +
+        CodeCreator.TAB + "}%n" +
+        CodeCreator.TAB + "return instance;%n" +
+        "}", CodeCreator.BOX_NAME_PLACEHOLDER, CodeCreator.BOX_NAME_PLACEHOLDER
     ));
 
     if (diagramElement != null) {

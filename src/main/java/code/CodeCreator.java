@@ -1,6 +1,7 @@
 package code;
 
 import diagram.DiagramElements.*;
+import diagram.Repository;
 
 import java.util.Scanner;
 
@@ -48,8 +49,11 @@ public class CodeCreator {
 
     insertBoxNames(codeBuilder, description);
 
-    if (description instanceof ClassDescriptionFactory) {
-
+    if (codeBuilder.indexOf(PRODUCT_NAME_PLACEHOLDER) > 0) {
+      String productName = getProductName((Factory) element);
+      if (productName != null) {
+        insertProductNames(codeBuilder, productName);
+      }
     }
 
     return codeBuilder.toString();
@@ -151,33 +155,21 @@ public class CodeCreator {
     return codeBuilder;
   }
 
-  private StringBuilder insertProductNames(StringBuilder codeBuilder, ClassDescriptionFactory factoryDescription) {
+  private StringBuilder insertProductNames(StringBuilder codeBuilder, String productName) {
     int replaceIndex;
     while ((replaceIndex = codeBuilder.indexOf(PRODUCT_NAME_PLACEHOLDER)) > 0) {
-      codeBuilder.replace(replaceIndex, replaceIndex + PRODUCT_NAME_PLACEHOLDER.length(), factoryDescription.getProductName());
+      codeBuilder.replace(replaceIndex, replaceIndex + PRODUCT_NAME_PLACEHOLDER.length(), productName);
     }
     return codeBuilder;
   }
 
-  private String getProductName(BoxDecorator factory) {
+  private String getProductName(Factory factory) {
     // factory decorator --> product decorator --> product box --> product box's name
+    if (factory.getConnecctions().isEmpty()) {
+      return null;
+    }
 
-    return null;
+    Product product = (Product) factory.getConnecctions().getFirst();
+    return product.getBox().getName();
   }
-
-//  private ClassDescription getClassDescription(Box box) {
-//    // TODO: remove this entire method
-//    // should just be able to do this instead if using JGS decorator pattern
-////    firstElement.updateDescription(description);
-//
-//    ClassDescription description = new ClassDescription();
-//
-//    for (int i = 0; i < box.getDecorators().size(); i++) {
-//      box.getDecorators().get(i).updateDescription(description);
-//    }
-//
-//    box.updateDescription(description);
-//
-//    return description;
-//  }
 }

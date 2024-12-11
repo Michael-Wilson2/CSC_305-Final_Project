@@ -1,5 +1,6 @@
 package diagram.DiagramElements;
 import code.ClassDescription;
+import code.CodeCreator;
 import diagram.*;
 
 import java.awt.*;
@@ -17,10 +18,18 @@ public class ChainNode extends BoxDecorator {
 
   @Override
   public ClassDescription updateDescription(ClassDescription description) {
+    description.addVariable("protected <Handler> successor;");
+
+    description.addMethod(String.format(
+        "public void setSuccessor(<Handler> successor) {%n" +
+        CodeCreator.TAB + "this.successor = successor;%n" +
+        "}"
+    ));
+
     description.addMethod(String.format(
         "public void handleRequest() {%n" +
-            "%n" +
-            "};"
+        "%n" +
+        "};"
     ));
 
     if (diagramElement != null) {
