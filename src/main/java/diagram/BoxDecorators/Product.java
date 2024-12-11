@@ -7,20 +7,20 @@ import wilson.Emojis;
 
 import java.awt.*;
 
-public class Decoratable extends BoxDecorator {
-  public Decoratable(int w, int h, Box box) {
+public class Product extends BoxDecorator {
+  public Product(int w, int h, Box box) {
     super(w, h, box);
   }
 
   @Override
   public void draw(Graphics g) {
     super.draw(g);
-    drawEmoji(Emojis.SPARKLE_EMOJI, g);
+    drawEmoji(Emojis.BOX_EMOJI, g);
   }
 
   @Override
   public ClassDescription updateDescription(ClassDescription description) {
-
+    // no changes
 
     return description;
   }
@@ -28,7 +28,7 @@ public class Decoratable extends BoxDecorator {
   @Override
   public void addConnection(DiagramElement connection) {
     BoxDecorator decoratorConnection = (BoxDecorator) connection;
-    if (decoratorConnection instanceof Decoration) {
+    if (decoratorConnection instanceof Factory) {
       connections.add(decoratorConnection);
     }
   }

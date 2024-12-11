@@ -7,20 +7,24 @@ import wilson.Emojis;
 
 import java.awt.*;
 
-public class Product extends BoxDecorator {
-  public Product(int w, int h, Box box) {
+public class Factory extends BoxDecorator {
+  public Factory(int w, int h, Box box) {
     super(w, h, box);
   }
 
   @Override
   public void draw(Graphics g) {
     super.draw(g);
-    drawEmoji(Emojis.BOX_EMOJI, g);
+    drawEmoji(Emojis.FACTORY_EMOJI, g);
   }
 
   @Override
   public ClassDescription updateDescription(ClassDescription description) {
-
+    description.addMethod(String.format(
+        "public %s create(){%n" +
+        "  return new %s();%n" +
+        "}", "<Product>", "<Product>" // TODO: use name of product class
+    ));
 
     return description;
   }
@@ -28,7 +32,7 @@ public class Product extends BoxDecorator {
   @Override
   public void addConnection(DiagramElement connection) {
     BoxDecorator decoratorConnection = (BoxDecorator) connection;
-    if (decoratorConnection instanceof Factory) {
+    if (decoratorConnection instanceof Product) {
       connections.add(decoratorConnection);
     }
   }

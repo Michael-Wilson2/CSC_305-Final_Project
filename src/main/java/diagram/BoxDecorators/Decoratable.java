@@ -7,26 +7,33 @@ import wilson.Emojis;
 
 import java.awt.*;
 
-public class Strategy extends BoxDecorator {
-  public Strategy(int w, int h, Box box) {
+public class Decoratable extends BoxDecorator {
+  public Decoratable(int w, int h, Box box) {
     super(w, h, box);
   }
 
   @Override
   public void draw(Graphics g) {
     super.draw(g);
-    drawEmoji(Emojis.BRAIN_EMOJI, g);
+    drawEmoji(Emojis.SPARKLE_EMOJI, g);
   }
 
   @Override
   public ClassDescription updateDescription(ClassDescription description) {
-
+    description.addMethod(String.format(
+        "public void operation() {%n" +
+        "%n" +
+        "}"
+    ));
 
     return description;
   }
 
   @Override
   public void addConnection(DiagramElement connection) {
-    // TODO: Maybe we should have "StrategyInterface" and "StrategyImpl" or similar
+    BoxDecorator decoratorConnection = (BoxDecorator) connection;
+    if (decoratorConnection instanceof Decoration) {
+      connections.add(decoratorConnection);
+    }
   }
 }
