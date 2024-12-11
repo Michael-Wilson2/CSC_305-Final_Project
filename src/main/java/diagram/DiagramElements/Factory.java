@@ -21,7 +21,7 @@ public class Factory extends BoxDecorator {
     description.addMethod(String.format(
         "public %s create() {%n" +
         CodeCreator.TAB + "return new %s();%n" +
-        "}", CodeCreator.PRODUCT_NAME_PLACEHOLDER, CodeCreator.PRODUCT_NAME_PLACEHOLDER // TODO: use name of product class
+        "}", CodeCreator.PRODUCT_NAME_PLACEHOLDER, CodeCreator.PRODUCT_NAME_PLACEHOLDER
     ));
 
     if (diagramElement != null) {
@@ -34,7 +34,7 @@ public class Factory extends BoxDecorator {
   @Override
   public void addConnection(DiagramElement connection) {
     BoxDecorator decoratorConnection = (BoxDecorator) connection;
-    if (decoratorConnection instanceof Product) {
+    if (!connections.contains(decoratorConnection) && decoratorConnection instanceof Product) {
       connections.add(decoratorConnection);
       decoratorConnection.addConnection(this);
     }

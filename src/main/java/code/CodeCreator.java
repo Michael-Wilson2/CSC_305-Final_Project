@@ -1,17 +1,16 @@
 package code;
 
 import diagram.DiagramElements.*;
-import diagram.Repository;
 
 import java.util.Scanner;
 
 public class CodeCreator {
   public static final String TAB = "    "; // four spaces
-  public static final String BOX_NAME_PLACEHOLDER = "<boxName>";
-  public static final String PRODUCT_NAME_PLACEHOLDER = "<productName>";
+  public static final String BOX_NAME_PLACEHOLDER = "<BoxName>";
+  public static final String PRODUCT_NAME_PLACEHOLDER = "<ProductName>";
+  public static final String HANDLER_NAME_PLACEHOLDER = "<HandlerName>";
 
-  // need to write code for each box in the diagram
-
+  // write code for each box in the diagram in a format similar to the following:
   /*
    * public <class / interface> <box name>
    * [OPTIONAL] implements ...
@@ -47,12 +46,14 @@ public class CodeCreator {
     addMethods(codeBuilder, description);
     codeBuilder.append("}");
 
-    insertBoxNames(codeBuilder, description);
+    replacePlaceholders(codeBuilder, BOX_NAME_PLACEHOLDER, description.getName());
+//    insertBoxNames(codeBuilder, description);
 
     if (codeBuilder.indexOf(PRODUCT_NAME_PLACEHOLDER) > 0) {
-      String productName = getProductName((Factory) element);
+      String productName = getProductNames((Factory) element);
       if (productName != null) {
-        insertProductNames(codeBuilder, productName);
+        replacePlaceholders(codeBuilder, PRODUCT_NAME_PLACEHOLDER, productName);
+//        insertProductNames(codeBuilder, productName);
       }
     }
 
@@ -147,23 +148,15 @@ public class CodeCreator {
     return codeBuilder;
   }
 
-  private StringBuilder insertBoxNames(StringBuilder codeBuilder, ClassDescription description) {
+  private StringBuilder replacePlaceholders(StringBuilder codeBuilder, String placeholder, String replacement) {
     int replaceIndex;
-    while ((replaceIndex = codeBuilder.indexOf(BOX_NAME_PLACEHOLDER)) > 0) {
-      codeBuilder.replace(replaceIndex, replaceIndex + BOX_NAME_PLACEHOLDER.length(), description.getName());
+    while ((replaceIndex = codeBuilder.indexOf(placeholder)) > 0) {
+      codeBuilder.replace(replaceIndex, replaceIndex + placeholder.length(), replacement);
     }
     return codeBuilder;
   }
 
-  private StringBuilder insertProductNames(StringBuilder codeBuilder, String productName) {
-    int replaceIndex;
-    while ((replaceIndex = codeBuilder.indexOf(PRODUCT_NAME_PLACEHOLDER)) > 0) {
-      codeBuilder.replace(replaceIndex, replaceIndex + PRODUCT_NAME_PLACEHOLDER.length(), productName);
-    }
-    return codeBuilder;
-  }
-
-  private String getProductName(Factory factory) {
+  private String getProductNames(Factory factory) {
     // factory decorator --> product decorator --> product box --> product box's name
     if (factory.getConnecctions().isEmpty()) {
       return null;
@@ -172,4 +165,6 @@ public class CodeCreator {
     Product product = (Product) factory.getConnecctions().getFirst();
     return product.getBox().getName();
   }
+
+
 }

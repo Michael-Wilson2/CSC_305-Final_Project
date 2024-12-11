@@ -29,7 +29,7 @@ public class Product extends BoxDecorator {
   @Override
   public void addConnection(DiagramElement connection) {
     BoxDecorator decoratorConnection = (BoxDecorator) connection;
-    if (decoratorConnection instanceof Factory) {
+    if (!connections.contains(decoratorConnection) && decoratorConnection instanceof Factory) {
       connections.add(decoratorConnection);
       decoratorConnection.addConnection(this);
     }
