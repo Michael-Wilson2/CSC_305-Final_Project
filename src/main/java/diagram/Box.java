@@ -1,6 +1,7 @@
 package diagram;
 
 import code.ClassDescription;
+import code.ClassDescriptionFactory;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -62,6 +63,10 @@ public class Box extends DiagramElement {
       description.setType(ClassDescription.CLASS);
     }
 
+    if (description instanceof ClassDescriptionFactory) {
+      ((ClassDescriptionFactory) description).setProductName(name);
+    } // also do for decorations and their decoratables
+
     return description;
   }
 
@@ -107,6 +112,10 @@ public class Box extends DiagramElement {
 
   public ArrayList<BoxDecorator> getDecorators() {
     return decorators;
+  }
+
+  public ArrayList<BoxConnection> getConnections() {
+    return connections;
   }
 
   @Override

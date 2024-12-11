@@ -2,24 +2,33 @@ package code;
 
 import diagram.*;
 
+import java.util.Scanner;
+
 public class CodeCreator {
+  public static final String TAB = "    "; // four spaces
+  public static final String BOX_NAME_PLACEHOLDER = "<boxName>";
+  public static final String PRODUCT_NAME_PLACEHOLDER = "<productName>";
+
   // need to write code for each box in the diagram
 
   /*
    * public <class / interface> <box name>
-   * implements ...
-   * extends ___
+   * [OPTIONAL] implements ...
+   * [OPTIONAL] extends ___
    * {
    *
-   * // variables
-   * int var1;
+   *   // variables
+   *   [OPTIONAL] int var1;
    *
-   * // constructor
-   * <public / private> <box name>() {
-   * // do super(new Object()) for PCS, otherwise leave blank
-   * }
+   *   // constructor
+   *   <public / private> <box name>() {
+   *     // do super(new Object()) for PCS, otherwise leave blank
+   *   }
    *
-   * // methods...
+   *   // methods...
+   *   [OPTIONAL] public void method1() {
+   *
+   *   }
    * }
    */
 
@@ -30,37 +39,34 @@ public class CodeCreator {
 //    ClassDescription description = element.updateDescription(new ClassDescription());
 
     StringBuilder codeBuilder = new StringBuilder(); // TODO: can chain methods?
-    codeBuilder.append(String.format("** imports **%n"));
     addImports(codeBuilder, description);
-
-    codeBuilder.append(String.format("** header **%n"));
     addHeader(codeBuilder, description);
-
-    codeBuilder.append(String.format("** variables **%n"));
     addVariables(codeBuilder, description);
-
-    codeBuilder.append(String.format("** constructor **%n"));
     addConstructor(codeBuilder, description);
-
-    codeBuilder.append(String.format("** methods **%n"));
     addMethods(codeBuilder, description);
-
     codeBuilder.append("}");
+
+    insertBoxNames(codeBuilder, description);
+
+    if (description instanceof ClassDescriptionFactory) {
+
+    }
 
     return codeBuilder.toString();
   }
 
-  public StringBuilder addImports(StringBuilder codeBuilder, ClassDescription description) {
+  private StringBuilder addImports(StringBuilder codeBuilder, ClassDescription description) {
     if (!description.getImports().isEmpty()) {
       for (int i = 0; i < description.getImports().size(); i ++) {
         codeBuilder.append(String.format("import %s;%n", description.getImports().get(i)));
       }
+      codeBuilder.append(String.format("%n"));
     }
 
     return codeBuilder;
   }
 
-  public StringBuilder addHeader(StringBuilder codeBuilder, ClassDescription description) {
+  private StringBuilder addHeader(StringBuilder codeBuilder, ClassDescription description) {
     codeBuilder.append(String.format(
         "public %s %s%n", description.getType(), description.getName()
     ));
@@ -73,6 +79,8 @@ public class CodeCreator {
 
         if (i < numImplementations - 1) {
           codeBuilder.append(", ");
+        } else {
+          codeBuilder.append(String.format("%n"));
         }
       }
     }
@@ -82,43 +90,82 @@ public class CodeCreator {
     }
 
     codeBuilder.append(String.format("{%n"));
-
     return codeBuilder;
   }
 
-  public StringBuilder addVariables(StringBuilder codeBuilder, ClassDescription description) {
-    for (int i = 0; i < description.getVariables().size(); i++) {
-      codeBuilder.append(String.format("%s%n", description.getVariables().get(i)));
+  private StringBuilder addVariables(StringBuilder codeBuilder, ClassDescription description) {
+    if (!description.getVariables().isEmpty()) {
+      for (int i = 0; i < description.getVariables().size(); i++) {
+        codeBuilder.append(String.format(TAB + "%s%n", description.getVariables().get(i)));
+      }
+      codeBuilder.append(String.format("%n"));
     }
 
     return codeBuilder;
   }
 
-  public StringBuilder addConstructor(StringBuilder codeBuilder, ClassDescription description) {
+  private StringBuilder addConstructor(StringBuilder codeBuilder, ClassDescription description) {
     if (description.getType().equals(ClassDescription.CLASS)) {
       codeBuilder.append(String.format(
-          "%s %s() {%n",
+          TAB + "%s %s() {%n",
           description.getConstructorAccess(), description.getName()
       ));
 
-      codeBuilder.append(description.getConstructorBody()); // for observable, must do super(new Object())
+      if (description.getConstructorBody().isEmpty()) {
+        codeBuilder.append(String.format("%n"));
+      } else {
+        codeBuilder.append(String.format(
+            TAB + TAB + description.getConstructorBody() // for observable, must do super(new Object())
+        ));
+      }
 
-      codeBuilder.append("}%n");
+      codeBuilder.append(String.format(TAB + "}%n%n"));
     }
 
     return codeBuilder;
   }
 
-  public StringBuilder addMethods(StringBuilder codeBuilder, ClassDescription description) {
-    for (int i = 0; i < description.getMethods().size(); i++) {
-      codeBuilder.append(description.getMethods().get(i));
-      codeBuilder.append(String.format("%n%n"));
+  private StringBuilder addMethods(StringBuilder codeBuilder, ClassDescription description) {
+    if (!description.getMethods().isEmpty()) {
+      for (int i = 0; i < description.getMethods().size(); i++) {
+        String method = description.getMethods().get(i);
+        Scanner scanner = new Scanner(method);
+        while (scanner.hasNextLine()) {
+          String line = scanner.nextLine();
+          codeBuilder.append(String.format(
+              TAB + line + String.format("%n")
+          ));
+        }
+        codeBuilder.append(String.format("%n"));
+      }
     }
 
     return codeBuilder;
   }
 
-  public ClassDescription getClassDescription(Box box) {
+  private StringBuilder insertBoxNames(StringBuilder codeBuilder, ClassDescription description) {
+    int replaceIndex;
+    while ((replaceIndex = codeBuilder.indexOf(BOX_NAME_PLACEHOLDER)) > 0) {
+      codeBuilder.replace(replaceIndex, replaceIndex + BOX_NAME_PLACEHOLDER.length(), description.getName());
+    }
+    return codeBuilder;
+  }
+
+  private StringBuilder insertProductNames(StringBuilder codeBuilder, ClassDescriptionFactory factoryDescription) {
+    int replaceIndex;
+    while ((replaceIndex = codeBuilder.indexOf(PRODUCT_NAME_PLACEHOLDER)) > 0) {
+      codeBuilder.replace(replaceIndex, replaceIndex + PRODUCT_NAME_PLACEHOLDER.length(), factoryDescription.getProductName());
+    }
+    return codeBuilder;
+  }
+
+  private String getProductName(BoxDecorator factory) {
+    // factory decorator --> product decorator --> product box --> product box's name
+
+    return null;
+  }
+
+  private ClassDescription getClassDescription(Box box) {
     // TODO: remove this entire method
     // should just be able to do this instead if using JGS decorator pattern
 //    firstElement.updateDescription(description);
@@ -128,6 +175,8 @@ public class CodeCreator {
     for (int i = 0; i < box.getDecorators().size(); i++) {
       box.getDecorators().get(i).updateDescription(description);
     }
+
+    box.updateDescription(description);
 
     return description;
   }

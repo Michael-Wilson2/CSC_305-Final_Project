@@ -1,5 +1,6 @@
 package diagram.BoxDecorators;
 import code.ClassDescription;
+import code.ClassDescriptionFactory;
 import diagram.Box;
 import diagram.BoxDecorator;
 import diagram.DiagramElement;
@@ -20,9 +21,10 @@ public class Product extends BoxDecorator {
 
   @Override
   public ClassDescription updateDescription(ClassDescription description) {
-    // no changes
+    ClassDescriptionFactory factoryDescription = new ClassDescriptionFactory(description);
+//    factoryDescription.setProductName(); // don't have it yet... do in Box implementation of updateDescription
 
-    return description;
+    return factoryDescription;
   }
 
   @Override

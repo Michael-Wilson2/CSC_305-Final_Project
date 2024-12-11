@@ -30,6 +30,9 @@ public class ClassDescription {
   private List<String> methods = new ArrayList<>();
   // ---------------------------------------------------------------
 
+  public void setImports(List<String> importList) {
+    this.imports = importList;
+  }
 
   public void addImport(String importName) {
     imports.add(importName);
@@ -55,6 +58,10 @@ public class ClassDescription {
     return name;
   }
 
+  public void setImplementations(List<String> implementationList) {
+    this.implementations = implementationList;
+  }
+
   public void addImplementation(String interfaceName) {
     implementations.add(interfaceName);
   }
@@ -69,6 +76,10 @@ public class ClassDescription {
 
   public String getExtension() {
     return extension;
+  }
+
+  public void setVariables(List<String> variableList) {
+    this.variables = variableList;
   }
 
   public void addVariable(String varDeclaration) {
@@ -93,6 +104,10 @@ public class ClassDescription {
 
   public String getConstructorBody() {
     return this.constructorBody;
+  }
+
+  public void setMethods(List<String> methodList) {
+    this.methods = methodList;
   }
 
   public void addMethod(String methodDefinition) {

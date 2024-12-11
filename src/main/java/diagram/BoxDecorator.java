@@ -77,4 +77,8 @@ public abstract class BoxDecorator extends DiagramElement {
     int offset = DEFAULT_DECORATOR_RADIUS / 2;
     return new Point(getRelativeX() + offset, getRelativeY() + offset);
   }
+
+  public ArrayList<BoxDecorator> getConnections() {
+    return connections;
+  }
 }

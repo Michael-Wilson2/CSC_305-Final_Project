@@ -1,8 +1,8 @@
 package diagram;
 
+import code.PanelCode;
+
 import javax.swing.*;
-import javax.swing.tree.DefaultMutableTreeNode;
-import java.awt.*;
 
 public class Main extends JFrame {
   public Main() {
@@ -15,6 +15,8 @@ public class Main extends JFrame {
 
     // Code panel
     PanelCode codePanel = new PanelCode();
+//    codePanel.addMouseListener();
+    Repository.getInstance().addPropertyChangeListener(codePanel);
 
     // Tabbed pane
     JTabbedPane tabbedPane = new JTabbedPane();

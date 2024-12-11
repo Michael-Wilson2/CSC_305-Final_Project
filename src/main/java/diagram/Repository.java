@@ -63,6 +63,15 @@ public class Repository extends PropertyChangeSupport {
     return this.elements;
   }
 
+  public Box getBox(String name) {
+    for (int i = 0; i < elements.size(); i++) {
+      if (elements.get(i).getName().equals(name)) {
+        return elements.get(i); // TODO: after refactoring decorator, do .getBox() or similar
+      }
+    }
+    return null;
+  }
+
   public int size() {
     return this.elements.size();
   }

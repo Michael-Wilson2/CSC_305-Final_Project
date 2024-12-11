@@ -23,7 +23,7 @@ public class Observer extends BoxDecorator {
     description.addImport("java.beans.PropertyChangeEvent");
     description.addImport("java.beans.PropertyChangeListener");
 
-    description.addImplementation("Observable"); // TODO: use name of observable class
+    description.addImplementation("PropertyChangeListener");
 
     description.addMethod(String.format(
         "@Override%n" +

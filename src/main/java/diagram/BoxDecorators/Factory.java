@@ -1,5 +1,7 @@
 package diagram.BoxDecorators;
 import code.ClassDescription;
+import code.ClassDescriptionFactory;
+import code.CodeCreator;
 import diagram.Box;
 import diagram.BoxDecorator;
 import diagram.DiagramElement;
@@ -22,7 +24,7 @@ public class Factory extends BoxDecorator {
   public ClassDescription updateDescription(ClassDescription description) {
     description.addMethod(String.format(
         "public %s create(){%n" +
-        "  return new %s();%n" +
+        CodeCreator.TAB + "return new %s();%n" +
         "}", "<Product>", "<Product>" // TODO: use name of product class
     ));
 

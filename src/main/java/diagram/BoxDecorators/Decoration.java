@@ -1,5 +1,6 @@
 package diagram.BoxDecorators;
 import code.ClassDescription;
+import code.CodeCreator;
 import diagram.Box;
 import diagram.BoxDecorator;
 import diagram.DiagramElement;
@@ -26,7 +27,7 @@ public class Decoration extends BoxDecorator {
 
     description.addMethod(String.format(
         "public void add(%s decoratable) {%n" +
-        "  next = decoratable;%n" +
+        CodeCreator.TAB + "next = decoratable;%n" +
         "}", "<Decoratable>"
     ));
 
