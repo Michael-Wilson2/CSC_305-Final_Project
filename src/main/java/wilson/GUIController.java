@@ -1,7 +1,10 @@
 package wilson;
 
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 
+// TODO: Use strategy pattern here
 public class GUIController implements MouseListener, MouseMotionListener, ComponentListener {
   int xOffset;
   int yOffset;
@@ -13,50 +16,140 @@ public class GUIController implements MouseListener, MouseMotionListener, Compon
 
   @Override
   public void mouseClicked(MouseEvent e) {
+    int x = e.getX();
+    int y = e.getY();
     if (e.getButton() == MouseEvent.BUTTON1) {
-      // left click -- either add a new Box or rename an existing one
-      if (!Repository.getInstance().isOccupied(e.getX(), e.getY())) {
-        // if clicked in an empty space, add a new Box
-        String name = "Box";
-        Box box = new Box(
-            e.getX() - (Box.DEFAULT_SIZE / 2),
-            e.getY() - (Box.DEFAULT_SIZE / 2),
-            Box.DEFAULT_SIZE,
-            Box.DEFAULT_SIZE,
-            String.format("%s%02d", name, Repository.getInstance().size())
-        );
+      handleLeftMouseClick(x, y);
+    } else if (e.getButton() == MouseEvent.BUTTON3) {
+      handleRightMouseClick(x, y);
+    }
+  }
 
-        Repository.getInstance().add(box);
-      }
-
-      else {
-        // clicked on an existing box, so rename it
+  private void handleRightMouseClick(int x, int y) {
+    Box box = Repository.getInstance().getElementAtLocation(x, y);
+    if (box != null) {
+      BoxDecorator boxDecorator = box.getDecoratorAtLocation(x, y);
+      if (boxDecorator == null) { // TODO: This ignores if clicking a decorator, but really, it should ignore if the new decorator will overlap
+        int offset = BoxDecorator.DEFAULT_DECORATOR_RADIUS / 2;
+        PopupDecoratorList popup = new PopupDecoratorList(box, x - offset, y - offset);
+        popup.show(Repository.getInstance().getFrame(), x, y);
       }
     }
+  }
 
-    else if (e.getButton() == MouseEvent.BUTTON3) {
-      // right click -- display popup menu
+  private void handleLeftMouseClick(int x, int y) {
+    if (Repository.getInstance().getConnectingDecorator() != null) {
+      handleLeftClickWhileConnectingDecorator(x, y);
+      return;
+    } else if (Repository.getInstance().getConnectingBox() != null) {
+      handleLeftClickWhileConnectingBox(x, y);
+      return;
+    } else if (Repository.getInstance().getConnector() != null) {
+      handleLeftClickAfterConnectorSet(x, y);
+      return;
     }
+
+    Box box = Repository.getInstance().getElementAtLocation(x, y);
+    if (box == null) { // Clicked empty space
+      handleLeftClickInEmptySpace(x, y);
+    } else { // Clicked non-empty space
+      BoxDecorator boxDecorator = box.getDecoratorAtLocation(x, y);
+      if (boxDecorator != null) {
+        handleLeftClickOnBoxDecorator(boxDecorator);
+      } else {
+        handleLeftClickOnBox(box);
+      }
+    }
+  }
+
+  private void handleLeftClickAfterConnectorSet(int x, int y) {
+    Box box = Repository.getInstance().getElementAtLocation(x, y);
+    if (box != null) {
+      Repository.getInstance().setConnectingBox(box);
+      Repository.getInstance().setLineStart(new Point((int) box.getBounds().getCenterX(), (int) box.getBounds().getCenterY()));
+    }
+  }
+
+  private void handleLeftClickWhileConnectingBox(int x, int y) {
+    Box box = Repository.getInstance().getElementAtLocation(x, y);
+    if (box != null) {
+      // TODO: If clicked box == connection box, cancel the connection
+      box.addConnection(Repository.getInstance().getConnectingBox());
+      Repository.getInstance().repaint();
+
+      Repository.getInstance().setConnectingBox(null);
+      Repository.getInstance().setConnector(null);
+      Repository.getInstance().setLineStart(null);
+    }
+  }
+
+  private void handleLeftClickWhileConnectingDecorator(int x, int y) {
+    Box box = Repository.getInstance().getElementAtLocation(x, y);
+    if (box != null) {
+      BoxDecorator boxDecorator = box.getDecoratorAtLocation(x, y);
+      if (boxDecorator != null) {
+        // TODO: If clicked box decoratro == connection box decorator, cancel the connection
+        boxDecorator.addConnection(Repository.getInstance().getConnectingDecorator());
+        Repository.getInstance().repaint();
+
+        Repository.getInstance().setConnectingDecorator(null);
+        Repository.getInstance().setIsConnectingDecorator(false);
+        Repository.getInstance().setLineStart(null);
+      }
+    }
+  }
+
+  private void handleLeftClickInEmptySpace(int x, int y) {
+    int offset = Box.DEFAULT_SIZE / 2;
+    String name = String.format("%s%02d", "Box", Repository.getInstance().size());
+    Box box = new Box(x - offset, y - offset, Box.DEFAULT_SIZE, Box.DEFAULT_SIZE, name);
+    Repository.getInstance().add(box);
+  }
+
+  private void handleLeftClickOnBox(Box box) {
+    JFrame frame = Repository.getInstance().getFrame();
+    String newName = JOptionPane.showInputDialog(frame, "New Name", "Rename", JOptionPane.PLAIN_MESSAGE);
+    if (newName != null) {
+      Repository.getInstance().setBoxName(box, newName);
+    }
+  }
+
+  private void handleLeftClickOnBoxDecorator(BoxDecorator boxDecorator) {
+    Repository.getInstance().setConnectingDecorator(boxDecorator);
+    Repository.getInstance().setIsConnectingDecorator(true);
+    Repository.getInstance().setLineStart(new Point(boxDecorator.getCenter().x, boxDecorator.getCenter().y));
   }
 
   @Override
   public void mousePressed(MouseEvent e) {
-
+    Box box = Repository.getInstance().getElementAtLocation(e.getX(), e.getY());
+    Repository.getInstance().setSelectedBox(box);
   }
 
   @Override
   public void mouseDragged(MouseEvent e) {
-
+    Box selectedBox = Repository.getInstance().getSelectedBox();
+    if (selectedBox != null) {
+      Repository.getInstance().setBoxPosition(selectedBox, e.getX(), e.getY());
+    }
   }
 
   @Override
   public void mouseReleased(MouseEvent e) {
-
+    Repository.getInstance().setSelectedBox(null);
   }
 
   @Override
   public void componentResized(ComponentEvent e) {
 
+  }
+
+  @Override
+  public void mouseMoved(MouseEvent e) {
+    Repository.getInstance().setPointer(e.getX(), e.getY());
+    if (Repository.getInstance().getLineStart() != null) {
+      Repository.getInstance().repaint();
+    }
   }
 
   // unused methods below -----------------------------------------------------
@@ -66,9 +159,6 @@ public class GUIController implements MouseListener, MouseMotionListener, Compon
 
   @Override
   public void mouseExited(MouseEvent e) {}
-
-  @Override
-  public void mouseMoved(MouseEvent e) {}
 
   @Override
   public void componentMoved(ComponentEvent e) {}
