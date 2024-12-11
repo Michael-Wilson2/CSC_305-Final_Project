@@ -1,4 +1,5 @@
 package wilson.DiagramElements;
+import code.ClassDescription;
 import wilson.Emojis;
 
 import java.awt.*;
@@ -12,6 +13,22 @@ public class Decoratable extends BoxDecorator {
   public void draw(Graphics g) {
     super.draw(g);
     drawEmoji(Emojis.SPARKLE_EMOJI, g);
+  }
+
+  @Override
+  public ClassDescription updateDescription(ClassDescription description) {
+    description.addMethod(String.format(
+        "@Override%n" +
+        "public void operation() {%n" +
+        "%n" +
+        "}"
+    ));
+
+    if (diagramElement != null) {
+      return diagramElement.updateDescription(description);
+    } else {
+      return description;
+    }
   }
 
   @Override

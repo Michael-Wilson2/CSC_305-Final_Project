@@ -1,4 +1,5 @@
 package wilson.DiagramElements;
+import code.ClassDescription;
 import wilson.*;
 
 import java.awt.*;
@@ -12,6 +13,21 @@ public class ChainNode extends BoxDecorator {
   public void draw(Graphics g) {
     super.draw(g);
     drawEmoji(Emojis.CHAIN_EMOJI, g);
+  }
+
+  @Override
+  public ClassDescription updateDescription(ClassDescription description) {
+    description.addMethod(String.format(
+        "public void handleRequest() {%n" +
+            "%n" +
+            "};"
+    ));
+
+    if (diagramElement != null) {
+      return diagramElement.updateDescription(description);
+    } else {
+      return description;
+    }
   }
 
   @Override

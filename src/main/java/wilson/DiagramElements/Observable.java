@@ -1,4 +1,5 @@
 package wilson.DiagramElements;
+import code.ClassDescription;
 import wilson.Emojis;
 
 import java.awt.*;
@@ -12,6 +13,21 @@ public class Observable extends BoxDecorator {
   public void draw(Graphics g) {
     super.draw(g);
     drawEmoji(Emojis.GLOBE_EMOJI, g);
+  }
+
+  @Override
+  public ClassDescription updateDescription(ClassDescription description) {
+    description.addImport("java.beans.PropertyChangeSupport");
+    description.setExtension("PropertyChangeSupport");
+    description.setConstructorBody(String.format(
+        "super(new Object());%n"
+    ));
+
+    if (diagramElement != null) {
+      return diagramElement.updateDescription(description);
+    } else {
+      return description;
+    }
   }
 
   @Override

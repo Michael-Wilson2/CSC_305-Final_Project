@@ -1,5 +1,7 @@
 package wilson.DiagramElements;
 
+import code.ClassDescription;
+import code.ClassDescriptionFactory;
 import wilson.Repository;
 
 import java.awt.*;
@@ -60,6 +62,20 @@ public class Box extends DiagramElement {
       return this;
     }
     return null;
+  }
+
+  @Override
+  public ClassDescription updateDescription(ClassDescription description) {
+    description.setName(name);
+    if (description.getType() == null) {
+      description.setType(ClassDescription.CLASS);
+    }
+
+    if (description instanceof ClassDescriptionFactory) {
+      ((ClassDescriptionFactory) description).setProductName(name);
+    } // also do for decorations and their decoratables
+
+    return description;
   }
 
   @Override

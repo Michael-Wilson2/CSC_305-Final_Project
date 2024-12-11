@@ -1,4 +1,5 @@
 package wilson.DiagramElements;
+import code.ClassDescription;
 import wilson.Emojis;
 
 import java.awt.*;
@@ -12,6 +13,19 @@ public class Strategy extends BoxDecorator {
   public void draw(Graphics g) {
     super.draw(g);
     drawEmoji(Emojis.BRAIN_EMOJI, g);
+  }
+
+  @Override
+  public ClassDescription updateDescription(ClassDescription description) {
+    description.setType(ClassDescription.INTERFACE);
+
+    description.addMethod("void algorithm();");
+
+    if (diagramElement != null) {
+      return diagramElement.updateDescription(description);
+    } else {
+      return description;
+    }
   }
 
   @Override

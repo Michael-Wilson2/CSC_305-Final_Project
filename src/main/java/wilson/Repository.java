@@ -68,6 +68,34 @@ public class Repository extends PropertyChangeSupport {
     return null;
   }
 
+  public List<String> getBoxNames() {
+    List<String> boxNames = new ArrayList<>();
+
+    for (DiagramElement element : elements) {
+      boxNames.add(element.getBox().getName());
+    }
+
+    return boxNames;
+  }
+
+  public Box getBox(String name) {
+    for (int i = 0; i < elements.size(); i++) {
+      if (elements.get(i).getBox().getName().equals(name)) {
+        return elements.get(i).getBox();
+      }
+    }
+    return null;
+  }
+
+  public DiagramElement getFirstElement(String name) {
+    for (DiagramElement element : elements) {
+      if (element.getBox().getName().equals(name)) {
+        return element;
+      }
+    }
+    return null;
+  }
+
   public static Repository getInstance() {
     if (instance == null) {
       instance = new Repository();

@@ -1,4 +1,5 @@
 package wilson.DiagramElements;
+import code.ClassDescription;
 import wilson.Emojis;
 
 import java.awt.*;
@@ -12,6 +13,27 @@ public class Observer extends BoxDecorator {
   public void draw(Graphics g) {
     super.draw(g);
     drawEmoji(Emojis.EYES_EMOJI, g);
+  }
+
+  @Override
+  public ClassDescription updateDescription(ClassDescription description) {
+    description.addImport("java.beans.PropertyChangeEvent");
+    description.addImport("java.beans.PropertyChangeListener");
+
+    description.addImplementation("PropertyChangeListener");
+
+    description.addMethod(String.format(
+        "@Override%n" +
+            "public void propertyChange(PropertyChangeEvent evt) {%n" +
+            "%n" +
+            "}"
+    ));
+
+    if (diagramElement != null) {
+      return diagramElement.updateDescription(description);
+    } else {
+      return description;
+    }
   }
 
   @Override

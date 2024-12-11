@@ -1,5 +1,6 @@
 package wilson.DiagramElements;
 
+import code.ClassDescription;
 import java.awt.*;
 
 public abstract class DiagramElement {
@@ -13,6 +14,21 @@ public abstract class DiagramElement {
   public abstract void draw(Graphics g);
 
   public abstract DiagramElement occupies(int x, int y);
+
+  public abstract ClassDescription updateDescription(ClassDescription description);
+
+  public Box getBox() {
+    DiagramElement traversalElement = this;
+    while (traversalElement instanceof BoxDecorator) {
+      traversalElement = ((BoxDecorator) traversalElement).getNext();
+    }
+
+    if (!(traversalElement instanceof Box)) {
+      System.out.println("error getting box from element!!");
+    }
+
+    return (Box) traversalElement;
+  }
 
   public void setSelected(boolean isSelected) {
     this.isSelected = isSelected;

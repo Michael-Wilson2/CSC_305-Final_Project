@@ -1,5 +1,7 @@
 package wilson.DiagramElements;
 
+import code.ClassDescription;
+
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
@@ -10,7 +12,7 @@ public abstract class BoxDecorator extends DiagramElement {
 //  private int xOffset;
 //  private int yOffset;
   protected ArrayList<BoxDecorator> connections;
-  private DiagramElement diagramElement;
+  protected DiagramElement diagramElement;
 
   public BoxDecorator(int x, int y) {
     super(x, y, DEFAULT_DECORATOR_RADIUS, DEFAULT_DECORATOR_RADIUS);
@@ -53,6 +55,11 @@ public abstract class BoxDecorator extends DiagramElement {
     return null;
   }
 
+  @Override
+  public ClassDescription updateDescription(ClassDescription description) {
+    return this.diagramElement.updateDescription(description); // should traverse linked list
+  }
+
   public abstract void addConnection(DiagramElement connection);
 
   public int getRelativeX() {
@@ -74,6 +81,10 @@ public abstract class BoxDecorator extends DiagramElement {
 
   public void add(DiagramElement diagramElement) {
     this.diagramElement = diagramElement;
+  }
+
+  public DiagramElement getNext() {
+    return this.diagramElement;
   }
 
   @Override
