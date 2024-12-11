@@ -4,8 +4,8 @@ import wilson.Emojis;
 import java.awt.*;
 
 public class Strategy extends BoxDecorator {
-  public Strategy(int w, int h, Box box) {
-    super(w, h, box);
+  public Strategy(int w, int h) {
+    super(w, h);
   }
 
   @Override

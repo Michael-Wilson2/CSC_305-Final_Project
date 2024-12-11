@@ -4,8 +4,8 @@ import wilson.*;
 import java.awt.*;
 
 public class ChainNode extends BoxDecorator {
-  public ChainNode(int w, int h, Box box) {
-    super(w, h, box);
+  public ChainNode(int w, int h) {
+    super(w, h);
   }
 
   @Override

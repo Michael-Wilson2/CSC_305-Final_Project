@@ -9,13 +9,13 @@ public class Box extends DiagramElement {
   public static final int DEFAULT_SIZE = 100;
 
   private String name;
-  private ArrayList<BoxDecorator> decorators;
+//  private ArrayList<BoxDecorator> decorators;
   private ArrayList<BoxConnection> connections;
 
   public Box(int x, int y, int w, int h, String name) {
     super(x, y, w, h);
     this.name = name;
-    this.decorators = new ArrayList<>();
+//    this.decorators = new ArrayList<>();
     this.connections = new ArrayList<>();
   }
 
@@ -37,6 +37,9 @@ public class Box extends DiagramElement {
     g.setColor(Color.WHITE);
     g.setFont(new Font("Arial", Font.PLAIN, 12));
     g.drawString(this.name, bounds.x + 10, (int) bounds.getCenterY());
+
+    // Draw connection
+    drawConnections(g);
   }
 
   public void drawConnections(Graphics g) {
@@ -51,8 +54,12 @@ public class Box extends DiagramElement {
   }
 
   @Override
-  public boolean occupies(int x, int y) {
-    return this.bounds.contains(x, y) || getDecoratorAtLocation(x, y) != null;
+  public DiagramElement occupies(int x, int y) {
+//    return this.bounds.contains(x, y) || getDecoratorAtLocation(x, y) != null;
+    if (this.bounds.contains(x, y)) {
+      return this;
+    }
+    return null;
   }
 
   @Override
@@ -65,35 +72,35 @@ public class Box extends DiagramElement {
     connections.add(boxConnection);
   }
 
-  public BoxDecorator getDecoratorAtLocation(int x, int y) {
-    for (BoxDecorator decorator : decorators) {
-      if (decorator.occupies(x, y)) {
-        return decorator;
-      }
-    }
-    return null;
-  }
+//  public BoxDecorator getDecoratorAtLocation(int x, int y) {
+//    for (BoxDecorator decorator : decorators) {
+//      if (decorator.occupies(x, y)) {
+//        return decorator;
+//      }
+//    }
+//    return null;
+//  }
 
-  public void drawDecoratorConnections(Graphics g) {
-    for (BoxDecorator decorator : decorators) {
-      decorator.drawConnections(g);
-    }
-  }
+//  public void drawDecoratorConnections(Graphics g) {
+//    for (BoxDecorator decorator : decorators) {
+//      decorator.drawConnections(g);
+//    }
+//  }
 
-  public void drawDecorators(Graphics g) {
-    for (BoxDecorator decorator : decorators) {
-      decorator.draw(g);
-    }
-  }
+//  public void drawDecorators(Graphics g) {
+//    for (BoxDecorator decorator : decorators) {
+//      decorator.draw(g);
+//    }
+//  }
 
-  public void addDecorator(BoxDecorator toAdd) {
-    for (BoxDecorator decorator : decorators) {
-      if (decorator.getClass().equals(toAdd.getClass())) {
-        return;
-      }
-    }
-    decorators.add(toAdd);
-  }
+//  public void addDecorator(BoxDecorator toAdd) {
+//    for (BoxDecorator decorator : decorators) {
+//      if (decorator.getClass().equals(toAdd.getClass())) {
+//        return;
+//      }
+//    }
+//    decorators.add(toAdd);
+//  }
 
   @Override
   public String toString() {
@@ -102,7 +109,4 @@ public class Box extends DiagramElement {
     );
   }
 
-  public Rectangle getBounds() {
-    return this.bounds;
-  }
 }

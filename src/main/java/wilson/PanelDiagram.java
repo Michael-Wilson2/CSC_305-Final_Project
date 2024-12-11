@@ -1,6 +1,7 @@
 package wilson;
 
 import wilson.DiagramElements.Box;
+import wilson.DiagramElements.DiagramElement;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,19 +18,19 @@ public class PanelDiagram extends JPanel implements PropertyChangeListener {
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
 
-    List<wilson.DiagramElements.Box> boxes = Repository.getInstance().getBoxes();
-    for (wilson.DiagramElements.Box box : boxes) {
-      box.drawConnections(g);
+    List<DiagramElement> elements = Repository.getInstance().getElements();
+//    for (DiagramElement element : elements) {
+//      element.drawConnections(g);
+//    }
+    for (DiagramElement element : elements) {
+      element.draw(g);
     }
-    for (wilson.DiagramElements.Box box : boxes) {
-      box.draw(g);
-    }
-    for (wilson.DiagramElements.Box box : boxes) {
-      box.drawDecoratorConnections(g);
-    }
-    for (Box box : boxes) {
-      box.drawDecorators(g);
-    }
+//    for (DiagramElement element : elements) {
+//      element.drawDecoratorConnections(g);
+//    }
+//    for (DiagramElement element : elements) {
+//      box.drawDecorators(g);
+//    }
 
     Point lineStart = Repository.getInstance().getLineStart();
     if (lineStart != null) {

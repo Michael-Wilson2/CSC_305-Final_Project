@@ -2,6 +2,7 @@ package wilson;
 
 import wilson.DiagramElements.Box;
 import wilson.DiagramElements.BoxDecorator;
+import wilson.DiagramElements.DiagramElement;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,12 +30,12 @@ public class GUIController implements MouseListener, MouseMotionListener, Compon
   }
 
   private void handleRightMouseClick(int x, int y) {
-    wilson.DiagramElements.Box box = Repository.getInstance().getElementAtLocation(x, y);
-    if (box != null) {
-      BoxDecorator boxDecorator = box.getDecoratorAtLocation(x, y);
-      if (boxDecorator == null) { // TODO: This ignores if clicking a decorator, but really, it should ignore if the new decorator will overlap
+    DiagramElement diagramElement = Repository.getInstance().getElementAtLocation(x, y);
+    if (diagramElement != null) {
+      if (diagramElement instanceof Box) {
         int offset = BoxDecorator.DEFAULT_DECORATOR_RADIUS / 2;
-        PopupDecoratorList popup = new PopupDecoratorList(box, x - offset, y - offset);
+        DiagramElement rootElement = Repository.getInstance().getRootElementAtLocation(x, y);
+        PopupDecoratorList popup = new PopupDecoratorList(rootElement, x - offset, y - offset);
         popup.show(Repository.getInstance().getFrame(), x, y);
       }
     }
@@ -52,32 +53,31 @@ public class GUIController implements MouseListener, MouseMotionListener, Compon
       return;
     }
 
-    wilson.DiagramElements.Box box = Repository.getInstance().getElementAtLocation(x, y);
-    if (box == null) { // Clicked empty space
+    DiagramElement element = Repository.getInstance().getElementAtLocation(x, y);
+    if (element == null) { // Clicked empty space
       handleLeftClickInEmptySpace(x, y);
     } else { // Clicked non-empty space
-      BoxDecorator boxDecorator = box.getDecoratorAtLocation(x, y);
-      if (boxDecorator != null) {
+      if (element instanceof BoxDecorator boxDecorator) {
         handleLeftClickOnBoxDecorator(boxDecorator);
-      } else {
+      } else if (element instanceof Box box) {
         handleLeftClickOnBox(box);
       }
     }
   }
 
   private void handleLeftClickAfterConnectorSet(int x, int y) {
-    wilson.DiagramElements.Box box = Repository.getInstance().getElementAtLocation(x, y);
-    if (box != null) {
+    DiagramElement element = Repository.getInstance().getElementAtLocation(x, y);
+    if (element instanceof Box box) {
       Repository.getInstance().setConnectingBox(box);
       Repository.getInstance().setLineStart(new Point((int) box.getBounds().getCenterX(), (int) box.getBounds().getCenterY()));
     }
   }
 
   private void handleLeftClickWhileConnectingBox(int x, int y) {
-    wilson.DiagramElements.Box box = Repository.getInstance().getElementAtLocation(x, y);
-    if (box != null) {
-      // TODO: If clicked box == connection box, cancel the connection
-      box.addConnection(Repository.getInstance().getConnectingBox());
+    DiagramElement diagramElement = Repository.getInstance().getElementAtLocation(x, y);
+    if (diagramElement instanceof Box box) {
+      Box connectingBox = Repository.getInstance().getConnectingBox();
+      box.addConnection(connectingBox);
       Repository.getInstance().repaint();
 
       Repository.getInstance().setConnectingBox(null);
@@ -87,18 +87,15 @@ public class GUIController implements MouseListener, MouseMotionListener, Compon
   }
 
   private void handleLeftClickWhileConnectingDecorator(int x, int y) {
-    wilson.DiagramElements.Box box = Repository.getInstance().getElementAtLocation(x, y);
-    if (box != null) {
-      BoxDecorator boxDecorator = box.getDecoratorAtLocation(x, y);
-      if (boxDecorator != null) {
-        // TODO: If clicked box decoratro == connection box decorator, cancel the connection
-        boxDecorator.addConnection(Repository.getInstance().getConnectingDecorator());
-        Repository.getInstance().repaint();
+   DiagramElement diagramElement = Repository.getInstance().getElementAtLocation(x, y);
+    if (diagramElement instanceof BoxDecorator boxDecorator) {
+      // TODO: If clicked box decorator == connection box decorator, cancel the connection
+      boxDecorator.addConnection(Repository.getInstance().getConnectingDecorator());
+      Repository.getInstance().repaint();
 
-        Repository.getInstance().setConnectingDecorator(null);
-        Repository.getInstance().setIsConnectingDecorator(false);
-        Repository.getInstance().setLineStart(null);
-      }
+      Repository.getInstance().setConnectingDecorator(null);
+      Repository.getInstance().setIsConnectingDecorator(false);
+      Repository.getInstance().setLineStart(null);
     }
   }
 
@@ -120,26 +117,31 @@ public class GUIController implements MouseListener, MouseMotionListener, Compon
   private void handleLeftClickOnBoxDecorator(BoxDecorator boxDecorator) {
     Repository.getInstance().setConnectingDecorator(boxDecorator);
     Repository.getInstance().setIsConnectingDecorator(true);
-    Repository.getInstance().setLineStart(new Point(boxDecorator.getCenter().x, boxDecorator.getCenter().y));
+    Repository.getInstance().setLineStart(new Point((int) boxDecorator.getBounds().getCenterX(),
+            (int) boxDecorator.getBounds().getCenterY()));
   }
 
   @Override
   public void mousePressed(MouseEvent e) {
-    wilson.DiagramElements.Box box = Repository.getInstance().getElementAtLocation(e.getX(), e.getY());
-    Repository.getInstance().setSelectedBox(box);
+    DiagramElement element = Repository.getInstance().getElementAtLocation(e.getX(), e.getY());
+//    if (element instanceof Box box) {
+    Repository.getInstance().setSelectedRootElement(Repository.getInstance().getRootElementAtLocation(e.getX(), e.getY()));
+//    }
   }
 
   @Override
   public void mouseDragged(MouseEvent e) {
-    Box selectedBox = Repository.getInstance().getSelectedBox();
-    if (selectedBox != null) {
-      Repository.getInstance().setBoxPosition(selectedBox, e.getX(), e.getY());
+    Repository.getInstance().setPointer(e.getX(), e.getY());
+    DiagramElement element = Repository.getInstance().getSelectedRootElement();
+    if (element != null) {
+      Repository.getInstance().moveElement(element);
     }
   }
 
   @Override
   public void mouseReleased(MouseEvent e) {
-    Repository.getInstance().setSelectedBox(null);
+    Repository.getInstance().setSelectedRootElement(null);
+    Repository.getInstance().setSelectedElement(null);
   }
 
   @Override

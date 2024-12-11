@@ -4,8 +4,8 @@ import wilson.Emojis;
 import java.awt.*;
 
 public class Singleton extends BoxDecorator {
-  public Singleton(int w, int h, Box box) {
-    super(w, h, box);
+  public Singleton(int w, int h) {
+    super(w, h);
   }
 
   @Override

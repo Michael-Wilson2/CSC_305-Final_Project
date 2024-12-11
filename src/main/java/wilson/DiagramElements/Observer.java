@@ -4,8 +4,8 @@ import wilson.Emojis;
 import java.awt.*;
 
 public class Observer extends BoxDecorator {
-  public Observer(int w, int h, Box box) {
-    super(w, h, box);
+  public Observer(int w, int h) {
+    super(w, h);
   }
 
   @Override

@@ -7,7 +7,7 @@ import javax.swing.*;
 
 public class PopupDecoratorList extends JPopupMenu {
 
-  public PopupDecoratorList(wilson.DiagramElements.Box box, int x, int y) {
+  public PopupDecoratorList(DiagramElement element, int x, int y) {
     String[] menuItems = {"Observer", "Observable", "Singleton", "Decoration", "Decoratable",
             "Chain Member", "Strategy", "Factory", "Product"};
     Class<?>[] classes = {Observer.class, Observable.class, Singleton.class, Decoration.class, Decoratable.class,
@@ -21,9 +21,9 @@ public class PopupDecoratorList extends JPopupMenu {
       menuItem.addActionListener(e -> {
         try {
           BoxDecorator boxDecorator = (BoxDecorator) classes[finalI]
-                  .getDeclaredConstructor(int.class, int.class, Box.class)
-                  .newInstance(x, y, box);
-          Repository.getInstance().addDecoratorToBox(box, boxDecorator);
+                  .getDeclaredConstructor(int.class, int.class)
+                  .newInstance(x, y);
+          Repository.getInstance().addElementToDecorator(element, boxDecorator);
         } catch (Exception ex) {
           ex.printStackTrace();
         }

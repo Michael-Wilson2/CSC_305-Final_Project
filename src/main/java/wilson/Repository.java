@@ -13,31 +13,32 @@ import java.util.ArrayList;
 public class Repository extends PropertyChangeSupport {
   private static Repository instance;
 
-  private List<wilson.DiagramElements.Box> elements;
-  private wilson.DiagramElements.Box selectedElement;
+  private List<DiagramElement> elements;
   private JFrame frame;
   private boolean isConnectingDecorator;
   private BoxDecorator connectingDecorator;
   private wilson.DiagramElements.Box connectionBox;
   private String itemName;
-  private wilson.DiagramElements.Box selectedBox;
   private Point lineStart;
   private Point pointer;
+  private Point pointerDelta;
+  private DiagramElement selectedElement;
+  private DiagramElement selectedRootElement;
 
   private Repository() {
     super(new Object());
 
     this.elements = new ArrayList<>();
-    this.selectedElement = null;
     this.frame = null;
     this.isConnectingDecorator = false;
     this.connectingDecorator = null;
     this.connectionBox = null;
-    this.selectedBox = null;
-    this.pointer = null;
+    this.selectedElement = null;
+    this.pointer = new Point(0, 0);
+    selectedRootElement = null;
   }
 
-  public void add(wilson.DiagramElements.Box element) {
+  public void add(Box element) {
     this.elements.add(element);
     repaint();
   }
@@ -47,9 +48,20 @@ public class Repository extends PropertyChangeSupport {
     repaint();
   }
 
-  public wilson.DiagramElements.Box getElementAtLocation(int x, int y) {
-    for (wilson.DiagramElements.Box element : this.elements) {
-      if (element.occupies(x, y)) {
+  public DiagramElement getElementAtLocation(int x, int y) {
+    for (DiagramElement element : this.elements) {
+      DiagramElement occupyingElement = element.occupies(x, y);
+      if (occupyingElement != null) {
+        return occupyingElement;
+      }
+    }
+    return null;
+  }
+
+  public DiagramElement getRootElementAtLocation(int x, int y) {
+    for (DiagramElement element : this.elements) {
+      DiagramElement occupyingElement = element.occupies(x, y);
+      if (occupyingElement != null) {
         return element;
       }
     }
@@ -63,20 +75,12 @@ public class Repository extends PropertyChangeSupport {
     return instance;
   }
 
-  public List<wilson.DiagramElements.Box> getBoxes() {
+  public List<DiagramElement> getElements() {
     return this.elements;
   }
 
   public int size() {
     return this.elements.size();
-  }
-
-  public DiagramElement getSelectedElement() {
-    return this.selectedElement;
-  }
-
-  public void setSelectedElement(wilson.DiagramElements.Box element) {
-    this.selectedElement = element;
   }
 
   public void setFrame(JFrame frame) {
@@ -101,8 +105,10 @@ public class Repository extends PropertyChangeSupport {
     repaint();
   }
 
-  public void addDecoratorToBox(wilson.DiagramElements.Box box, BoxDecorator boxDecorator) {
-    box.addDecorator(boxDecorator);
+  public void addElementToDecorator(DiagramElement diagramElement, BoxDecorator boxDecorator) {
+    boxDecorator.add(diagramElement);
+    elements.remove(diagramElement);
+    elements.add(boxDecorator);
     repaint();
   }
 
@@ -138,12 +144,12 @@ public class Repository extends PropertyChangeSupport {
     return itemName;
   }
 
-  public wilson.DiagramElements.Box getSelectedBox() {
-    return selectedBox;
+  public DiagramElement getSelectedElement() {
+    return selectedElement;
   }
 
-  public void setSelectedBox(Box selectedBox) {
-    this.selectedBox = selectedBox;
+  public void setSelectedElement(DiagramElement selectedElement) {
+    this.selectedElement = selectedElement;
   }
 
   public Point getLineStart() {
@@ -159,6 +165,24 @@ public class Repository extends PropertyChangeSupport {
   }
 
   public void setPointer(int x, int y) {
+    this.pointerDelta = new Point(this.pointer.x - x, this.pointer.y - y);
     this.pointer = new Point(x, y);
+  }
+
+  public Point getPointerDelta() {
+    return this.pointerDelta;
+  }
+
+  public DiagramElement getSelectedRootElement() {
+    return this.selectedRootElement;
+  }
+
+  public void setSelectedRootElement(DiagramElement element) {
+    this.selectedRootElement = element;
+  }
+
+  public void moveElement(DiagramElement element) {
+    element.move(pointerDelta);
+    repaint();
   }
 }

@@ -12,7 +12,7 @@ public abstract class DiagramElement {
 
   public abstract void draw(Graphics g);
 
-  public abstract boolean occupies(int x, int y);
+  public abstract DiagramElement occupies(int x, int y);
 
   public void setSelected(boolean isSelected) {
     this.isSelected = isSelected;
@@ -27,4 +27,12 @@ public abstract class DiagramElement {
   }
 
   public abstract void addConnection(DiagramElement connection);
+
+  public void move(Point pointerDelta) {
+    bounds.setLocation(bounds.x - pointerDelta.x, bounds.y - pointerDelta.y);
+  }
+
+  public Rectangle getBounds() {
+    return this.bounds;
+  }
 }
