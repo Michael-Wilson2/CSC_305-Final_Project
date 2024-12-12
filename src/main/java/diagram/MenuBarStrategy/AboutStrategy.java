@@ -23,8 +23,6 @@ public class AboutStrategy implements MenuBarStrategy {
             + "Made by Michael Wilson and Andrew Kulakovsky<br/>"
             + "</p></body></html>";
 
-    System.out.println(body);
-
     JOptionPane.showMessageDialog(Repository.getInstance().getFrame(), body, "About", JOptionPane.INFORMATION_MESSAGE);
   }
 }
