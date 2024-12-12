@@ -2,6 +2,9 @@ package diagram;
 
 import diagram.DiagramElements.*;
 
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+
 import javax.swing.*;
 
 /** A JPopupMenu for selecting a decorator type.
@@ -17,6 +20,7 @@ public class DecoratorPopup extends JPopupMenu {
   private static final Class<?>[] CLASSES = {
           Observer.class, Observable.class, Singleton.class, Decoration.class, Decoratable.class,
           ChainNode.class, Strategy.class, Factory.class, Product.class};
+  private Logger logger = LoggerFactory.getLogger(DecoratorPopup.class);
 
   public DecoratorPopup(DiagramElement element, int x, int y) {
     for (int i = 0; i < MENU_ITEMS.length; i++) {
@@ -31,7 +35,7 @@ public class DecoratorPopup extends JPopupMenu {
                   .newInstance(x, y);
           Repository.getInstance().addElementToDecorator(element, boxDecorator);
         } catch (Exception ex) {
-          ex.printStackTrace();
+          logger.error("error creating decorator popup menu");
         }
       });
     }
