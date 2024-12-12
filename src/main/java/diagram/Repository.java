@@ -25,6 +25,7 @@ public class Repository extends PropertyChangeSupport {
   private Point pointerDelta;
   private DiagramElement selectedElement;
   private DiagramElement selectedRootElement;
+  private String filePath;
 
   private Repository() {
     super(new Object());
@@ -232,5 +233,18 @@ public class Repository extends PropertyChangeSupport {
     } catch (Exception e) {
       e.printStackTrace();
     }
+  }
+
+  public void resetDiagram() {
+    elements.clear();
+    repaint();
+  }
+
+  public void setFilePath(String filePath) {
+    this.filePath = filePath;
+  }
+
+  public String getFilePath() {
+    return this.filePath;
   }
 }

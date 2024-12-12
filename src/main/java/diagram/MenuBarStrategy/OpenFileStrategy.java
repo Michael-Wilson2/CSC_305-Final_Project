@@ -9,6 +9,7 @@ public class OpenFileStrategy implements MenuBarStrategy {
     String filePath = fileChooser.getOpenFilePath();
     if (filePath != null) {
       Repository.getInstance().loadDiagramElements(filePath);
+      Repository.getInstance().setFilePath(filePath);
     }
   }
 }

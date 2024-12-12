@@ -23,10 +23,15 @@ public class MenuBarController implements ActionListener {
         break;
       case "Open...":
         menuBarStrategy = new OpenFileStrategy();
+        break;
       case "Save as...":
+        menuBarStrategy = new SaveFileAsStrategy();
         break;
       case "Save":
         menuBarStrategy = new SaveFileStrategy();
+        break;
+      case "New...":
+        menuBarStrategy = new NewFileStrategy();
         break;
     }
 
