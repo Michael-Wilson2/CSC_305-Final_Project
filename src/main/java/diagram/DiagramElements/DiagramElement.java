@@ -6,6 +6,13 @@ import java.io.Serializable;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
+
+/** Root class of decorator pattern. Represents a diagram element (e.g. box, box decorator, etc.).
+ *
+ * @author Michael Wilson
+ * @author Andrew Kulakovsky
+ * @version 1.0
+ */
 public abstract class DiagramElement implements Serializable {
   protected Rectangle bounds;
   private Logger logger;

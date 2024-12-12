@@ -3,6 +3,12 @@ import code.ClassDescription;
 
 import java.awt.*;
 
+/** A box decoration for visually representing a product class.
+ *
+ * @author Michael Wilson
+ * @author Andrew Kulakovsky
+ * @version 1.0
+ */
 public class Product extends BoxDecorator {
   public Product(int w, int h) {
     super(w, h);

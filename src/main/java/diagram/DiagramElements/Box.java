@@ -10,6 +10,12 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Map;
 
+/** Concrete class in decorator pattern. Represents a box in the diagram.
+ *
+ * @author Michael Wilson
+ * @author Andrew Kulakovsky
+ * @version 1.0
+ */
 public class Box extends DiagramElement {
   public static final int DEFAULT_SIZE = 100;
   public static final Map<String, Color> CONNECTION_TYPE_TO_COLOR = Map.of(

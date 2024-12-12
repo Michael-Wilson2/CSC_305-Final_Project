@@ -3,6 +3,12 @@ import code.ClassDescription;
 
 import java.awt.*;
 
+/** A box decoration for visually representing a strategy class.
+ *
+ * @author Michael Wilson
+ * @author Andrew Kulakovsky
+ * @version 1.0
+ */
 public class Strategy extends BoxDecorator {
   public Strategy(int w, int h) {
     super(w, h);

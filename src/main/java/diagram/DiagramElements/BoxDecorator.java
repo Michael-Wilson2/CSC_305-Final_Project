@@ -6,6 +6,12 @@ import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 
+/** Abstract decorator class in decorator pattern. Represents a box decorator that decorates a box in the diagram.
+ *
+ * @author Michael Wilson
+ * @author Andrew Kulakovsky
+ * @version 1.0
+ */
 public abstract class BoxDecorator extends DiagramElement {
   public static int DEFAULT_DECORATOR_RADIUS = 50;
   protected ArrayList<BoxDecorator> connections;

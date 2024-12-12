@@ -4,6 +4,12 @@ import code.CodeCreator;
 
 import java.awt.*;
 
+/** A box decoration for visually representing a chain node class.
+ *
+ * @author Michael Wilson
+ * @author Andrew Kulakovsky
+ * @version 1.0
+ */
 public class ChainNode extends BoxDecorator {
   public ChainNode(int w, int h) {
     super(w, h);

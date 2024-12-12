@@ -5,7 +5,9 @@ import java.util.List;
 
 
 /** A class to store all the parts of the code so that a code "skeleton" is easy to build
+ *
  * @author Michael Wilson
+ * @author Andrew Kulakovsky
  * @version 1.0
  */
 public class ClassDescription {

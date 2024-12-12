@@ -1,5 +1,11 @@
 package diagram.DiagramElements;
 
+/** Class to keep emoji string constants.
+ *
+ * @author Michael Wilson
+ * @author Andrew Kulakovsky
+ * @version 1.0
+ */
 public class Emojis {
   public static String EYES_EMOJI = "\uD83D\uDC40";
   public static String GLOBE_EMOJI = "\uD83C\uDF10";

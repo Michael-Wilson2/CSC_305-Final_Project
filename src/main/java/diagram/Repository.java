@@ -14,6 +14,12 @@ import java.io.*;
 import java.util.List;
 import java.util.ArrayList;
 
+/** A singleton repository for all the data in the project.
+ *
+ * @author Michael Wilson
+ * @author Andrew Kulakovsky
+ * @version 1.0
+ */
 public class Repository extends PropertyChangeSupport {
   private static Repository instance;
 

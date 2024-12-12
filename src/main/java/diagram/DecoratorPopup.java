@@ -4,6 +4,12 @@ import diagram.DiagramElements.*;
 
 import javax.swing.*;
 
+/** A JPopupMenu for selecting a decorator type.
+ *
+ * @author Michael Wilson
+ * @author Andrew Kulakovsky
+ * @version 1.0
+ */
 public class DecoratorPopup extends JPopupMenu {
   private static final String[] MENU_ITEMS = {
           "Observer", "Observable", "Singleton", "Decoration", "Decoratable",
