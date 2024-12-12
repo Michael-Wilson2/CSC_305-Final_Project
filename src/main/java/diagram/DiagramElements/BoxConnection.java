@@ -1,28 +1,8 @@
 package diagram.DiagramElements;
 
-public class BoxConnection {
-  private final Box from;
-  private final Box to;
-  private final String type;
+import java.io.Serializable;
 
-  public BoxConnection(Box from, Box to, String type) {
-    this.from = from;
-    this.to = to;
-    this.type = type;
-  }
+public record BoxConnection(Box from, Box to, String type) implements Serializable { }
 
-  // TODO: draw in different colors/styles based on type?
-  //  should we have subclasses instead of type?
-
-  public Box getFrom() {
-    return from;
-  }
-
-  public Box getTo() {
-    return to;
-  }
-
-  public String getType() {
-    return type;
-  }
-}
+// TODO: draw in different colors/styles based on type?
+//  should we have subclasses instead of type?

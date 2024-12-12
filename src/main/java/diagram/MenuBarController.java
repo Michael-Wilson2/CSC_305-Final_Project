@@ -1,8 +1,6 @@
 package diagram;
 
-import diagram.MenuBarStrategy.AboutStrategy;
-import diagram.MenuBarStrategy.BoxConnectorStrategy;
-import diagram.MenuBarStrategy.MenuBarStrategy;
+import diagram.MenuBarStrategy.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,10 +20,23 @@ public class MenuBarController implements ActionListener {
         break;
       case "About":
         menuBarStrategy = new AboutStrategy();
+        break;
+      case "Open...":
+        menuBarStrategy = new OpenFileStrategy();
+        break;
+      case "Save as...":
+        menuBarStrategy = new SaveFileAsStrategy();
+        break;
+      case "Save":
+        menuBarStrategy = new SaveFileStrategy();
+        break;
+      case "New...":
+        menuBarStrategy = new NewFileStrategy();
+        break;
     }
 
     if (menuBarStrategy != null) {
-      menuBarStrategy.doTheThing(e.getActionCommand());
+      menuBarStrategy.executeMenuAction(e.getActionCommand());
     }
   }
 }

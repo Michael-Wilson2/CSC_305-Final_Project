@@ -6,7 +6,7 @@ import javax.swing.*;
 
 public class AboutStrategy implements MenuBarStrategy {
   @Override
-  public void doTheThing(String itemName) {
+  public void executeMenuAction(String itemName) {
     JOptionPane.showMessageDialog(Repository.getInstance().getFrame(),
             "<html><body><p>"
                     + "<b>About</b><br/><br/>"

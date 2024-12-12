@@ -2,8 +2,9 @@ package diagram.DiagramElements;
 
 import code.ClassDescription;
 import java.awt.*;
+import java.io.Serializable;
 
-public abstract class DiagramElement {
+public abstract class DiagramElement implements Serializable {
   protected boolean isSelected;
   protected Rectangle bounds;
 

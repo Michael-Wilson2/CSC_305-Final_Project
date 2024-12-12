@@ -1,5 +1,5 @@
 package diagram.MenuBarStrategy;
 
 public interface MenuBarStrategy {
-  void doTheThing(String itemName);
+  void executeMenuAction(String itemName);
 }

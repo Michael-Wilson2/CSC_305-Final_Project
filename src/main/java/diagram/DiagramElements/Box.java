@@ -5,18 +5,26 @@ import diagram.Repository;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class Box extends DiagramElement {
   public static final int DEFAULT_SIZE = 100;
+  public static final Map<String, Color> CONNECTION_TYPE_TO_COLOR = Map.of(
+              "Aggregation", new Color(0x264653),
+              "Composition", new Color(0x2a9d8f),
+              "Association", new Color(0xe9c46a),
+              "Inheritance", new Color(0xf4a261),
+              "Realization", new Color(0xe76f51)
+  );
 
   private String name;
-//  private ArrayList<BoxDecorator> decorators;
   private ArrayList<BoxConnection> connections;
+
+
 
   public Box(int x, int y, int w, int h, String name) {
     super(x, y, w, h);
     this.name = name;
-//    this.decorators = new ArrayList<>();
     this.connections = new ArrayList<>();
   }
 
@@ -43,10 +51,11 @@ public class Box extends DiagramElement {
     drawConnections(g);
   }
 
-  public void drawConnections(Graphics g) {
-    g.setColor(Color.BLACK);
-    for (BoxConnection boxConnection : this.connections) {
-      Box box = boxConnection.getTo();
+  private void drawConnections(Graphics g) {
+    for (BoxConnection connection : this.connections) {
+      ((Graphics2D) g).setStroke(new BasicStroke(3));
+      g.setColor(CONNECTION_TYPE_TO_COLOR.getOrDefault(connection.type(), Color.BLACK));
+      Box box = connection.to();
       g.drawLine((int) bounds.getCenterX(),
               (int) bounds.getCenterY(),
               (int) box.bounds.getCenterX(),
