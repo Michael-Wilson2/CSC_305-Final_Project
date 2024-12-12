@@ -8,5 +8,5 @@ import java.io.Serializable;
  * @author Andrew Kulakovsky
  * @version 1.0
  */
-// TODO: Make connection type an enum
+
 public record BoxConnection(Box from, Box to, String type) implements Serializable { }
