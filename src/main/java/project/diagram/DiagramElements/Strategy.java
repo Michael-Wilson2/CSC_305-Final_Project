@@ -22,7 +22,7 @@ public class Strategy extends BoxDecorator {
   @Override
   public void draw(Graphics g) {
     super.draw(g);
-    drawEmoji(Emojis.BRAIN_EMOJI, g);
+    drawEmoji(BRAIN_EMOJI, g);
   }
 
   @Override

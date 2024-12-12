@@ -17,7 +17,7 @@ public class Product extends BoxDecorator {
   @Override
   public void draw(Graphics g) {
     super.draw(g);
-    drawEmoji(Emojis.BOX_EMOJI, g);
+    drawEmoji(BOX_EMOJI, g);
   }
 
   @Override

@@ -18,7 +18,7 @@ public class Decoration extends BoxDecorator {
   @Override
   public void draw(Graphics g) {
     super.draw(g);
-    drawEmoji(Emojis.PALETTE_EMOJI, g);
+    drawEmoji(PALETTE_EMOJI, g);
   }
 
   @Override

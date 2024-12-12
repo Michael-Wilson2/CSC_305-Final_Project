@@ -22,7 +22,7 @@ public class Singleton extends BoxDecorator {
   @Override
   public void draw(Graphics g) {
     super.draw(g);
-    drawEmoji(Emojis.CROWN_EMOJI, g);
+    drawEmoji(CROWN_EMOJI, g);
   }
 
   @Override

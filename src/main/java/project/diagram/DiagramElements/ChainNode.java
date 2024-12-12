@@ -22,7 +22,7 @@ public class ChainNode extends BoxDecorator {
   @Override
   public void draw(Graphics g) {
     super.draw(g);
-    drawEmoji(Emojis.CHAIN_EMOJI, g);
+    drawEmoji(CHAIN_EMOJI, g);
   }
 
   @Override

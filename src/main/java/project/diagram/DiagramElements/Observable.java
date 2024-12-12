@@ -17,7 +17,7 @@ public class Observable extends BoxDecorator {
   @Override
   public void draw(Graphics g) {
     super.draw(g);
-    drawEmoji(Emojis.GLOBE_EMOJI, g);
+    drawEmoji(GLOBE_EMOJI, g);
   }
 
   @Override
