@@ -16,10 +16,9 @@ public class Repository extends PropertyChangeSupport {
 
   private List<DiagramElement> elements;
   private JFrame frame;
-  private boolean isConnectingDecorator;
   private BoxDecorator connectingDecorator;
   private diagram.DiagramElements.Box connectionBox;
-  private String itemName; // TODO: change name to connectorName?
+  private String connectorName;
   private Point lineStart;
   private Point pointer;
   private Point pointerDelta;
@@ -32,7 +31,6 @@ public class Repository extends PropertyChangeSupport {
 
     this.elements = new ArrayList<>();
     this.frame = null;
-    this.isConnectingDecorator = false;
     this.connectingDecorator = null;
     this.connectionBox = null;
     this.selectedElement = null;
@@ -142,14 +140,6 @@ public class Repository extends PropertyChangeSupport {
     repaint();
   }
 
-  public boolean getIsConnectingDecorator() {
-    return isConnectingDecorator;
-  }
-
-  public void setIsConnectingDecorator(boolean isConnectingDecorator) {
-    this.isConnectingDecorator = isConnectingDecorator;
-  }
-
   public BoxDecorator getConnectingDecorator() {
     return connectingDecorator;
   }
@@ -167,11 +157,11 @@ public class Repository extends PropertyChangeSupport {
   }
 
   public void setConnector(String itemName) {
-    this.itemName = itemName;
+    this.connectorName = itemName;
   }
 
   public String getConnector() {
-    return itemName;
+    return connectorName;
   }
 
   public DiagramElement getSelectedElement() {

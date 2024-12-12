@@ -17,20 +17,12 @@ public class PanelDiagram extends JPanel implements PropertyChangeListener {
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
 
-    List<DiagramElement> elements = Repository.getInstance().getElements();
-//    for (DiagramElement element : elements) {
-//      element.drawConnections(g);
-//    }
-    for (DiagramElement element : elements) {
+    // Paint elements
+    for (DiagramElement element : Repository.getInstance().getElements()) {
       element.draw(g);
     }
-//    for (DiagramElement element : elements) {
-//      element.drawDecoratorConnections(g);
-//    }
-//    for (DiagramElement element : elements) {
-//      box.drawDecorators(g);
-//    }
 
+    // Paint "in-progress" connection
     Point lineStart = Repository.getInstance().getLineStart();
     if (lineStart != null) {
       Point pointer = Repository.getInstance().getPointer();

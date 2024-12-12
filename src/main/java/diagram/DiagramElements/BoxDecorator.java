@@ -8,35 +8,25 @@ import java.util.ArrayList;
 
 public abstract class BoxDecorator extends DiagramElement {
   public static int DEFAULT_DECORATOR_RADIUS = 50;
-
-//  private int xOffset;
-//  private int yOffset;
   protected ArrayList<BoxDecorator> connections;
   protected DiagramElement diagramElement;
 
   public BoxDecorator(int x, int y) {
     super(x, y, DEFAULT_DECORATOR_RADIUS, DEFAULT_DECORATOR_RADIUS);
-//    this.xOffset = box.bounds.x - x;
-//    this.yOffset = box.bounds.y - y;
     this.connections = new ArrayList<>();
   }
 
   @Override
   public void draw(Graphics g) {
-    // TODO: should call super.draw(g) to draw other decorators, then get rid of drawConnections()
-
     if (diagramElement != null) {
       diagramElement.draw(g);
     }
+
+    // Draw circle
     g.setColor(new Color(0xf0be5f));
     g.fillOval(bounds.x, bounds.y, bounds.width, bounds.height);
 
-    drawConnections(g);
-  }
-
-  public void drawConnections(Graphics g) {
-    // TODO: remove this method; see draw()
-
+    // Draw connections
     g.setColor(Color.BLACK);
     for (BoxDecorator boxDecorator : connections) {
       g.drawLine((int) bounds.getCenterX(), (int) bounds.getCenterY(),
@@ -51,10 +41,7 @@ public abstract class BoxDecorator extends DiagramElement {
       return this;
     }
     if (diagramElement != null) {
-      DiagramElement childDiagramElementOccupies = diagramElement.occupies(x, y);
-      if (childDiagramElementOccupies != null) {
-        return childDiagramElementOccupies;
-      }
+      return diagramElement.occupies(x, y);
     }
     return null;
   }
@@ -64,20 +51,18 @@ public abstract class BoxDecorator extends DiagramElement {
     return this.diagramElement.updateDescription(description); // should traverse linked list w/ decorator pattern
   }
 
+  @Override
+  public void move(Point pointerDelta) {
+    if (diagramElement != null) {
+      diagramElement.move(pointerDelta);
+    }
+    super.move(pointerDelta);
+  }
+
   public abstract void addConnection(DiagramElement connection);
 
   public ArrayList<BoxDecorator> getConnections() {
     return connections;
-  }
-
-  public int getRelativeX() {
-//    return box.bounds.x - xOffset;
-    return 0;
-  }
-
-  public int getRelativeY() {
-//    return box.bounds.y - yOffset;
-    return 0;
   }
 
   public void drawEmoji(String emoji, Graphics g) {
@@ -93,13 +78,5 @@ public abstract class BoxDecorator extends DiagramElement {
 
   public DiagramElement getNext() {
     return this.diagramElement;
-  }
-
-  @Override
-  public void move(Point pointerDelta) {
-    super.move(pointerDelta);
-    if (diagramElement != null) {
-      diagramElement.move(pointerDelta);
-    }
   }
 }

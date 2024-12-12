@@ -1,7 +1,6 @@
 package diagram.DiagramElements;
 import code.ClassDescription;
 import code.CodeCreator;
-import diagram.*;
 
 import java.awt.*;
 

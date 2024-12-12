@@ -20,20 +20,10 @@ public class Box extends DiagramElement {
   private String name;
   private ArrayList<BoxConnection> connections;
 
-
-
   public Box(int x, int y, int w, int h, String name) {
     super(x, y, w, h);
     this.name = name;
     this.connections = new ArrayList<>();
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
   }
 
   @Override
@@ -48,24 +38,17 @@ public class Box extends DiagramElement {
     g.drawString(this.name, bounds.x + 10, (int) bounds.getCenterY());
 
     // Draw connection
-    drawConnections(g);
-  }
-
-  private void drawConnections(Graphics g) {
     for (BoxConnection connection : this.connections) {
       ((Graphics2D) g).setStroke(new BasicStroke(3));
       g.setColor(CONNECTION_TYPE_TO_COLOR.getOrDefault(connection.type(), Color.BLACK));
       Box box = connection.to();
-      g.drawLine((int) bounds.getCenterX(),
-              (int) bounds.getCenterY(),
-              (int) box.bounds.getCenterX(),
-              (int) box.bounds.getCenterY());
+      g.drawLine((int) bounds.getCenterX(), (int) bounds.getCenterY(),
+              (int) box.bounds.getCenterX(), (int) box.bounds.getCenterY());
     }
   }
 
   @Override
   public DiagramElement occupies(int x, int y) {
-//    return this.bounds.contains(x, y) || getDecoratorAtLocation(x, y) != null;
     if (this.bounds.contains(x, y)) {
       return this;
     }
@@ -113,45 +96,23 @@ public class Box extends DiagramElement {
     connections.add(boxConnection);
   }
 
-  public ArrayList<BoxConnection> getConnections() {
-    return connections;
-  }
-
-//  public BoxDecorator getDecoratorAtLocation(int x, int y) {
-//    for (BoxDecorator decorator : decorators) {
-//      if (decorator.occupies(x, y)) {
-//        return decorator;
-//      }
-//    }
-//    return null;
-//  }
-
-//  public void drawDecoratorConnections(Graphics g) {
-//    for (BoxDecorator decorator : decorators) {
-//      decorator.drawConnections(g);
-//    }
-//  }
-
-//  public void drawDecorators(Graphics g) {
-//    for (BoxDecorator decorator : decorators) {
-//      decorator.draw(g);
-//    }
-//  }
-
-//  public void addDecorator(BoxDecorator toAdd) {
-//    for (BoxDecorator decorator : decorators) {
-//      if (decorator.getClass().equals(toAdd.getClass())) {
-//        return;
-//      }
-//    }
-//    decorators.add(toAdd);
-//  }
-
   @Override
   public String toString() {
     return String.format(
         "%s centered on (%d, %d)", name, (int) bounds.getCenterX(), (int) bounds.getCenterY()
     );
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+  
+  public ArrayList<BoxConnection> getConnections() {
+    return connections;
   }
 
 }

@@ -1,6 +1,5 @@
 package diagram.DiagramElements;
 import code.ClassDescription;
-import diagram.Emojis;
 
 import java.awt.*;
 

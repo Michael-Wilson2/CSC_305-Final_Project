@@ -8,16 +8,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-// TODO: Use strategy pattern here
+// TODO: Talk about how we could have used a design pattern here but decided keeping it "simple"
+// here was the better option instead of jumping across files to understand the branching :)
 public class GUIController implements MouseListener, MouseMotionListener, ComponentListener {
-  int xOffset;
-  int yOffset;
-
-  public GUIController() {
-    this.xOffset = 0;
-    this.yOffset = 0;
-  }
-
   @Override
   public void mouseClicked(MouseEvent e) {
     int x = e.getX();
@@ -35,7 +28,7 @@ public class GUIController implements MouseListener, MouseMotionListener, Compon
       if (diagramElement instanceof Box) {
         int offset = BoxDecorator.DEFAULT_DECORATOR_RADIUS / 2;
         DiagramElement rootElement = Repository.getInstance().getRootElementAtLocation(x, y);
-        PopupDecoratorList popup = new PopupDecoratorList(rootElement, x - offset, y - offset);
+        DecoratorPopup popup = new DecoratorPopup(rootElement, x - offset, y - offset);
         popup.show(Repository.getInstance().getFrame(), x, y);
       }
     }
@@ -89,24 +82,22 @@ public class GUIController implements MouseListener, MouseMotionListener, Compon
   private void handleLeftClickWhileConnectingDecorator(int x, int y) {
    DiagramElement diagramElement = Repository.getInstance().getElementAtLocation(x, y);
     if (diagramElement instanceof BoxDecorator boxDecorator) {
-      // TODO: If clicked box decorator == connection box decorator, cancel the connection
       boxDecorator.addConnection(Repository.getInstance().getConnectingDecorator());
       Repository.getInstance().repaint();
 
       Repository.getInstance().setConnectingDecorator(null);
-      Repository.getInstance().setIsConnectingDecorator(false);
       Repository.getInstance().setLineStart(null);
     }
   }
 
   private void handleLeftClickInEmptySpace(int x, int y) {
-    int offset = diagram.DiagramElements.Box.DEFAULT_SIZE / 2;
+    int offset = Box.DEFAULT_SIZE / 2;
     String name = String.format("%s%02d", "Box", Repository.getInstance().size());
-    diagram.DiagramElements.Box box = new diagram.DiagramElements.Box(x - offset, y - offset, diagram.DiagramElements.Box.DEFAULT_SIZE, diagram.DiagramElements.Box.DEFAULT_SIZE, name);
+    Box box = new Box(x - offset, y - offset, Box.DEFAULT_SIZE, Box.DEFAULT_SIZE, name);
     Repository.getInstance().add(box);
   }
 
-  private void handleLeftClickOnBox(diagram.DiagramElements.Box box) {
+  private void handleLeftClickOnBox(Box box) {
     JFrame frame = Repository.getInstance().getFrame();
     String newName = JOptionPane.showInputDialog(frame, "New Name", "Rename", JOptionPane.PLAIN_MESSAGE);
     if (newName != null) {
@@ -116,17 +107,13 @@ public class GUIController implements MouseListener, MouseMotionListener, Compon
 
   private void handleLeftClickOnBoxDecorator(BoxDecorator boxDecorator) {
     Repository.getInstance().setConnectingDecorator(boxDecorator);
-    Repository.getInstance().setIsConnectingDecorator(true);
     Repository.getInstance().setLineStart(new Point((int) boxDecorator.getBounds().getCenterX(),
             (int) boxDecorator.getBounds().getCenterY()));
   }
 
   @Override
   public void mousePressed(MouseEvent e) {
-    DiagramElement element = Repository.getInstance().getElementAtLocation(e.getX(), e.getY());
-//    if (element instanceof Box box) {
     Repository.getInstance().setSelectedRootElement(Repository.getInstance().getRootElementAtLocation(e.getX(), e.getY()));
-//    }
   }
 
   @Override
@@ -145,11 +132,6 @@ public class GUIController implements MouseListener, MouseMotionListener, Compon
   }
 
   @Override
-  public void componentResized(ComponentEvent e) {
-
-  }
-
-  @Override
   public void mouseMoved(MouseEvent e) {
     Repository.getInstance().setPointer(e.getX(), e.getY());
     if (Repository.getInstance().getLineStart() != null) {
@@ -158,6 +140,8 @@ public class GUIController implements MouseListener, MouseMotionListener, Compon
   }
 
   // unused methods below -----------------------------------------------------
+  @Override
+  public void componentResized(ComponentEvent e) {}
 
   @Override
   public void mouseEntered(MouseEvent e) {}
