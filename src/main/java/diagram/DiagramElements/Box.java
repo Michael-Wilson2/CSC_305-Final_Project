@@ -46,7 +46,7 @@ public class Box extends DiagramElement {
   public void drawConnections(Graphics g) {
     g.setColor(Color.BLACK);
     for (BoxConnection boxConnection : this.connections) {
-      Box box = boxConnection.getTo();
+      Box box = boxConnection.to();
       g.drawLine((int) bounds.getCenterX(),
               (int) bounds.getCenterY(),
               (int) box.bounds.getCenterX(),

@@ -7,6 +7,7 @@ import diagram.DiagramElements.DiagramElement;
 import javax.swing.*;
 import java.awt.*;
 import java.beans.PropertyChangeSupport;
+import java.io.*;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -212,5 +213,24 @@ public class Repository extends PropertyChangeSupport {
   public void moveElement(DiagramElement element) {
     element.move(pointerDelta);
     repaint();
+  }
+
+  public void saveDiagramElements(String filename) {
+    File file = new File(filename);
+
+    try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
+      oos.writeObject(elements);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public void loadDiagramElements(String filename) {
+    try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))) {
+      elements = (List<DiagramElement>) ois.readObject();
+      repaint();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 }
