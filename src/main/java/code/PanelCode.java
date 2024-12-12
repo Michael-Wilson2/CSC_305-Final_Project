@@ -16,6 +16,11 @@ import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+
+/** A JPanel to show the files in a tree format alongside the code corresponding to the user's diagram
+ * @author Michael Wilson
+ * @version 1.0
+ */
 public class PanelCode extends JPanel implements PropertyChangeListener, MouseListener {
   private final JTree fileTree;
   private final DefaultTreeModel treeModel;
@@ -82,7 +87,7 @@ public class PanelCode extends JPanel implements PropertyChangeListener, MouseLi
     }
   }
 
-  public void setSelectedPath(String selectedPath) {
+  private void setSelectedPath(String selectedPath) {
     this.selectedPath = selectedPath;
   }
 

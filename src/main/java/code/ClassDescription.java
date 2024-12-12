@@ -3,9 +3,11 @@ package code;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO: make FactoryDescription, DecorationDescription, StrategyDescription
-//  child classes to create/extend the right thing?
 
+/** A class to store all the parts of the code so that a code "skeleton" is easy to build
+ * @author Michael Wilson
+ * @version 1.0
+ */
 public class ClassDescription {
   public static final String PUBLIC = "public";
   public static final String PRIVATE = "private";

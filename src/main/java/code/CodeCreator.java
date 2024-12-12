@@ -5,7 +5,7 @@ import diagram.Repository;
 
 import java.util.Scanner;
 
-/**
+/** Contains methods to create a code "skeleton" for an element in the diagram
  * @author Michael Wilson
  * @version 1.0
  */
@@ -38,6 +38,11 @@ public class CodeCreator {
    * }
    */
 
+  /** Create a code "skeleton" for the given diagram element
+   *
+   * @param element the Box or Decorator from the diagram to create code for
+   * @return a String consisting of the code "skeleton" for the given element
+   */
   public String createCode(DiagramElement element) {
     ClassDescription description = element.updateDescription(new ClassDescription());
 
