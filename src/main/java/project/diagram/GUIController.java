@@ -17,7 +17,7 @@ import java.awt.event.*;
  */
 // TODO: Talk about how we could have used a design pattern here but decided keeping it "simple"
 // here was the better option instead of jumping across files to understand the branching :)
-public class GUIController implements MouseListener, MouseMotionListener, ComponentListener {
+public class GUIController implements MouseListener, MouseMotionListener {
   @Override
   public void mouseClicked(MouseEvent e) {
     int x = e.getX();
@@ -148,20 +148,8 @@ public class GUIController implements MouseListener, MouseMotionListener, Compon
 
   // unused methods below -----------------------------------------------------
   @Override
-  public void componentResized(ComponentEvent e) {}
-
-  @Override
   public void mouseEntered(MouseEvent e) {}
 
   @Override
   public void mouseExited(MouseEvent e) {}
-
-  @Override
-  public void componentMoved(ComponentEvent e) {}
-
-  @Override
-  public void componentShown(ComponentEvent e) {}
-
-  @Override
-  public void componentHidden(ComponentEvent e) {}
 }
