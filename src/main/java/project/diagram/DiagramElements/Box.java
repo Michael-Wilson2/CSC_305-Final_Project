@@ -78,7 +78,7 @@ public class Box extends DiagramElement {
 
         if ((connectionType.equals("Aggregation") || connectionType.equals("Composition")) && !isDecorator()) {
           description.addVariable(String.format(
-              "private %s %s%d", connections.get(i).to().getName(),
+              "private %s %s%d;", connections.get(i).to().getName(),
               connections.get(i).to().getName().toLowerCase().concat("_"), i
           ));
         }

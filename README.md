@@ -1,2 +1,2 @@
-# CSC_305-Final_Project
+# CSC 305 Final Project
 Team members: Andrew Kulakovsky and Michael Wilson

@@ -50,21 +50,9 @@ public class PanelCode extends JPanel implements PropertyChangeListener, MouseLi
     codePane.getCaret().setVisible(false);
     codePane.setFont(new Font("Courier", Font.PLAIN, 16));
 
-    setLayout(new GridBagLayout());
-    GridBagConstraints gbc = new GridBagConstraints();
-    gbc.fill = GridBagConstraints.BOTH;
-
-    gbc.gridx = 0;
-    gbc.gridy = 0;
-    gbc.weighty = 1;
-    gbc.weightx = 0.33;
-    add(scrollPane, gbc);
-
-    gbc.gridx = 1;
-    gbc.gridy = 0;
-    gbc.weighty = 1;
-    gbc.weightx = 0.67;
-    add(codePane, gbc);
+    setLayout(new GridLayout(1, 2));
+    add(scrollPane);
+    add(codePane);
 
     selectedPath = null;
   }

@@ -27,7 +27,9 @@ public class Singleton extends BoxDecorator {
 
   @Override
   public ClassDescription updateDescription(ClassDescription description) {
-    description.addVariable("private static " + CodeCreator.BOX_NAME_PLACEHOLDER + " instance;");
+    description.addVariable(String.format(
+        "private static %s instance;", CodeCreator.BOX_NAME_PLACEHOLDER
+    ));
 
     description.setConstructorAccess(ClassDescription.PRIVATE);
 

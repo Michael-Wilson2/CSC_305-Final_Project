@@ -27,7 +27,9 @@ public class ChainNode extends BoxDecorator {
 
   @Override
   public ClassDescription updateDescription(ClassDescription description) {
-    description.addVariable(String.format("protected %s successor;", CodeCreator.HANDLER_NAME_PLACEHOLDER));
+    description.addVariable(String.format(
+        "protected %s successor;", CodeCreator.HANDLER_NAME_PLACEHOLDER
+    ));
 
     description.addMethod(String.format(
         "public void setSuccessor(%s successor) {%n" +
