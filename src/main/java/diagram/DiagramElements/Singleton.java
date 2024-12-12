@@ -1,6 +1,8 @@
 package diagram.DiagramElements;
 import code.ClassDescription;
 import code.CodeCreator;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import java.awt.*;
 
@@ -11,6 +13,8 @@ import java.awt.*;
  * @version 1.0
  */
 public class Singleton extends BoxDecorator {
+  private Logger logger = LoggerFactory.getLogger(Singleton.class);
+
   public Singleton(int w, int h) {
     super(w, h);
   }
@@ -45,6 +49,6 @@ public class Singleton extends BoxDecorator {
 
   @Override
   public void addConnection(DiagramElement connection) {
-    // TODO: Log this is impossible
+    logger.warn("adding a connection to a singleton decoration is not allowed");
   }
 }

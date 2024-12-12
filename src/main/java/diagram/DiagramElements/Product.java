@@ -22,7 +22,7 @@ public class Product extends BoxDecorator {
 
   @Override
   public ClassDescription updateDescription(ClassDescription description) {
-    // no changes/additions
+    // no changes/additions to description; no unique code
 
     if (diagramElement != null) {
       return diagramElement.updateDescription(description);

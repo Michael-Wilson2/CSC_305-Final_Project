@@ -34,13 +34,10 @@ public class Repository extends PropertyChangeSupport {
   private DiagramElement selectedElement;
   private DiagramElement selectedRootElement;
   private String filePath;
-
-  private Logger logger;
+  private Logger logger = LoggerFactory.getLogger(Repository.class);
 
   private Repository() {
     super(new Object());
-
-    this.logger = LoggerFactory.getLogger(Repository.class);
 
     this.elements = new ArrayList<>();
     this.frame = null;

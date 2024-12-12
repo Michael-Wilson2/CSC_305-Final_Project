@@ -16,28 +16,6 @@ public class CodeCreator {
   public static final String HANDLER_NAME_PLACEHOLDER = "<HandlerName>";
   public static final String COMPONENT_NAME_PLACEHOLDER = "<ComponentName>";
 
-  // write code for each box in the diagram in a format similar to the following:
-  /*
-   * public <class / interface> <box name>
-   * [OPTIONAL] implements ...
-   * [OPTIONAL] extends ___
-   * {
-   *
-   *   // variables
-   *   [OPTIONAL] int var1;
-   *
-   *   // constructor
-   *   <public / private> <box name>() {
-   *     // do super(new Object()) for PCS, otherwise leave blank
-   *   }
-   *
-   *   // methods...
-   *   [OPTIONAL] public void method1() {
-   *
-   *   }
-   * }
-   */
-
   /** Create a code "skeleton" for the given diagram element
    *
    * @param element the Box or Decorator from the diagram to create code for

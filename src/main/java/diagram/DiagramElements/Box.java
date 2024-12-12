@@ -28,13 +28,12 @@ public class Box extends DiagramElement {
 
   private String name;
   private ArrayList<BoxConnection> connections;
-  private Logger logger;
+  private Logger logger = LoggerFactory.getLogger(Box.class);
 
   public Box(int x, int y, int w, int h, String name) {
     super(x, y, w, h);
     this.name = name;
     this.connections = new ArrayList<>();
-    this.logger = LoggerFactory.getLogger(Box.class);
   }
 
   @Override

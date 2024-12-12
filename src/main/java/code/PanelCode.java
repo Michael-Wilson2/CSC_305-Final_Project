@@ -30,11 +30,9 @@ public class PanelCode extends JPanel implements PropertyChangeListener, MouseLi
   private final JTextPane codePane;
   private final StyledDocument doc;
   private String selectedPath;
-  private Logger logger;
+  private Logger logger = LoggerFactory.getLogger(PanelCode.class);
 
   public PanelCode() {
-    this.logger = LoggerFactory.getLogger(PanelCode.class);
-
     setBackground(Color.DARK_GRAY);
 
     // File tree

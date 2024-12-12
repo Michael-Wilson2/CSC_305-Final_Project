@@ -1,6 +1,9 @@
 package diagram.DiagramElements;
 import code.ClassDescription;
 
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+
 import java.awt.*;
 
 /** A box decoration for visually representing a strategy class.
@@ -10,6 +13,8 @@ import java.awt.*;
  * @version 1.0
  */
 public class Strategy extends BoxDecorator {
+  private Logger logger = LoggerFactory.getLogger(Strategy.class);
+
   public Strategy(int w, int h) {
     super(w, h);
   }
@@ -35,6 +40,6 @@ public class Strategy extends BoxDecorator {
 
   @Override
   public void addConnection(DiagramElement connection) {
-    // TODO: Maybe we should have "StrategyInterface" and "StrategyImpl" or similar
+    logger.warn("adding connections to chain members is not allowed");
   }
 }
