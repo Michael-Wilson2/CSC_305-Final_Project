@@ -5,6 +5,12 @@ import diagram.Repository;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+/** Extension of JFileChooser for choosing .dag files to open/save.
+ *
+ * @author Michael Wilson
+ * @author Andrew Kulakovsky
+ * @version 1.0
+ */
 public class FileChooser extends JFileChooser {
   public FileChooser(String text) {
     setDialogTitle(text);

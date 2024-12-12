@@ -4,6 +4,13 @@ import code.ClassDescription;
 import java.awt.*;
 import java.io.Serializable;
 
+
+/** Root class of decorator pattern. Represents a diagram element (e.g. box, box decorator, etc.).
+ *
+ * @author Michael Wilson
+ * @author Andrew Kulakovsky
+ * @version 1.0
+ */
 public abstract class DiagramElement implements Serializable {
   protected Rectangle bounds;
 

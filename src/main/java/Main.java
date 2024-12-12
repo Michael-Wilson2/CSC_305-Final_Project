@@ -6,6 +6,12 @@ import diagram.Repository;
 
 import javax.swing.*;
 
+/** The main orchestrator class for the project. Extends JPanel.
+ *
+ * @author Michael Wilson
+ * @author Andrew Kulakovsky
+ * @version 1.0
+ */
 public class Main extends JFrame {
   public Main() {
     // Diagram panel

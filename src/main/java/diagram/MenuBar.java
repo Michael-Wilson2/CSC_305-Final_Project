@@ -2,6 +2,12 @@ package diagram;
 
 import javax.swing.*;
 
+/** The GUI's menu bar. Extends JMenuBar.
+ *
+ * @author Michael Wilson
+ * @author Andrew Kulakovsky
+ * @version 1.0
+ */
 public class MenuBar extends JMenuBar {
   public static JMenuItem[] FILE_MENU_ITEMS = {
           new JMenuItem("New..."),

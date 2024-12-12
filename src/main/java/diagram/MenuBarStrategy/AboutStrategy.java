@@ -6,6 +6,12 @@ import diagram.Repository;
 import javax.swing.*;
 import java.awt.*;
 
+/** Strategy for when "About" menu bar item is pressed.
+ *
+ * @author Michael Wilson
+ * @author Andrew Kulakovsky
+ * @version 1.0
+ */
 public class AboutStrategy implements MenuBarStrategy {
   @Override
   public void executeMenuAction(String itemName) {

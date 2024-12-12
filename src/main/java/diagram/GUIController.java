@@ -8,6 +8,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+/** The main GUI mouse listener and handler.
+ *
+ * @author Michael Wilson
+ * @author Andrew Kulakovsky
+ * @version 1.0
+ */
 // TODO: Talk about how we could have used a design pattern here but decided keeping it "simple"
 // here was the better option instead of jumping across files to understand the branching :)
 public class GUIController implements MouseListener, MouseMotionListener, ComponentListener {

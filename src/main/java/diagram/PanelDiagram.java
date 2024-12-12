@@ -8,6 +8,12 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 
+/** The diagram JPanel. Draws whatever the user has created or loaded.
+ *
+ * @author Michael Wilson
+ * @author Andrew Kulakovsky
+ * @version 1.0
+ */
 public class PanelDiagram extends JPanel implements PropertyChangeListener {
   public PanelDiagram() {
     setBackground(new Color(0xc6dace));

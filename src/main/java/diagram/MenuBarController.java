@@ -5,6 +5,12 @@ import diagram.MenuBarStrategy.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/** The GUI's menu bar controller which listens for and handles actions.
+ *
+ * @author Michael Wilson
+ * @author Andrew Kulakovsky
+ * @version 1.0
+ */
 public class MenuBarController implements ActionListener {
   @Override
   public void actionPerformed(ActionEvent e) {

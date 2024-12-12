@@ -3,6 +3,12 @@ import code.ClassDescription;
 
 import java.awt.*;
 
+/** A box decoration for visually representing an observer class.
+ *
+ * @author Michael Wilson
+ * @author Andrew Kulakovsky
+ * @version 1.0
+ */
 public class Observer extends BoxDecorator {
   public Observer(int w, int h) {
     super(w, h);

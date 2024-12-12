@@ -4,6 +4,12 @@ import code.CodeCreator;
 
 import java.awt.*;
 
+/** A box decoration for visually representing a singleton class.
+ *
+ * @author Michael Wilson
+ * @author Andrew Kulakovsky
+ * @version 1.0
+ */
 public class Singleton extends BoxDecorator {
   public Singleton(int w, int h) {
     super(w, h);

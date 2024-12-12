@@ -5,6 +5,12 @@ import diagram.DiagramElements.Emojis;
 
 import java.awt.*;
 
+/** A box decoration for visually representing a decoratable class.
+ *
+ * @author Michael Wilson
+ * @author Andrew Kulakovsky
+ * @version 1.0
+ */
 public class Decoratable extends BoxDecorator {
   public Decoratable(int w, int h) {
     super(w, h);
