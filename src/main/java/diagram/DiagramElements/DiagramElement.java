@@ -3,12 +3,16 @@ package diagram.DiagramElements;
 import code.ClassDescription;
 import java.awt.*;
 import java.io.Serializable;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 public abstract class DiagramElement implements Serializable {
   protected Rectangle bounds;
+  private Logger logger;
 
   public DiagramElement(int x, int y, int w, int h) {
     this.bounds = new Rectangle(x, y, w, h);
+    this.logger = LoggerFactory.getLogger(DiagramElement.class);
   }
 
   public abstract void draw(Graphics g);
@@ -38,7 +42,7 @@ public abstract class DiagramElement implements Serializable {
     }
 
     if (!(traversalElement instanceof Box)) {
-      System.out.println("error getting box from element!!");
+      logger.warn("error getting box from element!!");
     }
 
     return (Box) traversalElement;

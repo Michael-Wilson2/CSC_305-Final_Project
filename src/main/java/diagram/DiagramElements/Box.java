@@ -3,6 +3,9 @@ package diagram.DiagramElements;
 import code.ClassDescription;
 import diagram.Repository;
 
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Map;
@@ -19,11 +22,13 @@ public class Box extends DiagramElement {
 
   private String name;
   private ArrayList<BoxConnection> connections;
+  private Logger logger;
 
   public Box(int x, int y, int w, int h, String name) {
     super(x, y, w, h);
     this.name = name;
     this.connections = new ArrayList<>();
+    this.logger = LoggerFactory.getLogger(Box.class);
   }
 
   @Override
@@ -89,7 +94,7 @@ public class Box extends DiagramElement {
   @Override
   public void addConnection(DiagramElement connection) {
     if (!(connection instanceof Box)) {
-      System.out.println("Unexpected pls fix"); // TODO: make this a logger or exception
+      logger.warn("tried to connect a box to a non-box element");
       return;
     }
     BoxConnection boxConnection = new BoxConnection(this, (Box) connection, Repository.getInstance().getConnector());

@@ -3,6 +3,9 @@ package code;
 import diagram.DiagramElements.Box;
 import diagram.Repository;
 
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.text.BadLocationException;
@@ -16,7 +19,6 @@ import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-
 /** A JPanel to show the files in a tree format alongside the code corresponding to the user's diagram
  * @author Michael Wilson
  * @version 1.0
@@ -28,8 +30,11 @@ public class PanelCode extends JPanel implements PropertyChangeListener, MouseLi
   private final JTextPane codePane;
   private final StyledDocument doc;
   private String selectedPath;
+  private Logger logger;
 
   public PanelCode() {
+    this.logger = LoggerFactory.getLogger(PanelCode.class);
+
     setBackground(Color.DARK_GRAY);
 
     // File tree
@@ -83,7 +88,7 @@ public class PanelCode extends JPanel implements PropertyChangeListener, MouseLi
         );
       }
     } catch (BadLocationException e) {
-      System.out.println("unexpected error - BadLocationException occurred");
+      logger.error("BadLocationException occurred when trying to update code contents");
     }
   }
 
@@ -100,7 +105,9 @@ public class PanelCode extends JPanel implements PropertyChangeListener, MouseLi
 
   @Override
   public void mouseClicked(MouseEvent e) {
-    setSelectedPath(fileTree.getPathForLocation(e.getX(), e.getY()).getLastPathComponent().toString());
+    String filename = fileTree.getPathForLocation(e.getX(), e.getY()).getLastPathComponent().toString();
+    setSelectedPath(filename);
+    logger.trace(String.format("user is viewing code for %s", filename));
     repaint();
   }
 

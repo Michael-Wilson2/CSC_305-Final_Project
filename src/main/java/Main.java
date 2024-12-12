@@ -3,11 +3,18 @@ import diagram.GUIController;
 import diagram.MenuBar;
 import diagram.PanelDiagram;
 import diagram.Repository;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.swing.*;
 
 public class Main extends JFrame {
+  private Logger logger;
+
   public Main() {
+    this.logger = LoggerFactory.getLogger(Main.class);
+    logger.debug("program started");
+
     // Diagram panel
     PanelDiagram diagramPanel = new PanelDiagram();
     GUIController controller = new GUIController();

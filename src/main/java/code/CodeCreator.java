@@ -46,13 +46,13 @@ public class CodeCreator {
   public String createCode(DiagramElement element) {
     ClassDescription description = element.updateDescription(new ClassDescription());
 
-    StringBuilder codeBuilder = new StringBuilder(); // TODO: can chain methods?
-    addImports(codeBuilder, description);
-    addHeader(codeBuilder, description);
-    addVariables(codeBuilder, description);
-    addConstructor(codeBuilder, description);
-    addMethods(codeBuilder, description);
-    codeBuilder.append("}");
+    StringBuilder codeBuilder = new StringBuilder()
+      .append(addImports(description))
+      .append(addHeader(description))
+      .append(addVariables(description))
+      .append(addConstructor(description))
+      .append(addMethods(description))
+      .append("}");
 
     replacePlaceholders(codeBuilder, BOX_NAME_PLACEHOLDER, description.getName());
 
@@ -80,92 +80,102 @@ public class CodeCreator {
     return codeBuilder.toString();
   }
 
-  private StringBuilder addImports(StringBuilder codeBuilder, ClassDescription description) {
+  private StringBuilder addImports(ClassDescription description) {
+    StringBuilder importBuilder = new StringBuilder();
+
     if (!description.getImports().isEmpty()) {
       for (int i = 0; i < description.getImports().size(); i ++) {
-        codeBuilder.append(String.format("import %s;%n", description.getImports().get(i)));
+        importBuilder.append(String.format("import %s;%n", description.getImports().get(i)));
       }
-      codeBuilder.append(String.format("%n"));
+      importBuilder.append(String.format("%n"));
     }
 
-    return codeBuilder;
+    return importBuilder;
   }
 
-  private StringBuilder addHeader(StringBuilder codeBuilder, ClassDescription description) {
-    codeBuilder.append(String.format(
+  private StringBuilder addHeader(ClassDescription description) {
+    StringBuilder headerBuilder = new StringBuilder();
+
+    headerBuilder.append(String.format(
         "public %s %s%n", description.getType(), description.getName()
     ));
 
     if (!description.getImplementations().isEmpty()) {
-      codeBuilder.append("implements ");
+      headerBuilder.append("implements ");
       int numImplementations = description.getImplementations().size();
       for (int i = 0; i < numImplementations; i++) {
-        codeBuilder.append(description.getImplementations().get(i));
+        headerBuilder.append(description.getImplementations().get(i));
 
         if (i < numImplementations - 1) {
-          codeBuilder.append(", ");
+          headerBuilder.append(", ");
         } else {
-          codeBuilder.append(String.format("%n"));
+          headerBuilder.append(String.format("%n"));
         }
       }
     }
 
     if (!(description.getExtension() == null)) {
-      codeBuilder.append(String.format("extends %s%n", description.getExtension()));
+      headerBuilder.append(String.format("extends %s%n", description.getExtension()));
     }
 
-    codeBuilder.append(String.format("{%n"));
-    return codeBuilder;
+    headerBuilder.append(String.format("{%n"));
+    return headerBuilder;
   }
 
-  private StringBuilder addVariables(StringBuilder codeBuilder, ClassDescription description) {
+  private StringBuilder addVariables(ClassDescription description) {
+    StringBuilder variableBuilder = new StringBuilder();
+
     if (!description.getVariables().isEmpty()) {
       for (int i = 0; i < description.getVariables().size(); i++) {
-        codeBuilder.append(String.format(TAB + "%s%n", description.getVariables().get(i)));
+        variableBuilder.append(String.format(TAB + "%s%n", description.getVariables().get(i)));
       }
-      codeBuilder.append(String.format("%n"));
+      variableBuilder.append(String.format("%n"));
     }
 
-    return codeBuilder;
+    return variableBuilder;
   }
 
-  private StringBuilder addConstructor(StringBuilder codeBuilder, ClassDescription description) {
+  private StringBuilder addConstructor(ClassDescription description) {
+    StringBuilder constructorBuilder = new StringBuilder();
+
     if (description.getType().equals(ClassDescription.CLASS)) {
-      codeBuilder.append(String.format(
+      constructorBuilder.append(String.format(
           TAB + "%s %s() {%n",
           description.getConstructorAccess(), description.getName()
       ));
 
       if (description.getConstructorBody().isEmpty()) {
-        codeBuilder.append(String.format("%n"));
+        constructorBuilder.append(String.format("%n"));
       } else {
-        codeBuilder.append(String.format(
+        constructorBuilder.append(String.format(
             TAB + TAB + description.getConstructorBody() // for observable, must do super(new Object())
         ));
       }
 
-      codeBuilder.append(String.format(TAB + "}%n%n"));
+      constructorBuilder.append(String.format(TAB + "}%n%n"));
     }
 
-    return codeBuilder;
+    return constructorBuilder;
   }
 
-  private StringBuilder addMethods(StringBuilder codeBuilder, ClassDescription description) {
+  private StringBuilder addMethods(ClassDescription description) {
+    StringBuilder methodBuilder = new StringBuilder();
+
     if (!description.getMethods().isEmpty()) {
       for (int i = 0; i < description.getMethods().size(); i++) {
         String method = description.getMethods().get(i);
         Scanner scanner = new Scanner(method);
         while (scanner.hasNextLine()) {
           String line = scanner.nextLine();
-          codeBuilder.append(String.format(
+          methodBuilder.append(String.format(
               TAB + line + String.format("%n")
           ));
         }
-        codeBuilder.append(String.format("%n"));
+        methodBuilder.append(String.format("%n"));
       }
     }
 
-    return codeBuilder;
+    return methodBuilder;
   }
 
   private StringBuilder replacePlaceholders(StringBuilder codeBuilder, String placeholder, String replacement) {

@@ -4,6 +4,9 @@ import diagram.DiagramElements.Box;
 import diagram.DiagramElements.BoxDecorator;
 import diagram.DiagramElements.DiagramElement;
 
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+
 import javax.swing.*;
 import java.awt.*;
 import java.beans.PropertyChangeSupport;
@@ -26,8 +29,12 @@ public class Repository extends PropertyChangeSupport {
   private DiagramElement selectedRootElement;
   private String filePath;
 
+  private Logger logger;
+
   private Repository() {
     super(new Object());
+
+    this.logger = LoggerFactory.getLogger(Repository.class);
 
     this.elements = new ArrayList<>();
     this.frame = null;
@@ -40,11 +47,14 @@ public class Repository extends PropertyChangeSupport {
 
   public void add(Box element) {
     this.elements.add(element);
+    logger.info(String.format("a box has been added to the Repository at (%d, %d)",
+        (int) element.getBounds().getCenterX(), (int) element.getBounds().getCenterY()));
     repaint();
   }
 
   public void remove(diagram.DiagramElements.Box element) {
     this.elements.remove(element);
+    logger.info(String.format("%s has been removed from the repository", element));
     repaint();
   }
 
@@ -137,6 +147,7 @@ public class Repository extends PropertyChangeSupport {
     boxDecorator.add(diagramElement);
     elements.remove(diagramElement);
     elements.add(boxDecorator);
+    logger.info(String.format("%s has been added to %s", diagramElement, boxDecorator));
     repaint();
   }
 
@@ -212,7 +223,7 @@ public class Repository extends PropertyChangeSupport {
     try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
       oos.writeObject(elements);
     } catch (IOException e) {
-      e.printStackTrace();
+      logger.error("unable to save diagram elements");
     }
   }
 
@@ -221,7 +232,7 @@ public class Repository extends PropertyChangeSupport {
       elements = (List<DiagramElement>) ois.readObject();
       repaint();
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.error("unable to load diagram elements");
     }
   }
 
