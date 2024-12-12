@@ -1,4 +1,4 @@
-package diagram;
+package diagram.DiagramElements;
 
 public class Emojis {
   public static String EYES_EMOJI = "\uD83D\uDC40";

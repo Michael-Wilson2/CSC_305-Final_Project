@@ -1,7 +1,7 @@
 package diagram.DiagramElements;
 import code.ClassDescription;
 import code.CodeCreator;
-import diagram.Emojis;
+import diagram.DiagramElements.Emojis;
 
 import java.awt.*;
 
