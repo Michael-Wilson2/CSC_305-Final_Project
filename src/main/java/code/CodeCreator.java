@@ -1,9 +1,14 @@
 package code;
 
 import diagram.DiagramElements.*;
+import diagram.Repository;
 
 import java.util.Scanner;
 
+/**
+ * @author Michael Wilson
+ * @version 1.0
+ */
 public class CodeCreator {
   public static final String TAB = "    "; // four spaces
   public static final String BOX_NAME_PLACEHOLDER = "<BoxName>";
@@ -33,9 +38,6 @@ public class CodeCreator {
    */
 
   public String createCode(DiagramElement element) {
-//    ClassDescription description = getClassDescription((Box) element); // use before refactoring decorator
-
-    // TODO: should just be able to return this line instead using decorator pattern
     ClassDescription description = element.updateDescription(new ClassDescription());
 
     StringBuilder codeBuilder = new StringBuilder(); // TODO: can chain methods?
@@ -47,13 +49,18 @@ public class CodeCreator {
     codeBuilder.append("}");
 
     replacePlaceholders(codeBuilder, BOX_NAME_PLACEHOLDER, description.getName());
-//    insertBoxNames(codeBuilder, description);
 
     if (codeBuilder.indexOf(PRODUCT_NAME_PLACEHOLDER) > 0) {
-      String productName = getProductNames((Factory) element);
+      String productName = getProductName((Factory) element);
       if (productName != null) {
         replacePlaceholders(codeBuilder, PRODUCT_NAME_PLACEHOLDER, productName);
-//        insertProductNames(codeBuilder, productName);
+      }
+    }
+
+    if (codeBuilder.indexOf(HANDLER_NAME_PLACEHOLDER) > 0) {
+      String handlerName = getHandlerName(Repository.getInstance().getBox(description.getName()));
+      if (handlerName != null) {
+        replacePlaceholders(codeBuilder, HANDLER_NAME_PLACEHOLDER, handlerName);
       }
     }
 
@@ -156,15 +163,27 @@ public class CodeCreator {
     return codeBuilder;
   }
 
-  private String getProductNames(Factory factory) {
+  private String getProductName(Factory factory) {
     // factory decorator --> product decorator --> product box --> product box's name
-    if (factory.getConnecctions().isEmpty()) {
+    if (factory.getConnections().isEmpty()) {
       return null;
     }
 
-    Product product = (Product) factory.getConnecctions().getFirst();
+    Product product = (Product) factory.getConnections().getFirst();
     return product.getBox().getName();
   }
 
+  private String getHandlerName(Box chainMember) {
+    if (chainMember.getConnections().isEmpty()) {
+      return null;
+    }
 
+    for (int i = 0; i < chainMember.getConnections().size(); i++) {
+      if (chainMember.getConnections().get(i).type().equals("Inheritance")) {
+
+        return chainMember.getConnections().get(i).to().getName();
+      }
+    }
+    return null;
+  }
 }

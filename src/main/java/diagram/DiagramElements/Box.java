@@ -81,21 +81,21 @@ public class Box extends DiagramElement {
 
     if (!connections.isEmpty()) {
       for (int i = 0; i < connections.size(); i++) {
-        String connectionType = connections.get(i).getType();
+        String connectionType = connections.get(i).type();
 
         if (connectionType.equals("Aggregation") || connectionType.equals("Composition")) {
           description.addVariable(String.format(
-              "private %s %s%d", connections.get(i).getTo().getName(),
-              connections.get(i).getTo().getName().toLowerCase().concat("_"), i
+              "private %s %s%d", connections.get(i).to().getName(),
+              connections.get(i).to().getName().toLowerCase().concat("_"), i
           ));
         }
 
         else if (connectionType.equals("Inheritance")) {
-          description.setExtension(connections.get(i).getTo().getName());
+          description.setExtension(connections.get(i).to().getName());
         }
 
         else if (connectionType.equals("Realization")) {
-          description.addImplementation(connections.get(i).getTo().getName());
+          description.addImplementation(connections.get(i).to().getName());
         }
       }
     }
