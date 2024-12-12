@@ -11,6 +11,9 @@ public class BoxConnection {
     this.type = type;
   }
 
+  // TODO: draw in different colors/styles based on type?
+  //  should we have subclasses instead of type?
+
   public Box getFrom() {
     return from;
   }

@@ -18,7 +18,7 @@ public class Repository extends PropertyChangeSupport {
   private boolean isConnectingDecorator;
   private BoxDecorator connectingDecorator;
   private diagram.DiagramElements.Box connectionBox;
-  private String itemName;
+  private String itemName; // TODO: change name to connectorName?
   private Point lineStart;
   private Point pointer;
   private Point pointerDelta;

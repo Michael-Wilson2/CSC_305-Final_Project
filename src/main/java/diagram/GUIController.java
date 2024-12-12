@@ -77,7 +77,7 @@ public class GUIController implements MouseListener, MouseMotionListener, Compon
     DiagramElement diagramElement = Repository.getInstance().getElementAtLocation(x, y);
     if (diagramElement instanceof Box box) {
       Box connectingBox = Repository.getInstance().getConnectingBox();
-      box.addConnection(connectingBox);
+      connectingBox.addConnection(box);
       Repository.getInstance().repaint();
 
       Repository.getInstance().setConnectingBox(null);

@@ -70,6 +70,27 @@ public class Box extends DiagramElement {
       description.setType(ClassDescription.CLASS);
     }
 
+    if (!connections.isEmpty()) {
+      for (int i = 0; i < connections.size(); i++) {
+        String connectionType = connections.get(i).getType();
+
+        if (connectionType.equals("Aggregation") || connectionType.equals("Composition")) {
+          description.addVariable(String.format(
+              "private %s %s%d", connections.get(i).getTo().getName(),
+              connections.get(i).getTo().getName().toLowerCase().concat("_"), i
+          ));
+        }
+
+        else if (connectionType.equals("Inheritance")) {
+          description.setExtension(connections.get(i).getTo().getName());
+        }
+
+        else if (connectionType.equals("Realization")) {
+          description.addImplementation(connections.get(i).getTo().getName());
+        }
+      }
+    }
+
     return description;
   }
 
@@ -81,6 +102,10 @@ public class Box extends DiagramElement {
     }
     BoxConnection boxConnection = new BoxConnection(this, (Box) connection, Repository.getInstance().getConnector());
     connections.add(boxConnection);
+  }
+
+  public ArrayList<BoxConnection> getConnections() {
+    return connections;
   }
 
 //  public BoxDecorator getDecoratorAtLocation(int x, int y) {

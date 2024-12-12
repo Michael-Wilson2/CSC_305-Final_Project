@@ -66,7 +66,7 @@ public abstract class BoxDecorator extends DiagramElement {
 
   public abstract void addConnection(DiagramElement connection);
 
-  public ArrayList<BoxDecorator> getConnecctions() {
+  public ArrayList<BoxDecorator> getConnections() {
     return connections;
   }
 
