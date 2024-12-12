@@ -1,6 +1,6 @@
 package project.diagram;
 
-import diagram.DiagramElements.*;
+import project.diagram.DiagramElements.*;
 
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;

@@ -1,6 +1,6 @@
 package project.code;
 
-import diagram.DiagramElements.*;
+import project.diagram.DiagramElements.*;
 import project.Repository;
 import project.diagram.DiagramElements.Box;
 import project.diagram.DiagramElements.DiagramElement;

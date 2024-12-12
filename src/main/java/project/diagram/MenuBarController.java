@@ -1,6 +1,6 @@
 package project.diagram;
 
-import diagram.MenuBarStrategy.*;
+import project.diagram.MenuBarStrategy.*;
 import project.diagram.MenuBarStrategy.*;
 
 import java.awt.event.ActionEvent;
