@@ -18,14 +18,16 @@ public class Decoration extends BoxDecorator {
 
   @Override
   public ClassDescription updateDescription(ClassDescription description) {
+    description.setExtension(CodeCreator.COMPONENT_NAME_PLACEHOLDER);
+
     description.addVariable(String.format(
-        "protected %s next;", "<Component>" // TODO: get Component name from diagram
+        "protected %s next;", CodeCreator.COMPONENT_NAME_PLACEHOLDER
     ));
 
     description.addMethod(String.format(
         "public void add(%s next) {%n" +
         CodeCreator.TAB + "this.next = next;%n" +
-        "}", "<Component>"
+        "}", CodeCreator.COMPONENT_NAME_PLACEHOLDER
     ));
 
     description.addMethod(String.format(

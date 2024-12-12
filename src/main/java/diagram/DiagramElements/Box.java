@@ -83,7 +83,7 @@ public class Box extends DiagramElement {
       for (int i = 0; i < connections.size(); i++) {
         String connectionType = connections.get(i).type();
 
-        if (connectionType.equals("Aggregation") || connectionType.equals("Composition")) {
+        if ((connectionType.equals("Aggregation") || connectionType.equals("Composition")) && !isDecorator()) {
           description.addVariable(String.format(
               "private %s %s%d", connections.get(i).to().getName(),
               connections.get(i).to().getName().toLowerCase().concat("_"), i
@@ -115,6 +115,22 @@ public class Box extends DiagramElement {
 
   public ArrayList<BoxConnection> getConnections() {
     return connections;
+  }
+
+  public boolean isDecorator() {
+    DiagramElement element = Repository.getInstance().getFirstElement(name);
+    while (element instanceof BoxDecorator decorator) {
+      if (decorator instanceof Decoration) {
+        return true;
+      }
+
+      if (decorator.getNext() == null) {
+        return false;
+      } else {
+        element = decorator.getNext();
+      }
+    }
+    return false;
   }
 
 //  public BoxDecorator getDecoratorAtLocation(int x, int y) {

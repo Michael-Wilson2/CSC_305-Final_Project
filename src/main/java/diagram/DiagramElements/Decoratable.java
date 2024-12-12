@@ -1,5 +1,6 @@
 package diagram.DiagramElements;
 import code.ClassDescription;
+import code.CodeCreator;
 import diagram.Emojis;
 
 import java.awt.*;
@@ -17,6 +18,8 @@ public class Decoratable extends BoxDecorator {
 
   @Override
   public ClassDescription updateDescription(ClassDescription description) {
+    description.setExtension(CodeCreator.COMPONENT_NAME_PLACEHOLDER);
+
     description.addMethod(String.format(
         "@Override%n" +
         "public void operation() {%n" +

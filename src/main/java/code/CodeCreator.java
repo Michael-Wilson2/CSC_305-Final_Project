@@ -14,6 +14,7 @@ public class CodeCreator {
   public static final String BOX_NAME_PLACEHOLDER = "<BoxName>";
   public static final String PRODUCT_NAME_PLACEHOLDER = "<ProductName>";
   public static final String HANDLER_NAME_PLACEHOLDER = "<HandlerName>";
+  public static final String COMPONENT_NAME_PLACEHOLDER = "<ComponentName>";
 
   // write code for each box in the diagram in a format similar to the following:
   /*
@@ -58,9 +59,16 @@ public class CodeCreator {
     }
 
     if (codeBuilder.indexOf(HANDLER_NAME_PLACEHOLDER) > 0) {
-      String handlerName = getHandlerName(Repository.getInstance().getBox(description.getName()));
+      String handlerName = getParentName(Repository.getInstance().getBox(description.getName()));
       if (handlerName != null) {
         replacePlaceholders(codeBuilder, HANDLER_NAME_PLACEHOLDER, handlerName);
+      }
+    }
+
+    if (codeBuilder.indexOf(COMPONENT_NAME_PLACEHOLDER) > 0) {
+      String topComponentName = getParentName(Repository.getInstance().getBox(description.getName()));
+      if (topComponentName != null) {
+        replacePlaceholders(codeBuilder, COMPONENT_NAME_PLACEHOLDER, topComponentName);
       }
     }
 
@@ -173,15 +181,15 @@ public class CodeCreator {
     return product.getBox().getName();
   }
 
-  private String getHandlerName(Box chainMember) {
-    if (chainMember.getConnections().isEmpty()) {
+  private String getParentName(Box box) {
+    if (box.getConnections().isEmpty()) {
       return null;
     }
 
-    for (int i = 0; i < chainMember.getConnections().size(); i++) {
-      if (chainMember.getConnections().get(i).type().equals("Inheritance")) {
+    for (int i = 0; i < box.getConnections().size(); i++) {
+      if (box.getConnections().get(i).type().equals("Inheritance")) {
 
-        return chainMember.getConnections().get(i).to().getName();
+        return box.getConnections().get(i).to().getName();
       }
     }
     return null;
